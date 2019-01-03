@@ -5,4 +5,4 @@
 /etc/opt/app_setting_files/ekz_container/.env
 
 ## 起動
-entrypoint/entrypoint-ekz.shを実行してください。
+entrypoint/entrypoint-ekz.shを実行してください。 
