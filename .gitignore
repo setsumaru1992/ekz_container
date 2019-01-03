@@ -17,7 +17,9 @@ build/
 
 # misc
 .DS_Store/
-.env
+
+# allow in git. The file is symbolic link.
+#.env
 
 npm-debug.log*
 yarn-debug.log*
