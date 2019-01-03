@@ -1,9 +1,8 @@
-cd $(dirname $0)
+cd $(dirname $0 && pwd)
 cd ..
-
 CONTAINER_ROOT="$(pwd)"
 cd ${CONTAINER_ROOT}
-echo "CONTAINER_ROOT: ${CONTAINER_ROOT}"
+
 source .env
 
 echo "========== start ekz_api(rails) =========="
