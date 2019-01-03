@@ -2,7 +2,8 @@ cd $(dirname $0 && pwd)
 cd ..
 CONTAINER_ROOT="$(pwd)"
 
-source .env
+envpath=$(readlink .env)
+source $envpath
 
 echo "========== start ekz_api(rails) =========="
 API_ROOT="${CONTAINER_ROOT}/ekz_api"
