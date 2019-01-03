@@ -1,7 +1,6 @@
 cd $(dirname $0 && pwd)
 cd ..
 CONTAINER_ROOT="$(pwd)"
-cd ${CONTAINER_ROOT}
 
 source .env
 
