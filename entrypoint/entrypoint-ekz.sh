@@ -22,4 +22,5 @@ echo "========== start ekz(react) =========="
 EKZ_ROOT="${CONTAINER_ROOT}/ekz"
 cd ${EKZ_ROOT}
 yarn install
+yarn build
 yarn start &
