@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  url: MyString
+  description: MyText
+  evaluation: 1
+  click_cnt: 1
+  click_at: 2019-01-28 00:13:20
+  theme: one
+
+two:
+  name: MyString
+  url: MyString
+  description: MyText
+  evaluation: 1
+  click_cnt: 1
+  click_at: 2019-01-28 00:13:20
+  theme: two
