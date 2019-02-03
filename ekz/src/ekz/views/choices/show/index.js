@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import ChoiceShowElem from "~/views/choices/_showElem";
+import ChoiceShowElem from "~/views/choices/_elem";
 
 class ChoiceShow extends Component {
 

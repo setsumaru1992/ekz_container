@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import ChoiceShow from '~/views/choices/show'
+import ChoiceShow from '~/views/choices/show/index'
 import ChoiceNew from '~/views/choices/new'
 
 class ThemeShow extends Component {
@@ -10,7 +10,6 @@ class ThemeShow extends Component {
   }
 
   render() {
-    const idParam = this.props.idParam
     return (
       <div className="container">
         <table className="table">
@@ -20,7 +19,7 @@ class ThemeShow extends Component {
               今日食べたいもの
               <button>開く</button>
               {/*<ChoiceEkz />*/}
-              <ChoiceShow />
+              <ChoiceShow themeId={1} choiceList={this.props.choiceList} />
               <ChoiceNew />
             </td>
           </tr>
@@ -37,5 +36,5 @@ class ThemeShow extends Component {
 export default ThemeShow
 
 ThemeShow.propTypes = {
-  idParam: PropTypes.string
+  choiceList: PropTypes.array // 暫定
 }
