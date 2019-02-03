@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store from './common/store';
+import store from './ekz/common/store';
 import App from './App';
 
 ReactDOM.render(

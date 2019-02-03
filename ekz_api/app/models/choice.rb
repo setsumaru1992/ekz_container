@@ -1,3 +1,3 @@
 class Choice < ApplicationRecord
-  belongs_to :theme
+  belongs_to :themes
 end

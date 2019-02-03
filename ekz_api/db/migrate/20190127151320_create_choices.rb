@@ -7,7 +7,7 @@ class CreateChoices < ActiveRecord::Migration[5.2]
       t.integer :evaluation
       t.integer :click_cnt
       t.datetime :click_at
-      t.references :theme, foreign_key: true
+      t.references :themes, foreign_key: true
 
       t.timestamps
     end
