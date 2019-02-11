@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import ChoiceShowElem from "~/views/choices/_elem";
+import {connectViewToStateAndActionCreaters} from '~/views/_utils/connectorViewToOther'
+import {actionAsyncChoiceList} from '~/reducers/choicesReducer';
+import ChoiceShowElem from '~/views/choices/show/_elem';
 
 class ChoiceShow extends Component {
 
@@ -16,21 +18,6 @@ class ChoiceShow extends Component {
             {this.props.choiceList.map((choice) =>
               <ChoiceShowElem choice={choice} key={choice.id} />
             )}
-            {/*<ChoiceShowElem />*/}
-          <tr>
-            <td>洋食&emsp;&emsp;
-              <span>Good</span>&emsp;
-              <span>Bad</span>&emsp;
-              <button>編集</button>&emsp;
-              <button>削除</button></td>
-          </tr>
-          <tr>
-            <td>中華&emsp;&emsp;
-              <span>Good</span>&emsp;
-              <span>Bad</span>&emsp;
-              <button>編集</button>&emsp;
-              <button>削除</button></td>
-          </tr>
           </tbody>
         </table>
         <button>選び直す</button>
@@ -39,11 +26,18 @@ class ChoiceShow extends Component {
       </div>
     )
   }
-}
 
-export default ChoiceShow
+  componentDidMount() {
+    this.props.actionAsyncChoiceList()
+  }
+}
 
 ChoiceShow.propTypes = {
   themeId: PropTypes.number,
-  choiceList: PropTypes.array
 }
+
+export default connectViewToStateAndActionCreaters(ChoiceShow,
+  (state) => {
+    return {choiceList: state.choicesReducer.choiceList}
+  }, {actionAsyncChoiceList}
+)

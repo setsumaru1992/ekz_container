@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store from './ekz/common/store';
+import { Provider } from 'react-redux'
+import store from '~/common/store';
 import App from './App';
 
 ReactDOM.render(
-  //<Provider store={store}>
+  <Provider store={store}>
     <App />
-  //</Provider>
- ,
+  </Provider>,
   document.getElementById('root')
 );

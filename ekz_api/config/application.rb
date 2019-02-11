@@ -20,3 +20,15 @@ module EkzApi
     # the framework and any gems in your application.
   end
 end
+
+# https://qiita.com/guri3/items/268dc4f8be4bafe5029f
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "*"
+
+    resource "*",
+             headers: :any,
+             methods: [:get, :post, :put, :patch, :delete, :options, :head],
+             expose: ['Per-Page', 'Total', 'Link']
+  end
+end
