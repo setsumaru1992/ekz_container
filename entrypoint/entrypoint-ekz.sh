@@ -15,6 +15,7 @@ bundle install
 rails assets:precompile
 
 rm -f ${API_ROOT}/tmp/pids/server.pid
+kill $(lsof -i ":${EKZ_API_PORT}" | grep ":${EKZ_API_PORT}" | head -n 1 | awk '{print $2}')
 # cp /etc/opt/stock_view_rb/master.key config/
 rails server -p ${EKZ_API_PORT} -e ${EKZ_RAILS_ENV} &
 
