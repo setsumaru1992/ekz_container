@@ -1,10 +1,4 @@
 class ThemesController < ApplicationController
-  # require_relative "../domains/theme/theme"
-  load Rails.root + "app/domains/theme/theme_entity.rb" # 暫定　themeドメインの更新が頻繁なときはrequireだと一回しか読んでくれないから
-
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :null_session # 暫定　CSTFキー作るまで
 
   def index
   end
@@ -16,7 +10,7 @@ class ThemesController < ApplicationController
   end
 
   def new
-    ThemeEntity.new.create(params)
+    ThemeEntity.new.create(theme_params(params))
     render json: {}
   end
 
@@ -24,5 +18,11 @@ class ThemesController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def theme_params(params)
+    params.permit(:id, :name, :description)
   end
 end

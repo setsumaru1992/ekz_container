@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {URLS, HTTP_METHODS, EKZ_API_ROOT} from '~/common/const'
+import {HTTP_METHODS, EKZ_API_ROOT} from '~/common/const'
 
 const axiosConfig = {
   baseURL: EKZ_API_ROOT,
@@ -13,8 +13,6 @@ const axiosConfig = {
 let ax = axios.create(axiosConfig)
 export default ax
 
-// TODO パラメータ付きに変更 json形式（初期値＝{}）
-// https://qiita.com/taroc/items/f22f7dd5d6d5443c72a4
 export function req(
   url = "",
   params = {},
@@ -23,9 +21,10 @@ export function req(
   defaultRetVal = null
 ) {
   let access = getHttpMethod(methodStr)
+  const paramsForAxios = getParamsForAxios(params, methodStr)
   // TODO PromiseにAsync/Await使用
   return new Promise((resolve, reject) => {
-    access(url, params).then((response) => {
+    access(url, paramsForAxios).then((response) => {
       const data = response.data
       let ret = callback(data)
       resolve(ret)
@@ -42,5 +41,26 @@ function getHttpMethod(methodStr) {
       return ax.get
     case HTTP_METHODS.POST:
       return ax.post
+    case HTTP_METHODS.DELETE:
+      return ax.delete
+    case HTTP_METHODS.PATCH:
+      return ax.patch
+    default:
+      return null
+  }
+}
+
+function getParamsForAxios(params, methodStr){
+  switch (methodStr) {
+    case HTTP_METHODS.GET:
+      return {
+        params: params
+      }
+    case HTTP_METHODS.DELETE:
+      return {
+        data: params
+      }
+    default:
+      return params
   }
 }

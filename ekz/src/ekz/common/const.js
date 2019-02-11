@@ -8,5 +8,7 @@ export const EKZ_API_ROOT = apiHost + 'api/'
 
 export const HTTP_METHODS = {
   GET: "GET",
-  POST: "POST"
+  POST: "POST",
+  PATCH: "PATCH",
+  DELETE: "DELETE"
 }
