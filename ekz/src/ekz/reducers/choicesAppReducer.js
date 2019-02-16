@@ -1,19 +1,19 @@
-import {req} from "~/common/axios"
-import {patch} from "~/reducers/_utils/stateUtils"
+import {requestGetterWithoutParam} from "~/common/request"
+import {patch, updateObject, toggleObjValue} from "~/reducers/utils/stateUtils"
 import {HTTP_METHODS} from '~/common/const'
 
 export const ACTION_CHOICE_LIST = "ACTION_CHOICE_LIST"
 export const ACTION_CHOICE_CHANGED = "ACTION_CHOICE_CHANGED"
 
 const URL_BASE = "choices/"
-const URLS = {
-  GET_ALL: URL_BASE + "show",
-  NEW: URL_BASE + "new",
-  DESTROY: URL_BASE + "destroy",
+const REQUEST_GETTERS = {
+  GET_ALL: requestGetterWithoutParam(URL_BASE + "show", HTTP_METHODS.GET),
+  NEW: requestGetterWithoutParam(URL_BASE + "new", HTTP_METHODS.POST),
+  DESTROY: requestGetterWithoutParam(URL_BASE + "destroy", HTTP_METHODS.DELETE),
 }
 
 const initialState = {
-  choiceListMap: {}
+  choiceListMap: {},
 }
 
 function actionChoiceList(themeId, choiceList){
@@ -26,7 +26,7 @@ function actionChoiceList(themeId, choiceList){
 
 export function actionAsyncChoiceList(themeId){
   return (dispatch) =>{
-    return req(URLS.GET_ALL, {themeId: themeId}, (data) => {
+    return REQUEST_GETTERS.GET_ALL({themeId: themeId}).access((data) => {
       dispatch(actionChoiceList(themeId, data.choiceList))
     })
   }
@@ -40,7 +40,7 @@ export function actionChoiceChanged(){
 
 export function actionAsyncChoiceNew(choice){
   return (dispatch) =>{
-    return req(URLS.NEW, choice, (data) => {
+    return REQUEST_GETTERS.NEW(choice).access((data) => {
       dispatch(actionChoiceChanged())
       dispatch(actionAsyncChoiceList(choice.themeId))
     }, HTTP_METHODS.POST)
@@ -49,14 +49,14 @@ export function actionAsyncChoiceNew(choice){
 
 export function actionAsyncChoiceDestroy(choiceId, themeId){
   return (dispatch) =>{
-    return req(URLS.DESTROY, {id: choiceId}, (data) => {
+    return REQUEST_GETTERS.DESTROY({id: choiceId}).access((data) => {
       dispatch(actionChoiceChanged())
       dispatch(actionAsyncChoiceList(themeId))
     }, HTTP_METHODS.DELETE)
   }
 }
 
-export default function choicesReducer(state = initialState, action){
+export default function choicesViewReducer(state = initialState, action){
   switch (action.type) {
     case ACTION_CHOICE_LIST:
       let newChoiceListObj = {}

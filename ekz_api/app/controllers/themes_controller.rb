@@ -10,7 +10,7 @@ class ThemesController < ApplicationController
   end
 
   def new
-    ThemeEntity.new.create(theme_params(params))
+    ThemeDomain::Entity.new.create(theme_params(params))
     render json: {}
   end
 
@@ -18,6 +18,8 @@ class ThemesController < ApplicationController
   end
 
   def destroy
+    ThemeDomain::Entity.new.destroy(theme_params(params))
+    render json: {}
   end
 
   private

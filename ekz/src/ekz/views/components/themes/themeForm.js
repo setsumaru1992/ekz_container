@@ -29,8 +29,8 @@ const ThemeForm = formCreattor(
       <Form.Group>
         <Col smoffset={2} sm={5}>
           {/*<ButtonGroup aria-label="Basic">*/}
-          <Button variant={'primary'} type="submit" disabled={pristine || submitting}>登録</Button>
-          <Button variant={'secondary'} type="button" disabled={pristine || submitting} onClick={reset}>クリア</Button>
+          <Button variant={'outline-primary'} type="submit" disabled={pristine || submitting}>登録</Button>
+          <Button variant={'outline-secondary'} type="button" disabled={pristine || submitting} onClick={reset}>クリア</Button>
           {/*</ButtonGroup>*/}
         </Col>
       </Form.Group>

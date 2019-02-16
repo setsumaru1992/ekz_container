@@ -39,7 +39,7 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
           component={inputField}
           type="number"
           name="evaluation"
-          label="評価（1 / 0 / 1）"/>
+          label="評価（1 / 0 / -1）"/>
         <Form.Group>
           <Col smoffset={2} sm={5}>
             {/*<ButtonGroup aria-label="Basic">*/}

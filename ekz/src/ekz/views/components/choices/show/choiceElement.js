@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncChoiceDestroy} from '~/reducers/choicesReducer';
+import {actionAsyncChoiceDestroy} from '~/reducers/choicesAppReducer';
 
 class ChoiceShowElem extends Component {
   render() {
@@ -29,7 +29,12 @@ class ChoiceShowElem extends Component {
             <span>Good</span>&emsp;
             <span>Bad</span>&emsp;
             <button>編集</button>&emsp;
-            <button onClick={() => actionAsyncChoiceDestroy(choice.id, themeId)}>削除</button>
+            <button onClick={() => {
+              const deleteOk = window.confirm("本当に削除してもよろしいですか？")
+              if (!deleteOk) return
+              actionAsyncChoiceDestroy(choice.id, themeId)
+            }}
+            >削除</button>
           </div>
         </td>
       </tr>

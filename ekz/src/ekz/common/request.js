@@ -11,31 +11,37 @@ const axiosConfig = {
 }
 
 let ax = axios.create(axiosConfig)
-export default ax
 
-export function req(
-  url = "",
-  params = {},
-  callback = (data) => {},
-  methodStr = HTTP_METHODS.GET,
-  defaultRetVal = null
-) {
-  let access = getHttpMethod(methodStr)
-  const paramsForAxios = getParamsForAxios(params, methodStr)
-  // TODO PromiseにAsync/Await使用
-  return new Promise((resolve, reject) => {
-    access(url, paramsForAxios).then((response) => {
-      const data = response.data
-      let ret = callback(data)
-      resolve(ret)
-    })
-      .catch((e) => {
-        reject(defaultRetVal)
-      })
-  })
+export function requestGetterWithoutParam(url, methodStr) {
+  return (params = {}) => {
+    return new Request(url, params, methodStr)
+  }
 }
 
-function getHttpMethod(methodStr) {
+export class Request {
+  constructor(url, params = {}, methodStr = HTTP_METHODS.GET){
+    this.url = url
+    this.params = params
+    this.methodStr = methodStr
+  }
+
+  access(callback, defaultRetVal = null){
+    let access = getHttpAccesser(this.methodStr)
+    const paramsForAxios = getParamsForAxios(this.params, this.methodStr)
+    // TODO PromiseにAsync/Await使用
+    return new Promise((resolve, reject) => {
+      access(this.url, paramsForAxios).then((response) => {
+        const data = response.data
+        let ret = callback(data)
+        resolve(ret)
+      }).catch((e) => {
+        reject(defaultRetVal)
+      })
+    })
+  }
+}
+
+function getHttpAccesser(methodStr) {
   switch (methodStr) {
     case HTTP_METHODS.GET:
       return ax.get

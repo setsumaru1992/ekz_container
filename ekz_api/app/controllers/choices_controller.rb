@@ -9,7 +9,7 @@ class ChoicesController < ApplicationController
   end
 
   def new
-    ChoiceEntity.new.create(choice_params(params))
+    ChoiceDomain::Entity.new.create(choice_params(params))
     render json: {}
   end
 
@@ -17,7 +17,7 @@ class ChoicesController < ApplicationController
   end
 
   def destroy
-    ChoiceEntity.new.destroy(choice_params(params))
+    ChoiceDomain::Entity.new.destroy(choice_params(params))
     render json: {}
   end
 

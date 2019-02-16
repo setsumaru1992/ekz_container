@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ThemeShow from '~/views/components/themes/show/show'
+import ThemeShow from '~/views/components/themes/show'
 
 class ThemeShowPage extends Component {
   render() {
