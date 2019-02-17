@@ -1,6 +1,4 @@
-import {requestGetterWithoutParam} from "~/common/request"
-import {patch, updateObject, toggleObjValue} from "~/reducers/utils/stateUtils"
-import {HTTP_METHODS} from '~/common/const'
+import {patch, toggleObjValue} from "~/reducers/utils/stateUtils"
 
 export const ACTION_CHOICE_VISIBLE_FORM = "ACTION_CHOICE_VISIBLE_FORM"
 

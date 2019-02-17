@@ -1,40 +1,66 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import {NavLink} from "react-router-dom"
+import {ButtonGroup, ToggleButtonGroup, Button, ToggleButton} from "react-bootstrap"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncChoiceDestroy} from '~/reducers/choicesAppReducer';
+import {
+  actionAsyncChoiceDestroy,
+  actionAsyncChoiceUpdateEvaluation,
+  actionChoiceUpdateEvaluation
+} from '~/reducers/choicesAppReducer';
 
 class ChoiceShowElem extends Component {
+  componentWillMount() {
+    const {
+      choice,
+      actionChoiceUpdateEvaluation
+    } = this.props
+    actionChoiceUpdateEvaluation(choice.id, choice.evaluation)
+  }
+
   render() {
-    const {choice, actionAsyncChoiceDestroy, themeId} = this.props
+    const {
+      choice,
+      themeId,
+      actionAsyncChoiceDestroy,
+      actionAsyncChoiceUpdateEvaluation,
+      choiceEvaluationMap,
+    } = this.props
     let nameTag = null
     if(choice.url){
       nameTag = (<a href={choice.url}>{choice.name}</a>)
     } else {
       nameTag = (<span>{choice.name}</span>)
     }
+    const evaluationTagName = `evaluation_${choice.id}`
     return (
       <tr>
         <td style={{
           display: "flex",
         }}>
-          <div style={{
+          <NavLink to={"#"} style={{
             marginRight: "auto"
           }}>
             {nameTag}
-          </div>
+          </NavLink>
           <div style={{
             display: "flex",
             justifyContent: "flex-end",
           }}>
-            <span>Good</span>&emsp;
-            <span>Bad</span>&emsp;
-            <button>編集</button>&emsp;
-            <button onClick={() => {
+            <ToggleButtonGroup
+              name={evaluationTagName} value={choiceEvaluationMap[choice.id]}
+              onChange={(value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}}>
+              <ToggleButton type="radio" name={evaluationTagName}  value={1} variant="outline-primary">イイ！！</ToggleButton>
+              <ToggleButton type="radio" name={evaluationTagName}  value={0} variant="outline-primary">普通</ToggleButton>
+              <ToggleButton type="radio" name={evaluationTagName}  value={-1} variant="outline-primary">うーん...</ToggleButton>
+            </ToggleButtonGroup>&emsp;
+            <Button variant="outline-primary">編集</Button>&emsp;
+            <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
               if (!deleteOk) return
               actionAsyncChoiceDestroy(choice.id, themeId)
             }}
-            >削除</button>
+            >削除</Button>
           </div>
         </td>
       </tr>
@@ -49,6 +75,8 @@ ChoiceShowElem.propTypes = {
 
 export default connectViewToStateAndActionCreaters(ChoiceShowElem,
   (state) => {
-    return {}
-  }, {actionAsyncChoiceDestroy}
+    return {
+      choiceEvaluationMap: state.choicesAppReducer.choiceEvaluationMap
+    }
+  }, {actionAsyncChoiceDestroy, actionAsyncChoiceUpdateEvaluation, actionChoiceUpdateEvaluation}
 )

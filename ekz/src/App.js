@@ -1,45 +1,56 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom"
+import Layout from "~/views/layouts"
 import ThemeShow from '~/views/pages/themes/show'
+import ChoiceShow from '~/views/pages/choices/show'
 
 class App extends Component {
   render() {
-    // return (
-    //   <Router>
-    //     <ul>
-    //       <li>
-    //         <Link to="/">Home</Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/about">About</Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/topics">Topics</Link>
-    //       </li>
-    //
-    //       <hr />
-    //
-    //       {/*<Route exact path="/" component={<ThemeShow/>} />*/}
-    //       <Route path="/about" component={About} />
-    //       <Route path="/topics" component={Topics} />
-    //     </ul>
-    //   </Router>
-    // );
     return (
-
-      <ThemeShow/>
-    )
+      <Router>
+        <Layout>
+          <Switch>
+            <Route exaxt exact path="/" component={Top} />
+            {/* mypage */}
+            <Route exaxt path="/mypage/theme" component={ThemeShow} />
+            <Route exaxt path="/mypage/choice" component={ChoiceShow} />
+            <Route exaxt path="/mypage/profile" component={Profile} />
+            <Route exaxt path="/signup" component={Signup} />
+          </Switch>
+        </Layout>
+      </Router>
+    );
+    // return (
+    //   <ThemeShow />
+    // )
   }
 }
-const Topics = () => (
+
+
+const Top = () => (
   <div>
-    <h2>Topics</h2>
+    <h2>Top</h2>
+    <p>ログイン</p>
+    <p>新規登録</p>
+    <Redirect to="/mypage/theme" />
   </div>
 );
 
-const About = () => (
+const MyPage = () => (
   <div>
-    <h2>About</h2>
+    <h2>MyPage</h2>
+  </div>
+);
+
+const Signup = () => (
+  <div>
+    <h2>Signup</h2>
+  </div>
+);
+
+const Profile = () => (
+  <div>
+    <h2>Profile</h2>
   </div>
 );
 

@@ -14,6 +14,8 @@ class ChoicesController < ApplicationController
   end
 
   def update
+    ChoiceDomain::Entity.new.update(choice_params(params))
+    render json: {}
   end
 
   def destroy
@@ -24,6 +26,8 @@ class ChoicesController < ApplicationController
   private
 
   def choice_params(params)
-    params.permit(:id, :name, :url, :evaluation, :description, :themeId)
+    params.permit(
+      :id, :name, :url, :evaluation, :description, :themeId
+    )
   end
 end

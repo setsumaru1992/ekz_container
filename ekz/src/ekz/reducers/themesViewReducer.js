@@ -1,6 +1,4 @@
-import {requestGetterWithoutParam} from "~/common/request"
 import {patch} from "~/reducers/utils/stateUtils"
-import {HTTP_METHODS} from '~/common/const'
 
 export const ACTION_THEME_VISIBLE_THEME_NEW = "ACTION_THEME_VISIBLE_THEME_NEW"
 

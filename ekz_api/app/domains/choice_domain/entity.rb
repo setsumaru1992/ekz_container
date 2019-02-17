@@ -21,6 +21,12 @@ module ChoiceDomain
       return
     end
 
+    def update(params)
+      choice = Choice.find(params[:id])
+      choice.evaluation = params[:evaluation]
+      choice.save
+    end
+
     def destroy(params)
       choice = Choice.find(params[:id])
       choice.destroy
