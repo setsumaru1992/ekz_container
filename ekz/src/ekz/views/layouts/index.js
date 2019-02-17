@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {Navbar, Nav, } from "react-bootstrap"
+import {NavLink} from "react-router-dom"
 import {LinkContainer}  from "react-router-bootstrap"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
 
@@ -12,9 +13,15 @@ class Layout extends Component {
           <Navbar bg="dark" variant="dark">
             <Navbar.Brand href="/">ekz</Navbar.Brand>
             <Nav className="mr-auto">
-              <Nav.Link href="/mypage/theme">テーマ</Nav.Link>
-              <Nav.Link href="/mypage/profile">プロフィール</Nav.Link>
-              <Nav.Link href="/signup">新規登録</Nav.Link>
+              <LinkContainer to={"/mypage/theme"}>
+                <NavLink href=>テーマ</NavLink>
+              </LinkContainer>
+              <LinkContainer to={"/mypage/profile"}>
+                <NavLink href=>プロフィール</NavLink>
+              </LinkContainer>
+              <LinkContainer to={"/signup"}>
+                <NavLink href=>新規登録</NavLink>
+              </LinkContainer>
             </Nav>
           </Navbar>
           <div className="container">
