@@ -14,13 +14,13 @@ class Layout extends Component {
             <Navbar.Brand href="/">ekz</Navbar.Brand>
             <Nav className="mr-auto">
               <LinkContainer to={"/mypage/theme"}>
-                <NavLink href=>テーマ</NavLink>
+                <Nav.Link>テーマ</Nav.Link>
               </LinkContainer>
               <LinkContainer to={"/mypage/profile"}>
-                <NavLink href=>プロフィール</NavLink>
+                <Nav.Link>プロフィール</Nav.Link>
               </LinkContainer>
               <LinkContainer to={"/signup"}>
-                <NavLink href=>新規登録</NavLink>
+                <Nav.Link>新規登録</Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar>
