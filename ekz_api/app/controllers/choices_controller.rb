@@ -1,16 +1,24 @@
 class ChoicesController < ApplicationController
   def show
     render json: {
-      choiceList: Choice.where(theme_id: params[:themeId])
+      theme: Theme.find(choice_params(params)[:theme_id]),
+      choice_list: ChoiceDomain::Entity.new.list(choice_params(params))
     }
   end
 
-  def random
+  def ekz
+    theme_id = choice_params(params)[:theme_id]
+    render json: {
+      theme: Theme.find(theme_id),
+      ekz_list: ChoiceDomain::Entity.new.ekz_pick(choice_params(params))
+    }
   end
 
   def new
-    ChoiceDomain::Entity.new.create(choice_params(params))
-    render json: {}
+    new_choice = ChoiceDomain::Entity.new.create(choice_params(params))
+    render json: {
+      choice: new_choice
+    }
   end
 
   def update
@@ -27,7 +35,7 @@ class ChoicesController < ApplicationController
 
   def choice_params(params)
     params.permit(
-      :id, :name, :url, :evaluation, :description, :themeId
+      :id, :name, :url, :evaluation, :description, :theme_id
     )
   end
 end

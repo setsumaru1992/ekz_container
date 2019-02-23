@@ -4,7 +4,7 @@ if(window.location.href.indexOf('localhost') > 0){
 } else {
   apiHost = 'https://ekz.jp/'
 }
-export const EKZ_API_ROOT = apiHost + 'api/'
+export const EKZ_API_ROOT = apiHost + 'api/v1/'
 
 export const HTTP_METHODS = {
   GET: "GET",

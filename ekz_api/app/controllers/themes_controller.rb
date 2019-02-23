@@ -5,7 +5,7 @@ class ThemesController < ApplicationController
 
   def show
     render json: {
-      themeList: Theme.all #.where(theme_id: 1)
+      theme_list: ThemeDomain::Entity.new.list(theme_params(params))
     }
   end
 

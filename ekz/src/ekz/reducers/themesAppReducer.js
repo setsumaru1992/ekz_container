@@ -17,6 +17,21 @@ const initialState = {
   theme: {},
 }
 
+export default function themesAppReducer(state = initialState, action){
+  switch (action.type) {
+    case ACTION_THEME_LIST:
+      return patch(state, {
+        themeList: action.themeList
+      })
+    case ACTION_THEME_CHANGED:
+      return patch(state, {
+        theme: action.theme
+      })
+    default:
+      return state
+  }
+}
+
 function actionThemeList(themeList){
   return  {
     type: ACTION_THEME_LIST,
@@ -27,7 +42,7 @@ function actionThemeList(themeList){
 export function actionAsyncThemeList(){
   return (dispatch) =>{
     return REQUEST_GETTERS.GET_ALL({}).access((data) => {
-      dispatch(actionThemeList(data.themeList))
+      dispatch(actionThemeList(data.theme_list))
     })
   }
 }
@@ -53,20 +68,5 @@ export function actionAsyncThemeDestroy(themeId){
       dispatch(actionThemeChanged())
       dispatch(actionAsyncThemeList())
     })
-  }
-}
-
-export default function themesAppReducer(state = initialState, action){
-  switch (action.type) {
-    case ACTION_THEME_LIST:
-      return patch(state, {
-        themeList: action.themeList
-      })
-    case ACTION_THEME_CHANGED:
-      return patch(state, {
-        theme: action.theme
-      })
-    default:
-      return state
   }
 }

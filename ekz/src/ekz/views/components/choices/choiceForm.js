@@ -29,7 +29,7 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
           component={inputField}
           type="text"
           name="name"
-          label="選択肢名"/>
+          label="チョイス名"/>
         <Field
           component={inputField}
           type="text"

@@ -8,15 +8,19 @@ import choiceFormCreator from "~/views/components/choices/choiceForm"
 
 class ChoiceNew extends Component {
   render() {
-    const ChoiceForm = choiceFormCreator(this.props.themeId, null)
+    const {
+      themeId,
+      actionAsyncChoiceNew
+    } = this.props
+    const ChoiceForm = choiceFormCreator(themeId, null)
     return (
       <ChoiceForm
-        onSubmit={this.props.actionAsyncChoiceNew}
+        onSubmit={actionAsyncChoiceNew}
         initialValues={{
           name: "",
           url: "",
           evaluation: 0,
-          themeId: this.props.themeId
+          theme_id: themeId
         }}
       />
     )

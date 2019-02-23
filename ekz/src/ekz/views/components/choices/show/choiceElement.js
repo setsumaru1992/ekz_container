@@ -27,10 +27,17 @@ class ChoiceShowElem extends Component {
       choiceEvaluationMap,
     } = this.props
     let nameTag = null
+    const dispNameLength = 50
+    const choiceName = choice.name.length > dispNameLength
+      ? `${choice.name.substr(0, dispNameLength - 1)}...`
+      : choice.name
     if(choice.url){
-      nameTag = (<a href={choice.url}>{choice.name}</a>)
+      nameTag = (
+        <a href={choice.url} target={"blank"}>
+          {choiceName}
+        </a>)
     } else {
-      nameTag = (<span>{choice.name}</span>)
+      nameTag = choiceName
     }
     const evaluationTagName = `evaluation_${choice.id}`
     return (
@@ -38,11 +45,11 @@ class ChoiceShowElem extends Component {
         <td style={{
           display: "flex",
         }}>
-          <NavLink to={"#"} style={{
+          <div style={{
             marginRight: "auto"
           }}>
             {nameTag}
-          </NavLink>
+          </div>
           <div style={{
             display: "flex",
             justifyContent: "flex-end",
@@ -50,9 +57,9 @@ class ChoiceShowElem extends Component {
             <ToggleButtonGroup
               name={evaluationTagName} value={choiceEvaluationMap[choice.id]}
               onChange={(value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}}>
-              <ToggleButton type="radio" name={evaluationTagName}  value={1} variant="outline-primary">イイ！！</ToggleButton>
-              <ToggleButton type="radio" name={evaluationTagName}  value={0} variant="outline-primary">普通</ToggleButton>
-              <ToggleButton type="radio" name={evaluationTagName}  value={-1} variant="outline-primary">うーん...</ToggleButton>
+              <ToggleButton type="radio" name={evaluationTagName}  value={1} size="sm" variant="outline-primary">イイ！！</ToggleButton>
+              <ToggleButton type="radio" name={evaluationTagName}  value={0} size="sm" variant="outline-primary">普通</ToggleButton>
+              <ToggleButton type="radio" name={evaluationTagName}  value={-1} size="sm" variant="outline-primary">うーん...</ToggleButton>
             </ToggleButtonGroup>&emsp;
             <Button variant="outline-primary">編集</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {

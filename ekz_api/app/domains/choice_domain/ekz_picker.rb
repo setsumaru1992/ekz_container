@@ -1,0 +1,103 @@
+module ChoiceDomain::EkzPicker
+  EVALUATION_GOOD = 1
+  EVALUATION_NORMAL = 0
+  EVALUATION_BAD = -1
+
+  MAX_SIZE_BAD = 1
+
+  class << self
+    def pick(theme_id)
+      ekz_pick_param = EkzPickParams.new(theme_id)
+
+      max_list_size = 4
+      good_choice_size, bad_choice_size, normal_choice_size = sizes_every_evaluation(max_list_size, ekz_pick_param)
+
+
+      ekz_list = []
+      ekz_list.concat(pick_by_evaluation(EVALUATION_GOOD, good_choice_size, ekz_pick_param))
+      ekz_list.concat(pick_by_evaluation(EVALUATION_NORMAL, normal_choice_size, ekz_pick_param))
+      ekz_list.concat(pick_by_evaluation(EVALUATION_BAD, bad_choice_size, ekz_pick_param))
+      ekz_list
+    end
+
+    private
+
+    def sizes_every_evaluation(max_list_size, ekz_pick_param)
+      good_choice_size = gen_good_choice_size(max_list_size, ekz_pick_param)
+      bad_choice_size = gen_bad_choice_size(max_list_size, ekz_pick_param)
+      normal_choice_size = gen_normal_choice_size(
+        max_list_size, good_choice_size + bad_choice_size, ekz_pick_param)
+
+      current_list_size = good_choice_size + bad_choice_size + normal_choice_size
+      if current_list_size < max_list_size
+        max_good_choice_size = good_choice_size + (max_list_size - current_list_size)
+        good_choice_size = min_choice_size(EVALUATION_GOOD, max_good_choice_size, ekz_pick_param)
+      end
+
+      [good_choice_size, bad_choice_size, normal_choice_size]
+    end
+
+    def gen_good_choice_size(list_size, ekz_pick_param)
+      ratio = 1/2.to_f
+      max_good_choice_size = (list_size * ratio).ceil
+      min_choice_size(EVALUATION_GOOD, max_good_choice_size, ekz_pick_param)
+    end
+
+    def gen_bad_choice_size(list_size, ekz_pick_param)
+      max_num_of_one_happen = 10
+      if rand(max_num_of_one_happen) + 1 == 1
+        min_choice_size(EVALUATION_BAD, MAX_SIZE_BAD, ekz_pick_param)
+      else
+        0
+      end
+    end
+
+    def gen_normal_choice_size(list_size, filled_size, ekz_pick_param)
+      max_normal_choice_size = list_size - filled_size
+      min_choice_size(EVALUATION_NORMAL, max_normal_choice_size, ekz_pick_param)
+    end
+
+    def min_choice_size(evaluation, reference_size, ekz_pick_param)
+      existing_size = existing_size_by_evaluation(evaluation, ekz_pick_param)
+      if existing_size < reference_size
+        existing_size
+      else
+        reference_size
+      end
+    end
+
+    def existing_size_by_evaluation(evaluation, ekz_pick_param)
+      Choice.where(theme_id: ekz_pick_param.theme_id, evaluation: evaluation).size
+    end
+
+    def pick_by_evaluation(evaluation, size, ekz_pick_param)
+      return [] if size == 0
+      ids = Choice.where(theme_id: ekz_pick_param.theme_id, evaluation: evaluation).ids
+      return Choice.where(id: ids)  if ids.size == size
+
+      picked_ids = random_pick(ids, size)
+      Choice.where(id: picked_ids)
+    end
+
+    def random_pick(seeds, size)
+      picked = []
+      while picked.size < size
+        rand_idx = rand(seeds.size)
+        elem = seeds[rand_idx]
+        if !picked.include?(elem)
+          picked.push(elem)
+        end
+      end
+      picked
+    end
+  end
+
+  class EkzPickParams
+    attr_accessor :user_id, :theme_id
+
+    def initialize(theme_id)
+      # @user_id = user_id
+      @theme_id = theme_id
+    end
+  end
+end
