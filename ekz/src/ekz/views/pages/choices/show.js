@@ -7,6 +7,7 @@ import {actionChoiceVisibleForm} from '~/reducers/choicesViewReducer';
 import ChoiceShowElem from '~/views/components/choices/show/choiceElement';
 import ChoiceNew from '~/views/components/choices/new'
 import Button from "react-bootstrap/es/Button";
+import {Form} from "react-bootstrap"
 
 class ChoiceShow extends Component {
 
@@ -36,13 +37,20 @@ class ChoiceShow extends Component {
       <div>
         <h1>{themeName}</h1>
         <Button onClick={() => actionAsyncEkzList(this.themeId)}>選び直す</Button>
-        <table className="table table-hover table-striped">
-          <tbody>
+        <Form.Row>
           {ekzList ? ekzList.map((choice) =>
             <ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />
           ) : null}
-          </tbody>
-        </table>
+        </Form.Row>
+
+
+        {/*<table className="table table-hover table-striped">*/}
+          {/*<tbody>*/}
+          {/*{ekzList ? ekzList.map((choice) =>*/}
+            {/*<ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />*/}
+          {/*) : null}*/}
+          {/*</tbody>*/}
+        {/*</table>*/}
 
         <h2>全リスト</h2>
         <Button onClick={()=>actionChoiceVisibleForm(this.themeId)}>
@@ -56,13 +64,11 @@ class ChoiceShow extends Component {
           ? <ChoiceNew themeId={this.themeId} />
           : ""
         }
-        <table className="table table-hover table-striped">
-          <tbody>
-            {choiceList ? choiceList.map((choice) =>
-              <ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />
-            ) : null}
-          </tbody>
-        </table>
+        <Form.Row>
+          {choiceList ? choiceList.map((choice) =>
+            <ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />
+          ) : null}
+        </Form.Row>
       </div>
     )
   }

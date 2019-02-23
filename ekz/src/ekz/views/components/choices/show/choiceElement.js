@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {NavLink} from "react-router-dom"
-import {ButtonGroup, ToggleButtonGroup, Button, ToggleButton} from "react-bootstrap"
+import {Form, Card, Col, ToggleButtonGroup, Button, ToggleButton} from "react-bootstrap"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
 import {
   actionAsyncChoiceDestroy,
@@ -46,6 +46,47 @@ class ChoiceShowElem extends Component {
       nameTag = choiceName
     }
     const evaluationTagName = `evaluation_${choice.id}`
+    return (
+      <Col xs={12} md={6}>
+        <Card style={{
+          padding: "20px 25px",
+          margin: "10px 3px",
+          textAlign: "center",
+          background: "#fff",
+        }}>
+        {/*<Card.Img />*/}
+        <h3 style={{
+          height: "40px",
+          fontSize: "18px",
+          fontWeight: "700",
+          fontStyle: "normal",
+          marginBottom: "6px"
+        }}>{nameTag}</h3>
+        <Card.Body>
+        <p>
+          <ToggleButtonGroup
+            name={evaluationTagName} value={choiceEvaluationMap[choice.id]}
+            onChange={(value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}}>
+            <ToggleButton type="radio" name={evaluationTagName}  value={1} size="sm" variant="outline-primary">イイ！！</ToggleButton>
+            <ToggleButton type="radio" name={evaluationTagName}  value={0} size="sm" variant="outline-primary">普通</ToggleButton>
+            <ToggleButton type="radio" name={evaluationTagName}  value={-1} size="sm" variant="outline-primary">うーん...</ToggleButton>
+          </ToggleButtonGroup>
+        </p>
+          <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
+          <Button variant="outline-primary" onClick={() => {
+            const deleteOk = window.confirm("本当に削除してもよろしいですか？")
+            if (!deleteOk) return
+            actionAsyncChoiceDestroy(choice.id, themeId)
+          }}
+          >削除</Button>
+        {visibleFormMap[`${themeId}_${choice.id}`]
+          ? <ChoiceEdit themeId={themeId} choice={choice} />
+          : ""
+        }
+        </Card.Body>
+        </Card>
+      </Col>
+    )
     return (
       <tr>
         <td>
