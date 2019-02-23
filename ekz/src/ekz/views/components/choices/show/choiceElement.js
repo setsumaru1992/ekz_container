@@ -7,7 +7,11 @@ import {
   actionAsyncChoiceDestroy,
   actionAsyncChoiceUpdateEvaluation,
   actionChoiceUpdateEvaluation
-} from '~/reducers/choicesAppReducer';
+} from '~/reducers/choicesAppReducer'
+import {
+  actionChoiceVisibleForm
+} from "~/reducers/choicesViewReducer"
+import ChoiceEdit from '~/views/components/choices/edit'
 
 class ChoiceShowElem extends Component {
   componentWillMount() {
@@ -24,7 +28,9 @@ class ChoiceShowElem extends Component {
       themeId,
       actionAsyncChoiceDestroy,
       actionAsyncChoiceUpdateEvaluation,
+      actionChoiceVisibleForm,
       choiceEvaluationMap,
+      visibleFormMap,
     } = this.props
     let nameTag = null
     const dispNameLength = 50
@@ -42,9 +48,10 @@ class ChoiceShowElem extends Component {
     const evaluationTagName = `evaluation_${choice.id}`
     return (
       <tr>
-        <td style={{
-          display: "flex",
-        }}>
+        <td>
+          <div style={{
+            display: "flex",
+          }}>
           <div style={{
             marginRight: "auto"
           }}>
@@ -61,7 +68,7 @@ class ChoiceShowElem extends Component {
               <ToggleButton type="radio" name={evaluationTagName}  value={0} size="sm" variant="outline-primary">普通</ToggleButton>
               <ToggleButton type="radio" name={evaluationTagName}  value={-1} size="sm" variant="outline-primary">うーん...</ToggleButton>
             </ToggleButtonGroup>&emsp;
-            <Button variant="outline-primary">編集</Button>&emsp;
+            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
               if (!deleteOk) return
@@ -69,6 +76,11 @@ class ChoiceShowElem extends Component {
             }}
             >削除</Button>
           </div>
+          </div>
+          {visibleFormMap[`${themeId}_${choice.id}`]
+            ? <ChoiceEdit themeId={themeId} choice={choice} />
+            : ""
+          }
         </td>
       </tr>
     )
@@ -83,7 +95,13 @@ ChoiceShowElem.propTypes = {
 export default connectViewToStateAndActionCreaters(ChoiceShowElem,
   (state) => {
     return {
-      choiceEvaluationMap: state.choicesAppReducer.choiceEvaluationMap
+      choiceEvaluationMap: state.choicesAppReducer.choiceEvaluationMap,
+      visibleFormMap: state.choicesViewReducer.visibleFormMap,
     }
-  }, {actionAsyncChoiceDestroy, actionAsyncChoiceUpdateEvaluation, actionChoiceUpdateEvaluation}
+  }, {
+    actionAsyncChoiceDestroy,
+    actionAsyncChoiceUpdateEvaluation,
+    actionChoiceUpdateEvaluation,
+    actionChoiceVisibleForm
+  }
 )

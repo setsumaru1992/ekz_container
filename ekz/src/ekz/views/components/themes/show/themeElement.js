@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {NavLink} from "react-router-dom"
+import {Button} from "react-bootstrap";
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
 import {actionAsyncThemeDestroy} from '~/reducers/themesAppReducer';
-import {Button} from "react-bootstrap";
+import {
+  actionThemeVisibleForm
+} from "~/reducers/themesViewReducer"
+import ThemeEdit from "~/views/components/themes/edit"
 
 class ThemeShowElem extends Component {
   render() {
     const {
       theme,
       actionAsyncThemeDestroy,
+      visibleFormMap,
+      actionThemeVisibleForm,
     } = this.props
     return (
       <tr>
-        <td style={{
-          display: "flex",
-        }}>
+        <td>
+          <div style={{
+            display: "flex",
+          }}>
           <NavLink
             to={{
               pathname: "/mypage/choice",
@@ -32,7 +39,7 @@ class ThemeShowElem extends Component {
             justifyContent: "flex-end",
           }}>
           <Button variant="outline-primary">詳細</Button>
-          <Button variant="outline-primary">編集</Button>
+          <Button variant="outline-primary" onClick={()=>actionThemeVisibleForm(theme.id)}>編集</Button>
           <Button variant="outline-primary" onClick={() => {
             const deleteOk = window.confirm("本当に削除してもよろしいですか？")
             if(!deleteOk) return
@@ -41,6 +48,12 @@ class ThemeShowElem extends Component {
           >削除</Button>
           {/*<ChoiceEkz />*/}
           </div>
+          </div>
+          <br/>&emsp;
+          {visibleFormMap[`${theme.id}`]
+            ? <ThemeEdit theme={theme} />
+            : ""
+          }
         </td>
       </tr>
     )
@@ -53,6 +66,11 @@ ThemeShowElem.propTypes = {
 
 export default connectViewToStateAndActionCreaters(ThemeShowElem,
   (state) => {
-    return {}
-  }, {actionAsyncThemeDestroy}
+    return {
+      visibleFormMap: state.themesViewReducer.visibleFormMap,
+    }
+  }, {
+    actionAsyncThemeDestroy,
+    actionThemeVisibleForm
+  }
 )

@@ -9,9 +9,8 @@ module ChoiceDomain::EkzPicker
     def pick(theme_id)
       ekz_pick_param = EkzPickParams.new(theme_id)
 
-      max_list_size = 4
+      max_list_size = 5
       good_choice_size, bad_choice_size, normal_choice_size = sizes_every_evaluation(max_list_size, ekz_pick_param)
-
 
       ekz_list = []
       ekz_list.concat(pick_by_evaluation(EVALUATION_GOOD, good_choice_size, ekz_pick_param))

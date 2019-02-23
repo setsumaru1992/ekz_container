@@ -6,20 +6,21 @@ import choiceFormCreator from "~/views/components/choices/choiceForm"
 
 
 
-class ChoiceNew extends Component {
+class ChoiceEdit extends Component {
   render() {
     const {
       themeId,
+      choice,
       actionAsyncChoiceNew
     } = this.props
-    const ChoiceForm = choiceFormCreator(themeId)
+    const ChoiceForm = choiceFormCreator(themeId, choice.id)
     return (
       <ChoiceForm
         onSubmit={actionAsyncChoiceNew}
         initialValues={{
-          name: "",
-          url: "",
-          evaluation: 0,
+          name: choice.name,
+          url: choice.url,
+          evaluation: choice.evaluation,
           theme_id: themeId
         }}
       />
@@ -27,11 +28,12 @@ class ChoiceNew extends Component {
   }
 }
 
-ChoiceNew.propTypes = {
+ChoiceEdit.propTypes = {
   themeId: PropTypes.number,
+  choice: PropTypes.object
 }
 
-export default connectViewToStateAndActionCreaters(ChoiceNew,
+export default connectViewToStateAndActionCreaters(ChoiceEdit,
   (state) => {
     return {}
   }, {actionAsyncChoiceNew}
