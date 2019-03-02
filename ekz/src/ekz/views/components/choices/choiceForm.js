@@ -1,7 +1,8 @@
 import React from "react";
 import {Field} from 'redux-form';
-import formCreattor from "~/views/components/common/form/formCreator"
+import formCreator from "~/views/components/common/form/formCreator"
 import {inputField} from "~/views/components/common/form/formComponents"
+import {choiceEvaluationField} from "~/views/components/choices/choiceEvaluationField"
 import {
   Col,
   Form,
@@ -21,7 +22,9 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
   let formName = 'choiceForm'
   if(themeId != null) formName = `${formName}_${String(themeId)}`
   if(choiceId != null) formName = `${formName}_${String(choiceId)}`
-  const choiceForm = formCreattor(
+  let buttonTagName = "evaluation"
+  if(choiceId != null) formName = `${buttonTagName}_${String(choiceId)}`
+  const choiceForm = formCreator(
     formName,
     (handleSubmit, pristine, reset, submitting) => {return (
       <Form onSubmit={handleSubmit} action="#">
@@ -36,16 +39,12 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
           name="url"
           label="URL"/>
         <Field
-          component={inputField}
-          type="number"
-          name="evaluation"
-          label="評価（1 / 0 / -1）"/>
+          component={choiceEvaluationField}
+          name="evaluation"/>
         <Form.Group>
           <Col smoffset={2} sm={5}>
-            {/*<ButtonGroup aria-label="Basic">*/}
             <Button variant={"outline-primary"} type="submit" disabled={pristine || submitting}>登録</Button>
             <Button variant={"outline-secondary"} type="button" disabled={pristine || submitting} onClick={reset}>クリア</Button>
-            {/*</ButtonGroup>*/}
           </Col>
         </Form.Group>
       </Form>

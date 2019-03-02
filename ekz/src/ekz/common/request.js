@@ -35,6 +35,7 @@ export class Request {
         let ret = callback(data)
         resolve(ret)
       }).catch((e) => {
+        console.error(e)
         reject(defaultRetVal)
       })
     })

@@ -13,7 +13,10 @@ class ThemeNew extends Component {
       // onsubmitには関数オブジェクトを渡す（第一引数にフォームの内容のJSONデータが入る）
       <ThemeForm
         onSubmit={actionAsyncThemeNew}
-        initialValues={{name: ""}}
+        initialValues={{
+          id: "",
+          name: "",
+        }}
       />
     )
   }

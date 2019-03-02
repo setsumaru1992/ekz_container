@@ -1,12 +1,14 @@
-module ChoiceDomain::EkzPicker
+module Choice::EkzPicker
+  extend ActiveSupport::Concern
+
   EVALUATION_GOOD = 1
   EVALUATION_NORMAL = 0
   EVALUATION_BAD = -1
 
   MAX_SIZE_BAD = 1
 
-  class << self
-    def pick(theme_id)
+  class_methods do
+    def ekz_pick(theme_id)
       ekz_pick_param = EkzPickParams.new(theme_id)
 
       max_list_size = 4

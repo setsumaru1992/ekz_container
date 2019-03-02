@@ -17,6 +17,7 @@ class ChoiceNew extends Component {
       <ChoiceForm
         onSubmit={actionAsyncChoiceNew}
         initialValues={{
+          id: "",
           name: "",
           url: "",
           evaluation: 0,

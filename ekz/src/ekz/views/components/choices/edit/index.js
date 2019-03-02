@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types'
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncChoiceNew} from "~/reducers/choicesAppReducer"
+import {actionAsyncChoiceUpdate, actionAsyncRefleshEkzList} from "~/reducers/choicesAppReducer"
 import choiceFormCreator from "~/views/components/choices/choiceForm"
 
 
@@ -11,13 +11,20 @@ class ChoiceEdit extends Component {
     const {
       themeId,
       choice,
-      actionAsyncChoiceNew
+      actionAsyncChoiceUpdate,
+      actionAsyncRefleshEkzList,
+      ekzIdList,
     } = this.props
+    const execUpdate = (choice) => {
+      actionAsyncChoiceUpdate(choice)
+      actionAsyncRefleshEkzList(themeId, ekzIdList)
+    }
     const ChoiceForm = choiceFormCreator(themeId, choice.id)
     return (
       <ChoiceForm
-        onSubmit={actionAsyncChoiceNew}
+        onSubmit={execUpdate}
         initialValues={{
+          id: choice.id,
           name: choice.name,
           url: choice.url,
           evaluation: choice.evaluation,
@@ -35,6 +42,8 @@ ChoiceEdit.propTypes = {
 
 export default connectViewToStateAndActionCreaters(ChoiceEdit,
   (state) => {
-    return {}
-  }, {actionAsyncChoiceNew}
+    return {
+      ekzIdList: state.choicesAppReducer.ekzIdList
+    }
+  }, {actionAsyncChoiceUpdate, actionAsyncRefleshEkzList}
 )

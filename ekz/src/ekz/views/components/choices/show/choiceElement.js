@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import {NavLink} from "react-router-dom"
-import {Form, Card, Col, ToggleButtonGroup, Button, ToggleButton} from "react-bootstrap"
+import {Card, Col, Button} from "react-bootstrap"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
 import {
   actionAsyncChoiceDestroy,
@@ -12,15 +11,14 @@ import {
   actionChoiceVisibleForm
 } from "~/reducers/choicesViewReducer"
 import ChoiceEdit from '~/views/components/choices/edit'
+import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 
 class ChoiceShowElem extends Component {
-  componentWillMount() {
-    const {
-      choice,
-      actionChoiceUpdateEvaluation
-    } = this.props
-    actionChoiceUpdateEvaluation(choice.id, choice.evaluation)
-  }
+  /*
+  componentWillMount, componentDidMount（mount時に１回起動）以外で
+  つまりrender, conponentWillUpdate, componentDidUpdateで
+  stateを更新できないため、evaluationやリストの更新は個々のelementではなくて一括で行う
+  */
 
   render() {
     const {
@@ -28,6 +26,7 @@ class ChoiceShowElem extends Component {
       themeId,
       actionAsyncChoiceDestroy,
       actionAsyncChoiceUpdateEvaluation,
+      actionChoiceUpdateEvaluation,
       actionChoiceVisibleForm,
       choiceEvaluationMap,
       visibleFormMap,
@@ -45,7 +44,7 @@ class ChoiceShowElem extends Component {
     } else {
       nameTag = choiceName
     }
-    const evaluationTagName = `evaluation_${choice.id}`
+
     return (
       <Col xs={12} md={6}>
         <Card style={{
@@ -62,53 +61,13 @@ class ChoiceShowElem extends Component {
           fontStyle: "normal",
           marginBottom: "6px"
         }}>{nameTag}</h3>
-        <Card.Body>
-        <p>
-          <ToggleButtonGroup
-            name={evaluationTagName} value={choiceEvaluationMap[choice.id]}
-            onChange={(value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}}>
-            <ToggleButton type="radio" name={evaluationTagName}  value={1} size="sm" variant="outline-primary">イイ！！</ToggleButton>
-            <ToggleButton type="radio" name={evaluationTagName}  value={0} size="sm" variant="outline-primary">普通</ToggleButton>
-            <ToggleButton type="radio" name={evaluationTagName}  value={-1} size="sm" variant="outline-primary">うーん...</ToggleButton>
-          </ToggleButtonGroup>
-        </p>
-          <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
-          <Button variant="outline-primary" onClick={() => {
-            const deleteOk = window.confirm("本当に削除してもよろしいですか？")
-            if (!deleteOk) return
-            actionAsyncChoiceDestroy(choice.id, themeId)
-          }}
-          >削除</Button>
-        {visibleFormMap[`${themeId}_${choice.id}`]
-          ? <ChoiceEdit themeId={themeId} choice={choice} />
-          : ""
-        }
-        </Card.Body>
-        </Card>
-      </Col>
-    )
-    return (
-      <tr>
-        <td>
-          <div style={{
-            display: "flex",
-          }}>
-          <div style={{
-            marginRight: "auto"
-          }}>
-            {nameTag}
-          </div>
-          <div style={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}>
-            <ToggleButtonGroup
-              name={evaluationTagName} value={choiceEvaluationMap[choice.id]}
-              onChange={(value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}}>
-              <ToggleButton type="radio" name={evaluationTagName}  value={1} size="sm" variant="outline-primary">イイ！！</ToggleButton>
-              <ToggleButton type="radio" name={evaluationTagName}  value={0} size="sm" variant="outline-primary">普通</ToggleButton>
-              <ToggleButton type="radio" name={evaluationTagName}  value={-1} size="sm" variant="outline-primary">うーん...</ToggleButton>
-            </ToggleButtonGroup>&emsp;
+          <Card.Body>
+            <p>
+              {choiceEvaluationButtonGroup(
+                choice.id, themeId, choiceEvaluationMap[choice.id],
+                (value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}
+              )}
+            </p>
             <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
@@ -116,14 +75,13 @@ class ChoiceShowElem extends Component {
               actionAsyncChoiceDestroy(choice.id, themeId)
             }}
             >削除</Button>
-          </div>
-          </div>
           {visibleFormMap[`${themeId}_${choice.id}`]
             ? <ChoiceEdit themeId={themeId} choice={choice} />
             : ""
           }
-        </td>
-      </tr>
+          </Card.Body>
+        </Card>
+      </Col>
     )
   }
 }

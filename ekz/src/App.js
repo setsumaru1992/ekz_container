@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-d
 import Layout from "~/views/layouts"
 import ThemeShow from '~/views/pages/themes/show'
 import ChoiceShow from '~/views/pages/choices/show'
+import Login from '~/views/pages/sessions/login'
 
 class App extends Component {
   render() {
@@ -16,13 +17,11 @@ class App extends Component {
             <Route exaxt path="/mypage/choice" component={ChoiceShow} />
             <Route exaxt path="/mypage/profile" component={Profile} />
             <Route exaxt path="/signup" component={Signup} />
+            <Route exaxt path="/login" component={Login} />
           </Switch>
         </Layout>
       </Router>
     );
-    // return (
-    //   <ThemeShow />
-    // )
   }
 }
 

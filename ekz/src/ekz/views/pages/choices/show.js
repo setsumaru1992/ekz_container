@@ -43,15 +43,6 @@ class ChoiceShow extends Component {
           ) : null}
         </Form.Row>
 
-
-        {/*<table className="table table-hover table-striped">*/}
-          {/*<tbody>*/}
-          {/*{ekzList ? ekzList.map((choice) =>*/}
-            {/*<ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />*/}
-          {/*) : null}*/}
-          {/*</tbody>*/}
-        {/*</table>*/}
-
         <h2>全リスト</h2>
         <Button onClick={()=>actionChoiceVisibleForm(this.themeId)}>
           {visibleFormMap[`${this.themeId}_`]

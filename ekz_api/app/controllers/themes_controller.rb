@@ -5,26 +5,31 @@ class ThemesController < ApplicationController
 
   def show
     render json: {
-      theme_list: ThemeDomain::Entity.new.list(theme_params(params))
+      theme_list: Theme.find_with_last_choice_updated(theme_params)
     }
   end
 
   def new
-    ThemeDomain::Entity.new.create(theme_params(params))
+    theme_entity = Ekz::ThemeFactory.create_by_theme_id(theme_params[:id])
+    theme_entity.save_new_model(theme_params)
     render json: {}
   end
 
   def update
+    theme_entity = Ekz::ThemeFactory.create_by_theme_id(theme_params[:id])
+    theme_entity.update_model(theme_params)
+    render json: {}
   end
 
   def destroy
-    ThemeDomain::Entity.new.destroy(theme_params(params))
+    theme_entity = Ekz::ThemeFactory.create_by_theme_id(theme_params[:id])
+    theme_entity.destroy(theme_params)
     render json: {}
   end
 
   private
 
-  def theme_params(params)
+  def theme_params
     params.permit(:id, :name, :description)
   end
 end

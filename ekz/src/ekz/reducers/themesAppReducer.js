@@ -9,6 +9,7 @@ const URL_BASE = "themes/"
 const REQUEST_GETTERS = {
   GET_ALL: requestGetterWithoutParam(URL_BASE + "show", HTTP_METHODS.GET),
   NEW: requestGetterWithoutParam(URL_BASE + "new", HTTP_METHODS.POST),
+  UPDATE: requestGetterWithoutParam(URL_BASE + "update", HTTP_METHODS.PATCH),
   DESTROY: requestGetterWithoutParam(URL_BASE + "destroy", HTTP_METHODS.DELETE),
 }
 
@@ -56,6 +57,15 @@ export function actionThemeChanged(){
 export function actionAsyncThemeNew(theme){
   return (dispatch) =>{
     return REQUEST_GETTERS.NEW(theme).access((data) => {
+      dispatch(actionThemeChanged())
+      dispatch(actionAsyncThemeList())
+    })
+  }
+}
+
+export function actionAsyncThemeUpdate(theme){
+  return (dispatch) =>{
+    return REQUEST_GETTERS.UPDATE(theme).access((data) => {
       dispatch(actionThemeChanged())
       dispatch(actionAsyncThemeList())
     })

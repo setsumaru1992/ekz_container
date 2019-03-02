@@ -16,8 +16,8 @@ class Layout extends Component {
               <LinkContainer to={"/mypage/theme"}>
                 <Nav.Link>テーマ</Nav.Link>
               </LinkContainer>
-              <LinkContainer to={"/mypage/profile"}>
-                <Nav.Link>プロフィール</Nav.Link>
+              <LinkContainer to={"/login"}>
+                <Nav.Link>ログイン</Nav.Link>
               </LinkContainer>
               <LinkContainer to={"/signup"}>
                 <Nav.Link>新規登録</Nav.Link>
