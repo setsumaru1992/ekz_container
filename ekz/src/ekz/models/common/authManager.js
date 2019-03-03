@@ -2,8 +2,10 @@ import cookieManager from "~/models/common/cookieManager"
 
 const COOKIE_ACCESS_KEY_NAME = "ak"
 const minute = 60
+const hour = 60 * minute
+const day = 24 * hour
 const COOKIE_ACCESS_KEY_ATTR = {
-  maxAge: 30 * minute,
+  maxAge: 1 * day,
 }
 
 class AuthManager {

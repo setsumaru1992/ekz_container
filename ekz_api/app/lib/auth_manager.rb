@@ -59,7 +59,7 @@ module AuthManager
     end
 
     def gen_expire_datetime
-      Time.now + 30.minutes
+      Time.now + 1.days
     end
 
 

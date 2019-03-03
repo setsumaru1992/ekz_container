@@ -28,7 +28,6 @@ class AuthPageDispatcher extends Component {
       : ""
     return (
       <div>
-        AuthPageDispatcher needLogin: {String(needLogin)}
         {redirectComponent}
         {children}
       </div>
