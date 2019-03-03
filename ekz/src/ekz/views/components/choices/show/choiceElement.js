@@ -26,7 +26,6 @@ class ChoiceShowElem extends Component {
       themeId,
       actionAsyncChoiceDestroy,
       actionAsyncChoiceUpdateEvaluation,
-      actionChoiceUpdateEvaluation,
       actionChoiceVisibleForm,
       choiceEvaluationMap,
       visibleFormMap,

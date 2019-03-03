@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
 import QueryStringParser from "~/views/features/utils/queryStringParser"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
 import {actionAsyncChoiceList, actionAsyncEkzList} from '~/reducers/choicesAppReducer';

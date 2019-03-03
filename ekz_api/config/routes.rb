@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       end
 
       namespace :sessions do
+        post   "is_valid"
         post   "login", action: :create
         delete "logout", action: :destroy
       end

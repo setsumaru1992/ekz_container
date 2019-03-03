@@ -20,6 +20,13 @@ module EkzApi
     # the framework and any gems in your application.
     config.autoload_paths += %W(#{config.root}/app/domains)
     config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/app/lib)
+
+    config.time_zone = 'Asia/Tokyo'
+    #config.active_record.default_timezone = 'Tokyo'
+    config.active_record.default_timezone = :local
+
+    config.encoding = "utf-8"
   end
 end
 

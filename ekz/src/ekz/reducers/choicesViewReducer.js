@@ -1,4 +1,4 @@
-import {patch, updateObject, toggleObjValue} from "~/reducers/utils/stateUtils"
+import {patch, updateObject} from "~/reducers/utils/stateUtils"
 
 export const ACTION_CHOICE_VISIBLE_FORM = "ACTION_CHOICE_VISIBLE_FORM"
 

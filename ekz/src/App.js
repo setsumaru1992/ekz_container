@@ -1,23 +1,46 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom"
+import PropTypes from 'prop-types'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Layout from "~/views/layouts"
 import ThemeShow from '~/views/pages/themes/show'
 import ChoiceShow from '~/views/pages/choices/show'
 import Login from '~/views/pages/sessions/login'
+import Logout from '~/views/pages/sessions/logout'
+import AuthPageDispatcher from '~/views/components/sessions/authPageDispatcher'
 
 class App extends Component {
   render() {
+    const MypageRoute = (props) =>(
+      <Route exact path={props.path} render={() =>(
+        <AuthPageDispatcher>
+          <props.componentClass/>
+        </AuthPageDispatcher>
+      )}/>
+    )
+    MypageRoute.propTypes = {
+      path: PropTypes.string,
+      componentClass: PropTypes.any,
+    }
     return (
       <Router>
         <Layout>
           <Switch>
-            <Route exaxt exact path="/" component={Top} />
+            {/* session */}
+            <Route path="/login" component={Login} />
+            <Route path="/logout" component={Logout} />
+
             {/* mypage */}
-            <Route exaxt path="/mypage/theme" component={ThemeShow} />
-            <Route exaxt path="/mypage/choice" component={ChoiceShow} />
-            <Route exaxt path="/mypage/profile" component={Profile} />
-            <Route exaxt path="/signup" component={Signup} />
-            <Route exaxt path="/login" component={Login} />
+            <MypageRoute path="/mypage/theme" componentClass={ThemeShow} />
+            <MypageRoute path="/mypage/choice" componentClass={ChoiceShow} />
+            <MypageRoute path="/mypage/profile" componentClass={Profile} />
+
+            {/* signup */}
+            <Route path="/signup" component={Signup} />
+
+            <MypageRoute path="/" componentClass={ThemeShow} />
+
+
+            {/* public */}
           </Switch>
         </Layout>
       </Router>
@@ -26,20 +49,13 @@ class App extends Component {
 }
 
 
-const Top = () => (
-  <div>
-    <h2>Top</h2>
-    <p>ログイン</p>
-    <p>新規登録</p>
-    <Redirect to="/mypage/theme" />
-  </div>
-);
-
-const MyPage = () => (
-  <div>
-    <h2>MyPage</h2>
-  </div>
-);
+// const Top = () => (
+//   <div>
+//     <h2>Top</h2>
+//     <p>ログイン</p>
+//     <p>新規登録</p>
+//   </div>
+// );
 
 const Signup = () => (
   <div>

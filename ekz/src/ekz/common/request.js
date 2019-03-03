@@ -25,20 +25,25 @@ export class Request {
     this.methodStr = methodStr
   }
 
-  access(callback, defaultRetVal = null){
+  /*
+  react内でasyncが使えるのはredux内くらい
+  https://kibotsu.com/redmine/issues/1853
+   */
+  async access(callback, defaultRetVal = null){
     let access = getHttpAccesser(this.methodStr)
     const paramsForAxios = getParamsForAxios(this.params, this.methodStr)
-    // TODO PromiseにAsync/Await使用
-    return new Promise((resolve, reject) => {
-      access(this.url, paramsForAxios).then((response) => {
+    return access(this.url, paramsForAxios)
+      .then((response) => {
         const data = response.data
         let ret = callback(data)
-        resolve(ret)
+        // resolve(ret)
+        return ret
       }).catch((e) => {
         console.error(e)
-        reject(defaultRetVal)
-      })
-    })
+        // reject(defaultRetVal)
+        return defaultRetVal
+      }
+    )
   }
 }
 
