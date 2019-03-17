@@ -11,8 +11,8 @@ module Choice::EkzPicker
     def ekz_pick(theme_id)
       ekz_pick_param = EkzPickParams.new(theme_id)
 
-      max_list_size = 4
-      good_choice_size, bad_choice_size, normal_choice_size = sizes_every_evaluation(max_list_size, ekz_pick_param)
+      max_list_size = 1
+      good_choice_size, normal_choice_size, bad_choice_size = sizes_every_evaluation(max_list_size, ekz_pick_param)
 
       ekz_list = []
       ekz_list.concat(pick_by_evaluation(EVALUATION_GOOD, good_choice_size, ekz_pick_param))
@@ -24,6 +24,8 @@ module Choice::EkzPicker
     private
 
     def sizes_every_evaluation(max_list_size, ekz_pick_param)
+      return sizes_every_evaluation_which_one_size_is_one(ekz_pick_param) if max_list_size == 1
+
       good_choice_size = gen_good_choice_size(max_list_size, ekz_pick_param)
       bad_choice_size = gen_bad_choice_size(max_list_size, ekz_pick_param)
       normal_choice_size = gen_normal_choice_size(
@@ -35,16 +37,64 @@ module Choice::EkzPicker
         good_choice_size = min_choice_size(EVALUATION_GOOD, max_good_choice_size, ekz_pick_param)
       end
 
-      [good_choice_size, bad_choice_size, normal_choice_size]
+      [good_choice_size, normal_choice_size, bad_choice_size]
+    end
+
+    def sizes_every_evaluation_which_one_size_is_one(ekz_pick_param)
+      good_choice_size = 0
+      bad_choice_size = 0
+      normal_choice_size = 0
+
+      exist_good_choice_size = min_choice_size(EVALUATION_GOOD, 1, ekz_pick_param) == 1
+      exist_normal_choice_size = min_choice_size(EVALUATION_NORMAL, 1, ekz_pick_param) == 1
+      exist_bad_choice_size = min_choice_size(EVALUATION_BAD, 1, ekz_pick_param) == 1
+
+      return [0, 0, 0] unless exist_good_choice_size || exist_normal_choice_size || exist_bad_choice_size
+      all_exist_flags = [exist_good_choice_size, exist_normal_choice_size, exist_bad_choice_size]
+      return sizes_every_evaluation_which_existing_evaluation_is_one(all_exist_flags
+      ) if all_exist_flags.select {|exist_flag| exist_flag}.size == 1
+
+      while true
+        # 2/3でGood
+        if rand(3) != 0 && exist_good_choice_size
+          good_choice_size = 1
+          return [good_choice_size, normal_choice_size, bad_choice_size]
+        end
+
+        # 1/10でBad
+        if rand(10) == 0 && exist_bad_choice_size
+          bad_choice_size = 1
+          return [good_choice_size, normal_choice_size, bad_choice_size]
+        end
+
+        if exist_normal_choice_size
+          normal_choice_size = 1
+          return [good_choice_size, normal_choice_size, bad_choice_size]
+        end
+      end
+
+    end
+
+    def sizes_every_evaluation_which_existing_evaluation_is_one(exist_flags)
+      return unless exist_flags.select {|exist_flag| exist_flag}.size == 1
+      exist_flags.map do |exist_flag|
+        if exist_flag
+          1
+        else
+          0
+        end
+      end
     end
 
     def gen_good_choice_size(list_size, ekz_pick_param)
-      ratio = 1/2.to_f
+      ratio = 1 / 2.to_f
       max_good_choice_size = (list_size * ratio).ceil
+
       min_choice_size(EVALUATION_GOOD, max_good_choice_size, ekz_pick_param)
     end
 
     def gen_bad_choice_size(list_size, ekz_pick_param)
+      return 0 if list_size == 0
       max_num_of_one_happen = 10
       if rand(max_num_of_one_happen) + 1 == 1
         min_choice_size(EVALUATION_BAD, MAX_SIZE_BAD, ekz_pick_param)
@@ -74,7 +124,7 @@ module Choice::EkzPicker
     def pick_by_evaluation(evaluation, size, ekz_pick_param)
       return [] if size == 0
       ids = Choice.where(theme_id: ekz_pick_param.theme_id, evaluation: evaluation).ids
-      return Choice.where(id: ids)  if ids.size == size
+      return Choice.where(id: ids) if ids.size == size
 
       picked_ids = random_pick(ids, size)
       Choice.where(id: picked_ids)
