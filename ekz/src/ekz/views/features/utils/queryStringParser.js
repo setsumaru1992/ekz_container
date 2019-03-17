@@ -4,6 +4,7 @@ export default class QueryStringParser{
   ekz/src/ekz/views/features/utils/connectorViewToOther.js
    */
   constructor(routerLocation) {
+
     this.queryParams = new URLSearchParams(routerLocation.search)
   }
 

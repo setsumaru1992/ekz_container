@@ -7,6 +7,7 @@ import {actionAsyncCheckNeedLogin} from "~/reducers/sessionsAppReducer"
 import {initialStateOfRedirectToLogin} from '~/views/pages/sessions/login'
 
 const LOGIN_PATH = "/login"
+const LOGOUT_PATH = "/logout"
 
 class AuthPageDispatcher extends Component {
   componentWillMount() {
@@ -22,9 +23,9 @@ class AuthPageDispatcher extends Component {
       needLogin,
       children,
     } = this.props
-    const currentPath = location.pathname
-    let redirectComponent = needLogin && currentPath !== LOGIN_PATH
-      ? <RidirectToLogin beforeLoginPath={currentPath}/>
+    const beforeLoginPath = new BeforeLoginPath(location)
+    let redirectComponent = needLogin && !beforeLoginPath.isLoginPageNow
+      ? <RidirectToLogin beforeLoginPath={beforeLoginPath.pathname} queryString={beforeLoginPath.queryString}/>
       : ""
     return (
       <div>
@@ -35,6 +36,29 @@ class AuthPageDispatcher extends Component {
   }
 }
 
+class BeforeLoginPath {
+  constructor(routerLocation){
+    this.pathname = initialStateOfRedirectToLogin["beforeLoginPath"]
+    this.queryString = initialStateOfRedirectToLogin["queryString"]
+    this.isLoginPageNow = false
+
+    const currentPath = routerLocation.pathname
+    const queryString = routerLocation.search
+
+    if(currentPath === LOGOUT_PATH){
+      return
+    }
+
+    if(currentPath === LOGIN_PATH){
+      this.isLoginPageNow = true
+      return
+    }
+
+    this.pathname = currentPath
+    this.queryString = queryString
+  }
+}
+
 AuthPageDispatcher.propTypes = {
   children: PropTypes.any,
 }
@@ -42,10 +66,12 @@ AuthPageDispatcher.propTypes = {
 class RidirectToLogin extends Component {
   render(){
     const {
-      beforeLoginPath
+      beforeLoginPath,
+      queryString,
     } = this.props
     let state = initialStateOfRedirectToLogin
     state["beforeLoginPath"] = beforeLoginPath
+    state["queryString"] = queryString
     return (
       <Redirect
         to={{
@@ -59,6 +85,7 @@ class RidirectToLogin extends Component {
 
 RidirectToLogin.propTypes = {
   beforeLoginPath: PropTypes.string,
+  queryString: PropTypes.string,
 }
 
 export default connectViewToStateAndActionCreaters(AuthPageDispatcher,

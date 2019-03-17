@@ -5,7 +5,7 @@ const minute = 60
 const hour = 60 * minute
 const day = 24 * hour
 const COOKIE_ACCESS_KEY_ATTR = {
-  maxAge: 1 * day,
+  maxAge: 1 * hour,
 }
 
 class AuthManager {

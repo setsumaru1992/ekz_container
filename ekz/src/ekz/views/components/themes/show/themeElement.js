@@ -38,7 +38,6 @@ class ThemeShowElem extends Component {
             display: "flex",
             justifyContent: "flex-end",
           }}>
-          <Button variant="outline-primary">詳細</Button>
           <Button variant="outline-primary" onClick={()=>actionThemeVisibleForm(theme.id)}>編集</Button>
           <Button variant="outline-primary" onClick={() => {
             const deleteOk = window.confirm("本当に削除してもよろしいですか？")

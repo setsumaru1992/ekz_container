@@ -13,13 +13,13 @@ class Login extends Component {
     } = this.props
     const beforeLoginState = location.state !== undefined
       ? location.state : initialStateOfRedirectToLogin
-    const beforeLoginPath = beforeLoginState["beforeLoginPath"]
     return (
       <div>
         {needLogin
           ? ""
           : <Redirect to={{
-            pathname: beforeLoginPath,
+            pathname: beforeLoginState["beforeLoginPath"],
+            search: beforeLoginState["queryString"],
             state: initialStateOfRedirectToLogin
           }}/>}
         <LoginForm
@@ -36,6 +36,7 @@ class Login extends Component {
 
 export let initialStateOfRedirectToLogin = {
   beforeLoginPath: "/",
+  queryString: "",
 }
 
 Login.propTypes = {

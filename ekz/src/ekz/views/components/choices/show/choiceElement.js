@@ -37,7 +37,9 @@ class ChoiceShowElem extends Component {
       : choice.name
     if(choice.url){
       nameTag = (
-        <a href={choice.url} target={"blank"}>
+        <a href="#" target={"blank"}
+           onMouseDown={() => {window.open(choice.url, new Date().getTime())}}
+        >
           {choiceName}
         </a>)
     } else {
@@ -61,12 +63,12 @@ class ChoiceShowElem extends Component {
           marginBottom: "6px"
         }}>{nameTag}</h3>
           <Card.Body>
-            <p>
+            <div>
               {choiceEvaluationButtonGroup(
                 choice.id, themeId, choiceEvaluationMap[choice.id],
                 (value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}
               )}
-            </p>
+            </div>
             <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
