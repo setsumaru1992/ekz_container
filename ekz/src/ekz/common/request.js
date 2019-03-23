@@ -26,7 +26,7 @@ export class Request {
   }
 
   /*
-  react内でasyncが使えるのはredux内くらい
+  react内でasyncが使えるのはredux内くらい redux-chunkを使った時点で非同期はそれに任せる
   https://kibotsu.com/redmine/issues/1853
    */
   async access(callback, defaultRetVal = null){
@@ -44,6 +44,26 @@ export class Request {
         return defaultRetVal
       }
     )
+  }
+  // accessって名前使いたいけどaccessを使われている間はsend
+  // awaitを使われる前提
+  // 一回これで作ったけど、awaitを認識してくれなかったからaccessを使う
+  async send() {
+    let accessMethod = null
+    switch (this.methodStr) {
+      case HTTP_METHODS.GET:
+        accessMethod = ax.get
+      case HTTP_METHODS.POST:
+        accessMethod = ax.post
+      case HTTP_METHODS.DELETE:
+        accessMethod = ax.delete
+      case HTTP_METHODS.PATCH:
+        accessMethod = ax.patch
+      default:
+        return null
+    }
+    const response = await accessMethod(this.url, getParamsForAxios(this.params, this.methodStr))
+    return response.data
   }
 }
 

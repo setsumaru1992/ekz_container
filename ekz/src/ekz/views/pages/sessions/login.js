@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import { Redirect } from "react-router-dom"
+import {Redirect} from "react-router-dom"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncLogin} from "~/reducers/sessionsAppReducer"
+import {actionAsyncLogin} from "~/reducers/authAppReducer"
+import {REQUEST_GETTERS} from "~/models/auth/authManager"
 import LoginForm from "~/views/components/sessions/loginForm"
 
 class Login extends Component {
@@ -10,6 +11,7 @@ class Login extends Component {
       actionAsyncLogin,
       needLogin,
       location,
+      loginFailed,
     } = this.props
     const beforeLoginState = location.state !== undefined
       ? location.state : initialStateOfRedirectToLogin
@@ -22,11 +24,15 @@ class Login extends Component {
             search: beforeLoginState["queryString"],
             state: initialStateOfRedirectToLogin
           }}/>}
+        {loginFailed
+          ? "メールアドレスかパスワードが誤っています。"
+          : ""}
         <LoginForm
           onSubmit={actionAsyncLogin}
           initialValues={{
             email: "",
             password: "",
+            autologin: false,
           }}
         />
       </div>
@@ -39,14 +45,14 @@ export let initialStateOfRedirectToLogin = {
   queryString: "",
 }
 
-Login.propTypes = {
-}
+Login.propTypes = {}
 
 export default connectViewToStateAndActionCreaters(Login,
   (state) => {
     return {
-      needLogin: state.sessionsAppReducer.needLogin,
-      accessKey: state.sessionsAppReducer.accessKey,
+      needLogin: state.authManager.get("needLogin"),
+      accessKey: state.authManager.get("accessKey"),
+      loginFailed: state.authManager.get("loginFailed"),
     }
   }, {actionAsyncLogin}
 )

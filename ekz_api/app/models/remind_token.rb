@@ -1,0 +1,2 @@
+class RemindToken < ApplicationRecord
+end

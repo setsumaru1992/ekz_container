@@ -6,6 +6,7 @@ import ThemeShow from '~/views/pages/themes/show'
 import ChoiceShow from '~/views/pages/choices/show'
 import Login from '~/views/pages/sessions/login'
 import Logout from '~/views/pages/sessions/logout'
+import Dev from '~/views/pages/develop'
 import AuthPageDispatcher from '~/views/components/sessions/authPageDispatcher'
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
       <Router>
         <Layout>
           <Switch>
+            <Route path="/debug" component={Dev} />
             {/* session */}
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />

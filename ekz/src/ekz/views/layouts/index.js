@@ -55,7 +55,7 @@ Layout.propTypes = {
 export default connectViewToStateAndActionCreaters(Layout,
   (state) => {
     return {
-      needLogin: state.sessionsAppReducer.needLogin
+      needLogin: state.authManager.get("needLogin")
     }
   }, {}
 )

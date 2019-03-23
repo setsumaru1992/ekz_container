@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
       namespace :sessions do
         post   "is_valid"
+        post   "is_valid_remind_token"
         post   "login", action: :create
         delete "logout", action: :destroy
       end

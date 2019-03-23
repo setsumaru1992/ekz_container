@@ -1,7 +1,7 @@
 import React from "react";
 import {Field} from 'redux-form';
 import formCreattor from "~/views/components/common/form/formCreator"
-import {inputField} from "~/views/components/common/form/formComponents"
+import {inputField, checkOrRadioFieldWithOwnLabel} from "~/views/components/common/form/formComponents"
 import {
   Col,
   Form,
@@ -34,6 +34,11 @@ const LoginForm = formCreattor(
         type="password"
         name="password"
         label="パスワード"/>
+      <Field
+        component={checkOrRadioFieldWithOwnLabel}
+        type="checkbox"
+        name="autologin"
+        label="次から自動ログインする"/>
 
       <Form.Group>
         <Col smoffset={2} sm={5}>

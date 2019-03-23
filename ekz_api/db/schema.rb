@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_03_014428) do
+ActiveRecord::Schema.define(version: 2019_03_21_140651) do
 
   create_table "access_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 2019_03_03_014428) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["theme_id"], name: "index_choices_on_theme_id"
+  end
+
+  create_table "remind_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "remind_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "themes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -26,11 +26,26 @@ export const inputField = (field) => {
             {...field.input}
             placeholder={field.placeholder}
             type={field.type}
-            className={"form-control"}
             isInvalid={isInvalid(field)}
           />
           <Form.Control.Feedback type="invalid">{noticeOf(field)}</Form.Control.Feedback>
         </Col>
+      </Form.Row>
+    </Form.Group>
+  )
+}
+
+
+export const checkOrRadioFieldWithOwnLabel = (field) => {
+  return (
+    <Form.Group>
+      <Form.Row>
+        <Form.Check
+          {...field.input}
+          id={`${field.input.name}_${field.label}`}
+          type={field.type}
+          label={field.label}
+        />
       </Form.Row>
     </Form.Group>
   )

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { Redirect } from "react-router-dom"
 import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import authManager from "~/models/common/authManager"
-import {actionAsyncCheckNeedLogin} from "~/reducers/sessionsAppReducer"
+import authCookieManager from "~/models/auth/authCookieManager"
+import {actionAsyncCheckNeedLogin} from "~/reducers/authAppReducer"
 import {initialStateOfRedirectToLogin} from '~/views/pages/sessions/login'
 
 const LOGIN_PATH = "/login"
@@ -14,7 +14,7 @@ class AuthPageDispatcher extends Component {
     const {
       actionAsyncCheckNeedLogin,
     } = this.props
-    actionAsyncCheckNeedLogin(authManager.getAccessKey())
+    actionAsyncCheckNeedLogin(authCookieManager.getAccessKey())
   }
 
   render(){
@@ -91,7 +91,7 @@ RidirectToLogin.propTypes = {
 export default connectViewToStateAndActionCreaters(AuthPageDispatcher,
   (state) => {
     return {
-      needLogin: state.sessionsAppReducer.needLogin
+      needLogin: state.authManager.get("needLogin")
     }
   }, {actionAsyncCheckNeedLogin}
 )
