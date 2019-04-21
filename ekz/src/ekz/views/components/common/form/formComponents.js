@@ -21,7 +21,7 @@ export const inputField = (field) => {
     <Form.Group>
       <Form.Row>
         <Col componentclass={Form.Label} sm={3}>{field.label}</Col>
-        <Col sm={5}>
+        <Col sm={9}>
           <Form.Control
             {...field.input}
             placeholder={field.placeholder}
