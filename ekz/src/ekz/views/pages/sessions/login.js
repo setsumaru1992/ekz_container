@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom"
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionAsyncLogin} from "~/reducers/authAppReducer"
-import {REQUEST_GETTERS} from "~/models/auth/authManager"
 import LoginForm from "~/views/components/sessions/loginForm"
 
 class Login extends Component {

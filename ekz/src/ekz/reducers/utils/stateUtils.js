@@ -16,3 +16,11 @@ export function updateObject(existing_obj, key, value) {
 export function toggleObjValue(existing_obj, key) {
   return updateObject(existing_obj, key, !existing_obj[key])
 }
+
+export function updateStateField(updateTarget, fieldValueMap){
+  let updated = updateTarget
+  Object.keys(fieldValueMap).forEach(fieldName => {
+    updated = updated.set(fieldName, fieldValueMap[fieldName])
+  });
+  return updated
+}

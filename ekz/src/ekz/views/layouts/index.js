@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types"
 import {Navbar, Nav, } from "react-bootstrap"
 import {LinkContainer}  from "react-router-bootstrap"
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 
 class Layout extends Component {
   render() {

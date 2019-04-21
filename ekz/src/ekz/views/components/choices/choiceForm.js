@@ -1,5 +1,5 @@
 import React from "react";
-import {Field} from 'redux-form';
+import {Field} from "redux-form";
 import formCreator from "~/views/components/common/form/formCreator"
 import {inputField} from "~/views/components/common/form/formComponents"
 import {choiceEvaluationField} from "~/views/components/choices/choiceEvaluationField"
@@ -7,7 +7,7 @@ import {
   Col,
   Form,
   Button,
-} from 'react-bootstrap';
+} from "react-bootstrap";
 
 
 const choiceValidation = values => {
@@ -19,7 +19,7 @@ const choiceValidation = values => {
 }
 
 const choiceFormCreator =(themeId = null, choiceId = null) => {
-  let formName = 'choiceForm'
+  let formName = "choiceForm"
   if(themeId != null) formName = `${formName}_${String(themeId)}`
   if(choiceId != null) formName = `${formName}_${String(choiceId)}`
   let buttonTagName = "evaluation"
@@ -35,7 +35,7 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
           label="チョイス名"/>
         <Field
           component={inputField}
-          type="text"
+          type="url"
           name="url"
           label="URL"/>
         <Field

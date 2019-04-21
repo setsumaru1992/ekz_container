@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types"
+import {NavLink} from "react-router-dom"
 import {Card, Col, Button} from "react-bootstrap"
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {
   actionAsyncChoiceDestroy,
   actionAsyncChoiceUpdateEvaluation,
   actionChoiceUpdateEvaluation
-} from '~/reducers/choicesAppReducer'
+} from "~/reducers/choicesAppReducer"
 import {
   actionChoiceVisibleForm
 } from "~/reducers/choicesViewReducer"
-import ChoiceEdit from '~/views/components/choices/edit'
+import ChoiceEdit from "~/views/components/choices/edit"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 
 class ChoiceShowElem extends Component {
@@ -75,7 +76,19 @@ class ChoiceShowElem extends Component {
               if (!deleteOk) return
               actionAsyncChoiceDestroy(choice.id, themeId)
             }}
-            >削除</Button>
+            >削除</Button><br/>
+            <NavLink
+              to={{
+                pathname: `/mypage/choice/${choice.id}`,
+                search: `?t=${themeId}`,
+              }}
+              style={{
+                marginRight: "auto"
+              }}
+            >
+              More...
+            </NavLink>
+
           {visibleFormMap[`${themeId}_${choice.id}`]
             ? <ChoiceEdit themeId={themeId} choice={choice} />
             : ""

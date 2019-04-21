@@ -1,12 +1,12 @@
 import React from "react";
-import {Field} from 'redux-form';
+import {Field} from "redux-form";
 import formCreattor from "~/views/components/common/form/formCreator"
 import {inputField} from "~/views/components/common/form/formComponents"
 import {
   Col,
   Form,
   Button,
-} from 'react-bootstrap';
+} from "react-bootstrap";
 
 
 const themeValidation = values => {
@@ -31,8 +31,8 @@ const themeFormCreator = (themeId = null) => {
           label="テーマ名"/>
         <Form.Group>
           <Col smoffset={2} sm={5}>
-            <Button variant={'outline-primary'} type="submit" disabled={pristine || submitting}>登録</Button>
-            <Button variant={'outline-secondary'} type="button" disabled={pristine || submitting} onClick={reset}>クリア</Button>
+            <Button variant={"outline-primary"} type="submit" disabled={pristine || submitting}>登録</Button>
+            <Button variant={"outline-secondary"} type="button" disabled={pristine || submitting} onClick={reset}>クリア</Button>
           </Col>
         </Form.Group>
       </Form>

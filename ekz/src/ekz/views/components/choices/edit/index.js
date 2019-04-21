@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import PropTypes from 'prop-types'
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import PropTypes from "prop-types"
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionAsyncChoiceUpdate, actionAsyncRefleshEkzList} from "~/reducers/choicesAppReducer"
 import choiceFormCreator from "~/views/components/choices/choiceForm"
 

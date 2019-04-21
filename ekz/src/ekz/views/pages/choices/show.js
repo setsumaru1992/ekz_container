@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import QueryStringParser from "~/views/features/utils/queryStringParser"
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncChoiceList, actionAsyncEkzList} from '~/reducers/choicesAppReducer';
-import {actionChoiceVisibleForm} from '~/reducers/choicesViewReducer';
-import ChoiceShowElem from '~/views/components/choices/show/choiceElement';
-import ChoiceNew from '~/views/components/choices/new'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
+import {actionAsyncChoiceList, actionAsyncEkzList} from "~/reducers/choicesAppReducer";
+import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer";
+import ChoiceShowElem from "~/views/components/choices/show/choiceElement";
+import ChoiceNew from "~/views/components/choices/new"
 import Button from "react-bootstrap/es/Button";
 import {Form} from "react-bootstrap"
 

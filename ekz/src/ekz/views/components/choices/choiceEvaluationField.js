@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {Form, ToggleButtonGroup, ToggleButton} from "react-bootstrap"
 
 export const choiceEvaluationButtonGroup = (choiceId, themeId, evaluation, onChangeEvent=()=>{}) => {

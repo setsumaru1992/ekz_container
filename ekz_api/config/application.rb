@@ -27,6 +27,14 @@ module EkzApi
     config.active_record.default_timezone = :local
 
     config.encoding = "utf-8"
+
+    config.generators do |g|
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.template_engine false
+      g.test_framework false
+    end
   end
 end
 

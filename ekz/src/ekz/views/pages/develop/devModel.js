@@ -1,5 +1,4 @@
-import {connect} from "react-redux";
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionDev} from "~/reducers/devReducer"
 
 

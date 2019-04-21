@@ -1,5 +1,6 @@
 import {Record} from "immutable"
 import authCookieManager from "~/models/auth/authCookieManager"
+import {updateStateField} from "~/reducers/utils/stateUtils"
 
 const AuthManagerRecord = Record({
   needLogin: false,
@@ -13,7 +14,7 @@ const AuthManagerRecord = Record({
 
 export default class AuthManager extends AuthManagerRecord {
   updateNeedLoginState(needLogin, accessKey = null){
-    let updated = this.updateField({needLogin: needLogin})
+    let updated = updateStateField(this, {needLogin: needLogin})
     updated = updated.setAccessKey(accessKey)
     return updated
   }
@@ -29,7 +30,7 @@ export default class AuthManager extends AuthManagerRecord {
   }
 
   loginSuccess(accessKey, remindToken = null){
-    let updated = this.updateField({
+    let updated = updateStateField(this, {
       needLogin: false,
       loginFailed: false,
     })
@@ -39,7 +40,7 @@ export default class AuthManager extends AuthManagerRecord {
   }
 
   setAccessKey(accessKey){
-    let updated = this.updateField({
+    let updated = updateStateField(this, {
       accessKey: accessKey,
     })
     authCookieManager.setAccessKey(accessKey)
@@ -47,7 +48,7 @@ export default class AuthManager extends AuthManagerRecord {
   }
 
   loginFailed(){
-    let updated = this.updateField({
+    let updated = updateStateField(this, {
       needLogin: true,
       loginFailed: true,
     })
@@ -55,21 +56,13 @@ export default class AuthManager extends AuthManagerRecord {
   }
 
   logout(){
-    let updated = this.updateField({
+    let updated = updateStateField(this, {
       needLogin: true,
       loginFailed: false,
       accessKey: null,
     })
     authCookieManager.deleteAccessKey()
     authCookieManager.deleteRemindToken()
-    return updated
-  }
-
-  updateField(fieldValueMap){
-    let updated = this
-    Object.keys(fieldValueMap).forEach(fieldName => {
-      updated = updated.set(fieldName, fieldValueMap[fieldName])
-    });
     return updated
   }
 

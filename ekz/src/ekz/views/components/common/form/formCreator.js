@@ -1,4 +1,4 @@
-import {reduxForm} from 'redux-form';
+import {reduxForm} from "redux-form";
 import React from "react";
 
 const formCreattor = (

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionAsyncThemeNew} from "~/reducers/themesAppReducer"
 import themeFormCreator from "~/views/components/themes/themeForm"
 

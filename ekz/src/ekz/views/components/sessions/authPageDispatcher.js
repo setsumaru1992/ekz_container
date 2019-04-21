@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types"
 import { Redirect } from "react-router-dom"
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import authCookieManager from "~/models/auth/authCookieManager"
 import {actionAsyncCheckNeedLogin} from "~/reducers/authAppReducer"
-import {initialStateOfRedirectToLogin} from '~/views/pages/sessions/login'
+import {initialStateOfRedirectToLogin} from "~/views/pages/sessions/login"
 
 const LOGIN_PATH = "/login"
 const LOGOUT_PATH = "/logout"

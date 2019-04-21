@@ -1,22 +1,29 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import React, {Component} from "react";
+import PropTypes from "prop-types"
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Layout from "~/views/layouts"
-import ThemeShow from '~/views/pages/themes/show'
-import ChoiceShow from '~/views/pages/choices/show'
-import Login from '~/views/pages/sessions/login'
-import Logout from '~/views/pages/sessions/logout'
-import Dev from '~/views/pages/develop'
-import AuthPageDispatcher from '~/views/components/sessions/authPageDispatcher'
+import ThemeShow from "~/views/pages/themes/show"
+import ChoiceShow from "~/views/pages/choices/show"
+import ChoiceDetail from "~/views/pages/choices/detail"
+import Profile from "~/views/pages/profile"
+import Signup from "~/views/pages/signup"
+import Login from "~/views/pages/sessions/login"
+import Logout from "~/views/pages/sessions/logout"
+import Dev from "~/views/pages/develop"
+import AuthPageDispatcher from "~/views/components/sessions/authPageDispatcher"
 
 class App extends Component {
   render() {
-    const MypageRoute = (props) =>(
-      <Route exact path={props.path} render={() =>(
-        <AuthPageDispatcher>
-          <props.componentClass/>
-        </AuthPageDispatcher>
-      )}/>
+    const MypageRoute = (props) => (
+      <Route
+        path={props.path}
+        exact={props.notExact !== undefined ? !props.notExact : true}
+        render={() => (
+          <AuthPageDispatcher>
+            <props.componentClass/>
+          </AuthPageDispatcher>
+        )}
+      />
     )
     MypageRoute.propTypes = {
       path: PropTypes.string,
@@ -26,20 +33,21 @@ class App extends Component {
       <Router>
         <Layout>
           <Switch>
-            <Route path="/debug" component={Dev} />
+            <Route path="/debug" component={Dev}/>
             {/* session */}
-            <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
+            <Route path="/login" component={Login}/>
+            <Route path="/logout" component={Logout}/>
 
             {/* mypage */}
-            <MypageRoute path="/mypage/theme" componentClass={ThemeShow} />
-            <MypageRoute path="/mypage/choice" componentClass={ChoiceShow} />
-            <MypageRoute path="/mypage/profile" componentClass={Profile} />
+            <MypageRoute path="/mypage/theme" componentClass={ThemeShow}/>
+            <MypageRoute path="/mypage/choice/:id" componentClass={ChoiceDetail}/>
+            <MypageRoute path="/mypage/choice" componentClass={ChoiceShow}/>
+            <MypageRoute path="/mypage/profile" componentClass={Profile}/>
 
             {/* signup */}
-            <Route path="/signup" component={Signup} />
+            <Route path="/signup" component={Signup}/>
 
-            <MypageRoute path="/" componentClass={ThemeShow} />
+            <MypageRoute path="/" componentClass={ThemeShow}/>
 
 
             {/* public */}
@@ -59,16 +67,5 @@ class App extends Component {
 //   </div>
 // );
 
-const Signup = () => (
-  <div>
-    <h2>Signup</h2>
-  </div>
-);
-
-const Profile = () => (
-  <div>
-    <h2>Profile</h2>
-  </div>
-);
 
 export default App;

@@ -1,13 +1,13 @@
-import axios from 'axios'
-import {HTTP_METHODS, EKZ_API_ROOT} from '~/common/const'
+import axios from "axios"
+import {HTTP_METHODS, EKZ_API_ROOT} from "~/common/const"
 
 const axiosConfig = {
   baseURL: EKZ_API_ROOT,
   headers: {
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
   },
-  responseType: 'json'
+  responseType: "json"
 }
 
 let ax = axios.create(axiosConfig)
@@ -53,12 +53,16 @@ export class Request {
     switch (this.methodStr) {
       case HTTP_METHODS.GET:
         accessMethod = ax.get
+        break
       case HTTP_METHODS.POST:
         accessMethod = ax.post
+        break
       case HTTP_METHODS.DELETE:
         accessMethod = ax.delete
+        break
       case HTTP_METHODS.PATCH:
         accessMethod = ax.patch
+        break
       default:
         return null
     }

@@ -1,7 +1,7 @@
 import {requestGetterWithoutParam} from "~/common/request"
 import {patch, updateObject} from "~/reducers/utils/stateUtils"
 import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer"
-import {HTTP_METHODS} from '~/common/const'
+import {HTTP_METHODS} from "~/common/const"
 
 export const ACTION_CHOICE_LIST = "ACTION_CHOICE_LIST"
 export const ACTION_EKZ_LIST = "ACTION_EKZ_LIST"

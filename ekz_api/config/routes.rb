@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'signups/register'
   scope :api do
     scope :v1 do
       namespace :themes do
@@ -24,6 +25,14 @@ Rails.application.routes.draw do
         post   "is_valid_remind_token"
         post   "login", action: :create
         delete "logout", action: :destroy
+      end
+
+      namespace :profiles do
+        root   action: :index
+      end
+
+      scope :signup do
+        post   "regist", controller: :signups, action: :regist
       end
     end
   end

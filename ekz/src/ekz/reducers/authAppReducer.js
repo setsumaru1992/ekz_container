@@ -1,8 +1,7 @@
 import AuthManager from "~/models/auth/authManager"
 import {requestGetterWithoutParam} from "~/common/request"
-import {patch} from "~/reducers/utils/stateUtils"
 import authCookieManager from "~/models/auth/authCookieManager"
-import {HTTP_METHODS} from '~/common/const'
+import {HTTP_METHODS} from "~/common/const"
 
 export const ACTION_LOGIN = "ACTION_LOGIN"
 export const ACTION_LOGOUT = "ACTION_LOGOUT"
@@ -16,8 +15,7 @@ const REQUEST_GETTERS = {
   IS_REMIND_TOKEN_VALID: requestGetterWithoutParam(URL_BASE + "is_valid_remind_token", HTTP_METHODS.POST),
 }
 
-export default function authAppReducer(state = new AuthManager, action) {
-  console.log(state)
+export default function authAppReducer(state = new AuthManager(), action) {
   switch (action.type) {
     case ACTION_LOGIN:
       return state.updateLoginResultState(action.isLoginSuccess, action.accessKey, action.remindToken)

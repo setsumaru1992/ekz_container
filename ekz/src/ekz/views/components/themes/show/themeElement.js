@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types'
+import React, {Component} from "react";
+import PropTypes from "prop-types"
 import {NavLink} from "react-router-dom"
 import {Button} from "react-bootstrap";
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncThemeDestroy} from '~/reducers/themesAppReducer';
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
+import {actionAsyncThemeDestroy} from "~/reducers/themesAppReducer";
 import {
   actionThemeVisibleForm
 } from "~/reducers/themesViewReducer"

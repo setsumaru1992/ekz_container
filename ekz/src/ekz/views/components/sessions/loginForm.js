@@ -1,12 +1,12 @@
 import React from "react";
-import {Field} from 'redux-form';
+import {Field} from "redux-form";
 import formCreattor from "~/views/components/common/form/formCreator"
 import {inputField, checkOrRadioFieldWithOwnLabel} from "~/views/components/common/form/formComponents"
 import {
   Col,
   Form,
   Button,
-} from 'react-bootstrap';
+} from "react-bootstrap";
 
 
 const loginValidation = values => {

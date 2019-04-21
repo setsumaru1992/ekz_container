@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import DevModel from "~/views/pages/develop/devModel"
+import React, { Component } from "react";
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
+// import DevModel from "~/views/pages/develop/devModel"
 
 class Dev extends Component {
   componentWillMount() {

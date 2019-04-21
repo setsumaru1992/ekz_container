@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import PropTypes from 'prop-types'
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
+import PropTypes from "prop-types"
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionAsyncThemeUpdate} from "~/reducers/themesAppReducer"
 import themeFormCreator from "~/views/components/themes/themeForm"
 

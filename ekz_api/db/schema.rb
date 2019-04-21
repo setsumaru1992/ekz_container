@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_140651) do
+ActiveRecord::Schema.define(version: 2019_04_21_014414) do
 
   create_table "access_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 2019_03_21_140651) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["theme_id"], name: "index_choices_on_theme_id"
+  end
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "content"
+    t.bigint "choice_id"
+    t.integer "created_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["choice_id"], name: "index_comments_on_choice_id"
   end
 
   create_table "remind_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -76,6 +85,7 @@ ActiveRecord::Schema.define(version: 2019_03_21_140651) do
   end
 
   add_foreign_key "choices", "themes"
+  add_foreign_key "comments", "choices"
   add_foreign_key "user_group_relations", "user_groups"
   add_foreign_key "user_group_relations", "users"
 end

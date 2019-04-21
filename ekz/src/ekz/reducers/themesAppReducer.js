@@ -1,6 +1,6 @@
 import {requestGetterWithoutParam} from "~/common/request"
 import {patch} from "~/reducers/utils/stateUtils"
-import {HTTP_METHODS} from '~/common/const'
+import {HTTP_METHODS} from "~/common/const"
 
 export const ACTION_THEME_LIST = "ACTION_THEME_LIST"
 export const ACTION_THEME_CHANGED = "ACTION_THEME_CHANGED"

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connectViewToStateAndActionCreaters} from '~/views/features/utils/connectorViewToOther'
-import {actionAsyncThemeList} from '~/reducers/themesAppReducer';
-import {actionVisibleThemeNew} from '~/reducers/themesViewReducer';
-import ThemeShowElem from '~/views/components/themes/show/themeElement'
+import React, {Component} from "react";
+import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
+import {actionAsyncThemeList} from "~/reducers/themesAppReducer";
+import {actionVisibleThemeNew} from "~/reducers/themesViewReducer";
+import ThemeShowElem from "~/views/components/themes/show/themeElement"
 import ThemeNew from "~/views/components/themes/new"
 
 
