@@ -28,7 +28,6 @@ class ChoiceShowElem extends Component {
       actionAsyncChoiceDestroy,
       actionAsyncChoiceUpdateEvaluation,
       actionChoiceVisibleForm,
-      choiceEvaluationMap,
       visibleFormMap,
     } = this.props
     let nameTag = null
@@ -66,7 +65,7 @@ class ChoiceShowElem extends Component {
           <Card.Body>
             <div>
               {choiceEvaluationButtonGroup(
-                choice.id, themeId, choiceEvaluationMap[choice.id],
+                choice.id, themeId, choice.evaluation,
                 (value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}
               )}
             </div>
@@ -108,7 +107,6 @@ ChoiceShowElem.propTypes = {
 export default connectViewToStateAndActionCreaters(ChoiceShowElem,
   (state) => {
     return {
-      choiceEvaluationMap: state.choicesAppReducer.choiceEvaluationMap,
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
     }
   }, {
