@@ -7,34 +7,42 @@ import ChoiceShowElem from "~/views/components/choices/show/choiceElement";
 import ChoiceNew from "~/views/components/choices/new"
 import Button from "react-bootstrap/es/Button";
 import {Form} from "react-bootstrap"
-import {NavLink} from "react-router-dom"
+import {NavLink} from "react-router-dom";
 
-class ChoiceShow extends Component {
+class ChoiceEkz extends Component {
 
   componentWillMount() {
     const {
       location,
+      actionAsyncEkzList,
       actionAsyncChoiceList,
     } = this.props
     const themeId = new QueryStringParser(location).getThemeId()
-    actionAsyncChoiceList(themeId)
+    actionAsyncEkzList(themeId)
   }
 
   render() {
     const {
-      choiceList,
+      ekzList,
+      actionAsyncEkzList,
+      theme,
       visibleFormMap,
       actionChoiceVisibleForm,
-      theme,
     } = this.props
     return (
       <div>
         <h1>{theme.name}</h1>
+        <Button onClick={() => actionAsyncEkzList(theme.id)}>選び直す</Button>
+        <Form.Row>
+          {ekzList.map((choice) =>
+            <ChoiceShowElem choice={choice} themeId={theme.id} key={choice.id} />
+          )}
+        </Form.Row>
         <NavLink
           to={{
-            pathname: "/mypage/ekz",
+            pathname: "/mypage/choice",
             search: `?t=${theme.id}`
-          }}>ekz</NavLink>
+          }}>全リスト</NavLink>
         <Button onClick={()=>actionChoiceVisibleForm(theme.id)}>
           {visibleFormMap[`${theme.id}_`]
             ? "閉じる"
@@ -46,25 +54,20 @@ class ChoiceShow extends Component {
           ? <ChoiceNew themeId={theme.id} />
           : ""
         }
-        <Form.Row>
-          {choiceList.map((choice) =>
-            <ChoiceShowElem choice={choice} themeId={theme.id} key={choice.id} />
-          )}
-        </Form.Row>
       </div>
     )
   }
 }
 
-ChoiceShow.propTypes = {
+ChoiceEkz.propTypes = {
 }
 
-export default connectViewToStateAndActionCreaters(ChoiceShow,
+export default connectViewToStateAndActionCreaters(ChoiceEkz,
   (state) => {
     return {
       theme: state.choicesAppReducer.getTheme(),
-      choiceList: state.choicesAppReducer.getChoiceList(),
+      ekzList: state.choicesAppReducer.getEkzList(),
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
     }
-  }, {actionAsyncChoiceList, actionAsyncEkzList, actionChoiceVisibleForm}
+  }, {actionAsyncEkzList, actionChoiceVisibleForm}
 )

@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Layout from "~/views/layouts"
 import ThemeShow from "~/views/pages/themes/show"
 import ChoiceShow from "~/views/pages/choices/show"
+import ChoiceEkz from "~/views/pages/choices/ekz"
 import ChoiceDetail from "~/views/pages/choices/detail"
 import Profile from "~/views/pages/profile"
 import Signup from "~/views/pages/signup"
@@ -42,6 +43,7 @@ class App extends Component {
             <MypageRoute path="/mypage/theme" componentClass={ThemeShow}/>
             <MypageRoute path="/mypage/choice/:id" componentClass={ChoiceDetail}/>
             <MypageRoute path="/mypage/choice" componentClass={ChoiceShow}/>
+            <MypageRoute path="/mypage/ekz" componentClass={ChoiceEkz}/>
             <MypageRoute path="/mypage/profile" componentClass={Profile}/>
 
             {/* signup */}

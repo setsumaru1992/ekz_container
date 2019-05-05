@@ -25,7 +25,7 @@ class ThemeShowElem extends Component {
           }}>
           <NavLink
             to={{
-              pathname: "/mypage/choice",
+              pathname: "/mypage/ekz",
               search: `?t=${theme.id}`
             }}
             style={{
