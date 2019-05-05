@@ -23,23 +23,22 @@ class ChoiceShow extends Component {
 
   render() {
     const {
-      ekzListMap,
-      choiceListMap,
+      ekzList,
+      choiceList,
       visibleFormMap,
       actionChoiceVisibleForm,
       actionAsyncEkzList,
+      theme,
     } = this.props
-    const ekzList = ekzListMap[this.themeId] ? ekzListMap[this.themeId].ekzList: undefined
-    const choiceList = choiceListMap[this.themeId] ? choiceListMap[this.themeId].choiceList: undefined
-    const themeName = choiceListMap[this.themeId] ? choiceListMap[this.themeId].themeInfo.name: undefined
+    const themeName = theme.name
     return (
       <div>
         <h1>{themeName}</h1>
         <Button onClick={() => actionAsyncEkzList(this.themeId)}>選び直す</Button>
         <Form.Row>
-          {ekzList ? ekzList.map((choice) =>
+          {ekzList.map((choice) =>
             <ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />
-          ) : null}
+          )}
         </Form.Row>
 
         <h2>全リスト</h2>
@@ -55,9 +54,9 @@ class ChoiceShow extends Component {
           : ""
         }
         <Form.Row>
-          {choiceList ? choiceList.map((choice) =>
+          {choiceList.map((choice) =>
             <ChoiceShowElem choice={choice} themeId={this.themeId} key={choice.id} />
-          ) : null}
+          )}
         </Form.Row>
       </div>
     )
@@ -70,8 +69,9 @@ ChoiceShow.propTypes = {
 export default connectViewToStateAndActionCreaters(ChoiceShow,
   (state) => {
     return {
-      choiceListMap: state.choicesAppReducer.choiceListMap,
-      ekzListMap: state.choicesAppReducer.ekzListMap,
+      theme: state.choicesAppReducer.getTheme(),
+      choiceList: state.choicesAppReducer.getChoiceList(),
+      ekzList: state.choicesAppReducer.getEkzList(),
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
     }
   }, {actionAsyncChoiceList, actionAsyncEkzList, actionChoiceVisibleForm}

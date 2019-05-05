@@ -2,6 +2,7 @@ import {requestGetterWithoutParam} from "~/common/request"
 import {patch, updateObject} from "~/reducers/utils/stateUtils"
 import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer"
 import {HTTP_METHODS} from "~/common/const"
+import ChoiceState from "~/models/choice/choiceState"
 
 export const ACTION_CHOICE_LIST = "ACTION_CHOICE_LIST"
 export const ACTION_EKZ_LIST = "ACTION_EKZ_LIST"
@@ -20,82 +21,91 @@ const REQUEST_GETTERS = {
   UPDATE_EVALUATION: requestGetterWithoutParam(URL_BASE + "update_evaluation", HTTP_METHODS.PATCH),
 }
 
-const initialState = {
-  choiceListMap: {},
-  /* sample
-  {
-    [themeId]: {
-      themeInfo: [theme],
-      choiceList: [choiceList]
-    }
-  }
-  */
-  ekzListMap: {},
-  /* sample
-  {
-    [themeId]: {
-      themeInfo: [theme],
-      ekzList: [ekzList]
-    }
-  }
-  */
-  ekzIdList: [],
-  choiceEvaluationMap: {},
-  /* sample
-  {
-    [choiceId]: [evaluation],
-  }
-  */
-}
+// const initialState = {
+//   choiceListMap: {},
+//   /* sample
+//   {
+//     [themeId]: {
+//       themeInfo: [theme],
+//       choiceList: [choiceList]
+//     }
+//   }
+//   */
+//   ekzListMap: {},
+//   /* sample
+//   {
+//     [themeId]: {
+//       themeInfo: [theme],
+//       ekzList: [ekzList]
+//     }
+//   }
+//   */
+//   ekzIdList: [],
+//   choiceEvaluationMap: {},
+//   /* sample
+//   {
+//     [choiceId]: [evaluation],
+//   }
+//   */
+// }
 
-export default function choicesAppReducer(state = initialState, action){
+export default function choicesAppReducer(state = new ChoiceState(), action){
+  let updatedState = state
   switch (action.type) {
     case ACTION_CHOICE_LIST:
-      let choiceEvaluationMap = {}
-      action.choiceList.forEach((choice) => {
-        choiceEvaluationMap[choice.id] = choice.evaluation
-      })
-      return patch(state, {
-        choiceListMap: updateObject(
-          state.choiceListMap, action.theme.id, {
-            themeInfo: action.theme,
-            choiceList: action.choiceList
-          }
-        ),
-        choiceEvaluationMap: choiceEvaluationMap
-      })
+      // let choiceEvaluationMap = {}
+      // action.choiceList.forEach((choice) => {
+      //   choiceEvaluationMap[choice.id] = choice.evaluation
+      // })
+      // return patch(state, {
+      //   choiceListMap: updateObject(
+      //     state.choiceListMap, action.theme.id, {
+      //       themeInfo: action.theme,
+      //       choiceList: action.choiceList
+      //     }
+      //   ),
+      //   choiceEvaluationMap: choiceEvaluationMap
+      // })
+      updatedState = updatedState.setChoiceList(action.choiceList)
+      updatedState = updatedState.setTheme(action.theme)
+      return updatedState
     case ACTION_EKZ_LIST:
-      return patch(state, {
-        ekzListMap: updateObject(
-          state.ekzListMap, action.theme.id, {
-            themeInfo: action.theme,
-            ekzList: action.ekzList
-          }
-        ),
-        ekzIdList: action.ekzList.map((ekzChoice) => {
-          return ekzChoice.id
-        }),
-      })
+      // return patch(state, {
+      //   ekzListMap: updateObject(
+      //     state.ekzListMap, action.theme.id, {
+      //       themeInfo: action.theme,
+      //       ekzList: action.ekzList
+      //     }
+      //   ),
+      //   ekzIdList: action.ekzList.map((ekzChoice) => {
+      //     return ekzChoice.id
+      //   }),
+      // })
+      updatedState = updatedState.setEkzList(action.ekzList)
+      updatedState = updatedState.setTheme(action.theme)
+      return updatedState
     case ACTION_EKZ_REFLESH_LIST:
-      return patch(state, {
-        ekzListMap: updateObject(
-          state.ekzListMap, action.themeId, {
-            themeInfo: state.ekzListMap[action.themeId].themeInfo,
-            ekzList: action.ekzList
-          }
-        ),
-        ekzIdList: action.ekzList.map((ekzChoice) => {
-          return ekzChoice.id
-        })
-      })
+      // return patch(state, {
+      //   ekzListMap: updateObject(
+      //     state.ekzListMap, action.themeId, {
+      //       themeInfo: state.ekzListMap[action.themeId].themeInfo,
+      //       ekzList: action.ekzList
+      //     }
+      //   ),
+      //   ekzIdList: action.ekzList.map((ekzChoice) => {
+      //     return ekzChoice.id
+      //   })
+      // })
+      return state
     case ACTION_CHOICE_CHANGED:
       return state
     case ACTION_CHOICE_UPDATED_EVALUTION:
-      return patch(state, {
-        choiceEvaluationMap: updateObject(
-          state.choiceEvaluationMap, action.choiceId, action.evaluation
-        )
-      })
+      // return patch(state, {
+      //   choiceEvaluationMap: updateObject(
+      //     state.choiceEvaluationMap, action.choiceId, action.evaluation
+      //   )
+      // })
+      return updatedState.updateChoiceEvaluation(action.choiceId, action.evaluation)
     default:
       return state
   }
