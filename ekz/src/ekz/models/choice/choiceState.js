@@ -7,10 +7,6 @@ const ChoiceStateRecord = Record({
     name: "",
   },
   choiceList: [],
-  ekzList: [],
-  /*
-  choiceMapと同じ構造
-   */
 })
 
 export default class ChoiceState extends ChoiceStateRecord {
@@ -57,15 +53,5 @@ export default class ChoiceState extends ChoiceStateRecord {
     let choiceForUpdate = this.getChoiceBy(choiceId)
     choiceForUpdate.evaluation = evaluation
     return this.setChoiceToChoiceList(choiceForUpdate)
-  }
-
-  setEkzList(ekzList){
-    return updateStateField(this, {
-      ekzList: ekzList
-    })
-  }
-
-  getEkzList(){
-    return this.get("ekzList")
   }
 }

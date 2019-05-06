@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import QueryStringParser from "~/views/features/utils/queryStringParser"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
-import {actionAsyncChoiceList, actionAsyncEkzList} from "~/reducers/choicesAppReducer";
+import {actionAsyncChoiceList} from "~/reducers/choicesAppReducer";
 import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer";
 import ChoiceShowElem from "~/views/components/choices/show/choiceElement";
 import ChoiceNew from "~/views/components/choices/new"
@@ -66,5 +66,5 @@ export default connectViewToStateAndActionCreaters(ChoiceShow,
       choiceList: state.choicesAppReducer.getChoiceList(),
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
     }
-  }, {actionAsyncChoiceList, actionAsyncEkzList, actionChoiceVisibleForm}
+  }, {actionAsyncChoiceList, actionChoiceVisibleForm}
 )

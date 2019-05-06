@@ -1,6 +1,7 @@
 import {combineReducers} from "redux"
 import {reducer as reduxFormReducer} from "redux-form";
 import choicesAppReducer from "~/reducers/choicesAppReducer"
+import ekzAppReducer from "~/reducers/ekzAppReducer"
 import choicesViewReducer from "~/reducers/choicesViewReducer"
 import themesAppReducer from "~/reducers/themesAppReducer"
 import themesViewReducer from "~/reducers/themesViewReducer"
@@ -15,6 +16,7 @@ https://qiita.com/usagi-f/items/ae568fb64c2eac882d05
 const rootReducer = combineReducers({
   choicesAppReducer,
   choicesViewReducer,
+  ekzAppReducer,
   themesAppReducer,
   themesViewReducer,
   profileAppReducer,

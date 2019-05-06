@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import QueryStringParser from "~/views/features/utils/queryStringParser"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
-import {actionAsyncChoiceList, actionAsyncEkzList} from "~/reducers/choicesAppReducer";
+import {actionAsyncEkzList} from "~/reducers/ekzAppReducer";
 import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer";
-import ChoiceShowElem from "~/views/components/choices/show/choiceElement";
+import ChoiceShowElem from "~/views/components/choices/ekz/ekzElement";
 import ChoiceNew from "~/views/components/choices/new"
 import Button from "react-bootstrap/es/Button";
 import {Form} from "react-bootstrap"
@@ -65,8 +65,8 @@ ChoiceEkz.propTypes = {
 export default connectViewToStateAndActionCreaters(ChoiceEkz,
   (state) => {
     return {
-      theme: state.choicesAppReducer.getTheme(),
-      ekzList: state.choicesAppReducer.getEkzList(),
+      theme: state.ekzAppReducer.getTheme(),
+      ekzList: state.ekzAppReducer.getEkzList(),
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
     }
   }, {actionAsyncEkzList, actionChoiceVisibleForm}
