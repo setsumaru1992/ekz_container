@@ -7,6 +7,7 @@ const ChoiceStateRecord = Record({
     name: "",
   },
   choiceList: [],
+  choiceDetail: {},
 })
 
 export default class ChoiceState extends ChoiceStateRecord {
@@ -18,6 +19,16 @@ export default class ChoiceState extends ChoiceStateRecord {
 
   getTheme(){
     return this.get("theme")
+  }
+
+  setChoiceDetail(choiceDetail){
+    return updateStateField(this, {
+      choiceDetail: choiceDetail
+    })
+  }
+
+  getChoiceDetail(){
+    return this.get("choiceDetail")
   }
 
   setChoiceList(choiceList){

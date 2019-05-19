@@ -1,5 +1,7 @@
 module Ekz
   class ChoiceEntity
+    attr_reader :choice_model
+
     STATUS_NO_ERROR = 0
     STATUS_ERROR_THEME_NOT_EXIST = 1
 
@@ -19,6 +21,7 @@ module Ekz
       @choice_model.name = params[:name]
       @choice_model.url = params[:url]
       @choice_model.evaluation = params[:evaluation]
+      @choice_model.description = params[:description]
 
       @choice_model.save!
       result
@@ -33,6 +36,7 @@ module Ekz
       @choice_model.name = params[:name]
       @choice_model.url = params[:url]
       @choice_model.evaluation = params[:evaluation]
+      @choice_model.description = params[:description]
       @choice_model.save!
       result
     end

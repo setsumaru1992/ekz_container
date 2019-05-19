@@ -1,7 +1,7 @@
 import React from "react";
 import {Field} from "redux-form";
 import formCreator from "~/views/components/common/form/formCreator"
-import {inputField} from "~/views/components/common/form/formComponents"
+import {inputField, textareaField} from "~/views/components/common/form/formComponents"
 import {choiceEvaluationField} from "~/views/components/choices/choiceEvaluationField"
 import {
   Col,
@@ -38,6 +38,10 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
           type="url"
           name="url"
           label="URL"/>
+        <Field
+          component={textareaField}
+          name="description"
+          label="説明"/>
         <Field
           component={choiceEvaluationField}
           name="evaluation"/>

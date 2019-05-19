@@ -12,6 +12,11 @@ export default class QueryStringParser{
     const themeId = this.queryParams.get(paramNameMap.themeId)
     return Number(themeId)
   }
+
+  getChoiceId(){
+    const choiceId = this.queryParams.get(paramNameMap.choiceId)
+    return Number(choiceId)
+  }
 }
 
 const paramNameMap = {

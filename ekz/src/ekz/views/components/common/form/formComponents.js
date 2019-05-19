@@ -3,7 +3,7 @@ import {
   Col,
   Form,
 } from "react-bootstrap";
-
+import {} from "react-bootstrap";
 
 /*
 fieldの主なパラメータ
@@ -26,6 +26,25 @@ export const inputField = (field) => {
             {...field.input}
             placeholder={field.placeholder}
             type={field.type}
+            isInvalid={isInvalid(field)}
+          />
+          <Form.Control.Feedback type="invalid">{noticeOf(field)}</Form.Control.Feedback>
+        </Col>
+      </Form.Row>
+    </Form.Group>
+  )
+}
+
+export const textareaField = (field) => {
+  return (
+    <Form.Group>
+      <Form.Row>
+        <Col componentclass={Form.Label} sm={3}>{field.label}</Col>
+        <Col sm={9}>
+          <Form.Control
+            {...field.input}
+            as="textarea"
+            placeholder={field.placeholder}
             isInvalid={isInvalid(field)}
           />
           <Form.Control.Feedback type="invalid">{noticeOf(field)}</Form.Control.Feedback>

@@ -20,6 +20,7 @@ class ChoiceNew extends Component {
           id: "",
           name: "",
           url: "",
+          description: "",
           evaluation: 0,
           theme_id: themeId
         }}

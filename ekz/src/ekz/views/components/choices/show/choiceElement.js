@@ -79,7 +79,6 @@ class ChoiceShowElem extends Component {
             <NavLink
               to={{
                 pathname: `/mypage/choice/${choice.id}`,
-                search: `?t=${themeId}`,
               }}
               style={{
                 marginRight: "auto"

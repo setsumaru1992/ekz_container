@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'signups/register'
   scope :api do
     scope :v1 do
       namespace :themes do
@@ -14,9 +13,17 @@ Rails.application.routes.draw do
         get    'show'
         get    'show_by_ids'
         get    'ekz'
+        get    'detail'
         post   'new'
         patch  'update'
         patch  'update_evaluation'
+        delete 'destroy'
+      end
+
+      namespace :choice_comments do
+        get    'show'
+        post   'new'
+        patch  'update'
         delete 'destroy'
       end
 

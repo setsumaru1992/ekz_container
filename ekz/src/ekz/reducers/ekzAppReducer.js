@@ -1,5 +1,4 @@
 import {requestGetterWithoutParam} from "~/common/request"
-import {patch, updateObject} from "~/reducers/utils/stateUtils"
 import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer"
 import {HTTP_METHODS} from "~/common/const"
 import EkzState from "~/models/choice/ekzState"

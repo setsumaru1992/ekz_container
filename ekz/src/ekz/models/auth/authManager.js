@@ -47,6 +47,10 @@ export default class AuthManager extends AuthManagerRecord {
     return updated
   }
 
+  getAccessKey(){
+    return authCookieManager.getAccessKey()
+  }
+
   loginFailed(){
     let updated = updateStateField(this, {
       needLogin: true,

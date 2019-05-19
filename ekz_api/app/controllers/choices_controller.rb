@@ -23,6 +23,11 @@ class ChoicesController < ApplicationController
     }
   end
 
+  def detail
+    choice_entity = Ekz::ChoiceFactory.create_by_choice_id(choice_params[:id])
+    render json: {choice: choice_entity.choice_model}
+  end
+
   def new
     choice_entity = Ekz::ChoiceFactory.create_by_choice_id(choice_params[:id])
     result = choice_entity.save_new_model(choice_params)
@@ -51,7 +56,7 @@ class ChoicesController < ApplicationController
 
   def choice_params
     params.permit(
-      :id, :name, :url, :evaluation, :description, :theme_id, :ids
+      :id, :name, :url, :evaluation, :description, :theme_id, :ids, :description
     )
   end
 end

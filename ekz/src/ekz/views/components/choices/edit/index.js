@@ -25,6 +25,7 @@ class ChoiceEdit extends Component {
           id: choice.id,
           name: choice.name,
           url: choice.url,
+          description: choice.description,
           evaluation: choice.evaluation,
           theme_id: themeId
         }}

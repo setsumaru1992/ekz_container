@@ -1,16 +1,17 @@
 import {requestGetterWithoutParam} from "~/common/request"
-import {patch, updateObject} from "~/reducers/utils/stateUtils"
 import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer"
 import {HTTP_METHODS} from "~/common/const"
 import ChoiceState from "~/models/choice/choiceState"
 
 export const ACTION_CHOICE_LIST = "ACTION_CHOICE_LIST"
+export const ACTION_CHOICE_DETAIL = "ACTION_CHOICE_DETAIL"
 export const ACTION_CHOICE_UPDATED_EVALUTION = "ACTION_CHOICE_UPDATED_EVALUTION"
 export const ACTION_CHOICE_CHANGED = "ACTION_CHOICE_CHANGED"
 
 const URL_BASE = "choices/"
 const REQUEST_GETTERS = {
   GET_ALL: requestGetterWithoutParam(URL_BASE + "show", HTTP_METHODS.GET),
+  DETAIL: requestGetterWithoutParam(URL_BASE + "detail", HTTP_METHODS.GET),
   NEW: requestGetterWithoutParam(URL_BASE + "new", HTTP_METHODS.POST),
   DESTROY: requestGetterWithoutParam(URL_BASE + "destroy", HTTP_METHODS.DELETE),
   UPDATE: requestGetterWithoutParam(URL_BASE + "update", HTTP_METHODS.PATCH),
@@ -24,6 +25,8 @@ export default function choicesAppReducer(state = new ChoiceState(), action){
       updatedState = updatedState.setChoiceList(action.choiceList)
       updatedState = updatedState.setTheme(action.theme)
       return updatedState
+    case ACTION_CHOICE_DETAIL:
+      return updatedState.setChoiceDetail(action.choice)
     case ACTION_CHOICE_CHANGED:
       return state
     case ACTION_CHOICE_UPDATED_EVALUTION:
@@ -45,6 +48,21 @@ export function actionAsyncChoiceList(themeId){
   return (dispatch) =>{
     return REQUEST_GETTERS.GET_ALL({theme_id: themeId}).access((data) => {
       dispatch(actionChoiceList(data.theme, data.choice_list))
+    })
+  }
+}
+
+function actionChoiceDetail(choice){
+  return  {
+    type: ACTION_CHOICE_DETAIL,
+    choice
+  }
+}
+
+export function actionAsyncChoiceDetail(choiceId){
+  return (dispatch) =>{
+    return REQUEST_GETTERS.DETAIL({id: choiceId}).access((data) => {
+      dispatch(actionChoiceDetail(data.choice))
     })
   }
 }
