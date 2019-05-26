@@ -69,7 +69,9 @@ class EkzShowElem extends Component {
         }}>{nameTag}</h3>
           <Card.Body>
             {choice.image_filename
-              ? <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />
+              ? <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">
+                  <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />
+                </a>
               : null}
             <div>
               {choiceEvaluationButtonGroup(
