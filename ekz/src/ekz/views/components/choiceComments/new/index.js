@@ -9,13 +9,13 @@ class ChoiceCommentNew extends Component {
   render() {
     const {
       choiceId,
-      actionAsyncChoiceCommentNew,
+      actionAsyncChoiceImageNew,
       accessKey,
     } = this.props
     const ChoiceCommentForm = choiceCommentFormCreator(choiceId)
     return (
       <ChoiceCommentForm
-        onSubmit={actionAsyncChoiceCommentNew}
+        onSubmit={actionAsyncChoiceImageNew}
         initialValues={{
           id: "",
           comment: "",
@@ -37,5 +37,5 @@ export default connectViewToStateAndActionCreaters(ChoiceCommentNew,
     return {
       accessKey: state.authManager.getAccessKey()
     }
-  }, {actionAsyncChoiceCommentNew}
+  }, {actionAsyncChoiceImageNew: actionAsyncChoiceCommentNew}
 )

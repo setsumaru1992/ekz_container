@@ -1,8 +1,14 @@
 class ChoicesController < ApplicationController
   def show
+    choice_list = Choice.find_by_theme_id(choice_params[:theme_id])
+    choice_hash_list = choice_list.map do |choice|
+      choice_hash = choice.attributes
+      choice_hash["image_filename"] = choice.choice_images.first.image_filename if choice.choice_images.present?
+      choice_hash
+    end
     render json: {
       theme: Theme.find(choice_params[:theme_id]),
-      choice_list: Choice.find_by_theme_id(choice_params[:theme_id]),
+      choice_list: choice_hash_list,
     }
   end
 
@@ -17,9 +23,16 @@ class ChoicesController < ApplicationController
 
   def ekz
     theme_id = choice_params[:theme_id]
+    ekz_list = Choice.ekz_pick(choice_params[:theme_id])
+    ekz_hash_list = ekz_list.map do |choice|
+      choice_hash = choice.attributes
+      choice_hash["image_filename"] = choice.choice_images.first.image_filename if choice.choice_images.present?
+      Rails.logger.info(choice_hash)
+      choice_hash
+    end
     render json: {
       theme: Theme.find(theme_id),
-      ekz_list: Choice.ekz_pick(choice_params[:theme_id])
+      ekz_list: ekz_hash_list
     }
   end
 
@@ -56,7 +69,8 @@ class ChoicesController < ApplicationController
 
   def choice_params
     params.permit(
-      :id, :name, :url, :evaluation, :description, :theme_id, :ids, :description
+      :id, :name, :url, :evaluation, :description, :theme_id, :ids,
+      :description, :choice, image: []
     )
   end
 end

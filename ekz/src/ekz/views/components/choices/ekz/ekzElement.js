@@ -9,9 +9,12 @@ import {
   actionChoiceUpdateEvaluation
 } from "~/reducers/ekzAppReducer"
 import {
-  actionChoiceVisibleForm
+  actionChoiceVisibleForm,
+  actionChoiceVisibleFileForm,
 } from "~/reducers/choicesViewReducer"
+import {EKZ_IMAGE_ROOT} from "~/common/const"
 import ChoiceEdit from "~/views/components/choices/edit"
+import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 
 class EkzShowElem extends Component {
@@ -29,6 +32,8 @@ class EkzShowElem extends Component {
       actionAsyncChoiceUpdateEvaluation,
       actionChoiceVisibleForm,
       visibleFormMap,
+      visibleFileFormMap,
+      actionChoiceVisibleFileForm,
     } = this.props
     let nameTag = null
     const dispNameLength = 50
@@ -63,6 +68,9 @@ class EkzShowElem extends Component {
           marginBottom: "6px"
         }}>{nameTag}</h3>
           <Card.Body>
+            {choice.image_filename
+              ? <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />
+              : null}
             <div>
               {choiceEvaluationButtonGroup(
                 choice.id, themeId, choice.evaluation,
@@ -70,6 +78,7 @@ class EkzShowElem extends Component {
               )}
             </div>
             <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
+            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleFileForm(choice.id)}>アップロード</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
               if (!deleteOk) return
@@ -86,11 +95,14 @@ class EkzShowElem extends Component {
             >
               More...
             </NavLink>
+            {visibleFileFormMap[`${choice.id}_`]
+              ? <ChoiceImageNew choiceId={choice.id}/>
+              : null}
 
-          {visibleFormMap[`${themeId}_${choice.id}`]
-            ? <ChoiceEdit themeId={themeId} choice={choice} />
-            : ""
-          }
+            {visibleFormMap[`${themeId}_${choice.id}`]
+              ? <ChoiceEdit themeId={themeId} choice={choice} />
+              : ""
+            }
           </Card.Body>
         </Card>
       </Col>
@@ -107,11 +119,13 @@ export default connectViewToStateAndActionCreaters(EkzShowElem,
   (state) => {
     return {
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
+      visibleFileFormMap: state.choicesViewReducer.visibleFileFormMap,
     }
   }, {
     actionAsyncChoiceDestroy,
     actionAsyncChoiceUpdateEvaluation,
     actionChoiceUpdateEvaluation,
-    actionChoiceVisibleForm
+    actionChoiceVisibleForm,
+    actionChoiceVisibleFileForm,
   }
 )

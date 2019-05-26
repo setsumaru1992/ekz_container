@@ -124,10 +124,12 @@ module Choice::EkzPicker
     def pick_by_evaluation(evaluation, size, ekz_pick_param)
       return [] if size == 0
       ids = Choice.where(theme_id: ekz_pick_param.theme_id, evaluation: evaluation).ids
-      return Choice.where(id: ids) if ids.size == size
+      return Choice.where(id: ids).eager_load(:choice_images)
+        .select("choices.*, choice_images.image_filename") if ids.size == size
 
       picked_ids = random_pick(ids, size)
-      Choice.where(id: picked_ids)
+      Choice.where(id: picked_ids).eager_load(:choice_images)
+        .select("choices.*, choice_images.image_filename")
     end
 
     def random_pick(seeds, size)

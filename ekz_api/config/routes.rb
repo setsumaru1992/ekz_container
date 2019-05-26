@@ -27,6 +27,13 @@ Rails.application.routes.draw do
         delete 'destroy'
       end
 
+      namespace :choice_images do
+        get    'show'
+        post   'new'
+        patch  'update'
+        delete 'destroy'
+      end
+
       namespace :sessions do
         post   "is_valid"
         post   "is_valid_remind_token"

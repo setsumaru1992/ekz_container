@@ -35,6 +35,34 @@ export const inputField = (field) => {
   )
 }
 
+
+export const inputFileField = (field) => {
+  return (
+    <Form.Group>
+      <Form.Row>
+        <Col componentclass={Form.Label} sm={3}>{field.label}</Col>
+        <Col sm={9}>
+          <Form.Control
+            {...field.input}
+            placeholder={field.placeholder}
+            type="file"
+            isInvalid={isInvalid(field)}
+            accept={"image/*"}
+            onChange={e => {
+              e.preventDefault()
+              field.input.onChange(e.target.files[0])
+              field.onFieldChange && field.onFieldChange(e.target.files[0])
+            }}
+            onBlur={() => {}}
+            value={undefined}
+          />
+          <Form.Control.Feedback type="invalid">{noticeOf(field)}</Form.Control.Feedback>
+        </Col>
+      </Form.Row>
+    </Form.Group>
+  )
+}
+
 export const textareaField = (field) => {
   return (
     <Form.Group>

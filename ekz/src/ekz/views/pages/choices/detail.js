@@ -22,8 +22,6 @@ class ChoiceDetail extends Component {
       choice,
       commentMap,
     } = this.props
-    window.commentMap = commentMap
-    console.log(`choice.id: ${choice.id}`)
     const comments = commentMap[choice.id] ? commentMap[choice.id] : []
     return (
       <div>
@@ -39,8 +37,7 @@ class ChoiceDetail extends Component {
           {comments.map(comment =>
             <tr key={comment.id}>
               <td>{comment.content} &emsp; {comment.created_by} &emsp; {comment.created_at}&emsp; 編集 &emsp; 削除</td>
-            </tr>
-          )
+            </tr>)
           }
           </tbody>
         </Table>

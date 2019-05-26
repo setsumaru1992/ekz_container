@@ -1,7 +1,7 @@
 import React from "react";
 import {Field} from "redux-form";
 import formCreator from "~/views/components/common/form/formCreator"
-import {inputField, textareaField} from "~/views/components/common/form/formComponents"
+import {inputField, textareaField, inputFileField} from "~/views/components/common/form/formComponents"
 import {choiceEvaluationField} from "~/views/components/choices/choiceEvaluationField"
 import {
   Col,

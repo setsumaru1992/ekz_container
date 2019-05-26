@@ -3,7 +3,7 @@ module Ekz
     attr_reader :choice_model
 
     STATUS_NO_ERROR = 0
-    STATUS_ERROR_THEME_NOT_EXIST = 1
+    STATUS_ERROR_CHOICE_NOT_EXIST = 1
 
     def initialize(params)
       id = params[:id]
@@ -22,15 +22,15 @@ module Ekz
       @choice_model.url = params[:url]
       @choice_model.evaluation = params[:evaluation]
       @choice_model.description = params[:description]
-
       @choice_model.save!
+
       result
     end
 
     def update(params)
       result = initial_result
       if @choice_model.id.blank?
-        result[:status] = STATUS_ERROR_THEME_NOT_EXIST
+        result[:status] = STATUS_ERROR_CHOICE_NOT_EXIST
         return result
       end
       @choice_model.name = params[:name]
@@ -41,10 +41,16 @@ module Ekz
       result
     end
 
+    def create_image(params)
+      image_model = @choice_model.choice_images.build
+      image_model.image_filename = params[:image]
+      image_model.save!
+    end
+
     def update_model_evaluation(params)
       result = initial_result
       if @choice_model.id.blank?
-        result[:status] = STATUS_ERROR_THEME_NOT_EXIST
+        result[:status] = STATUS_ERROR_CHOICE_NOT_EXIST
         return result
       end
       @choice_model.evaluation = params[:evaluation]

@@ -13,6 +13,7 @@ const REQUEST_GETTERS = {
   GET_ALL: requestGetterWithoutParam(URL_BASE + "show", HTTP_METHODS.GET),
   DETAIL: requestGetterWithoutParam(URL_BASE + "detail", HTTP_METHODS.GET),
   NEW: requestGetterWithoutParam(URL_BASE + "new", HTTP_METHODS.POST),
+  IMAGE_NEW: requestGetterWithoutParam("choice_images/" + "new", HTTP_METHODS.POST),
   DESTROY: requestGetterWithoutParam(URL_BASE + "destroy", HTTP_METHODS.DELETE),
   UPDATE: requestGetterWithoutParam(URL_BASE + "update", HTTP_METHODS.PATCH),
   UPDATE_EVALUATION: requestGetterWithoutParam(URL_BASE + "update_evaluation", HTTP_METHODS.PATCH),
@@ -114,6 +115,18 @@ export function actionAsyncChoiceUpdateEvaluation(choiceId, evaluation, themeId)
   return (dispatch) =>{
     return REQUEST_GETTERS.UPDATE_EVALUATION({id:choiceId, evaluation: evaluation}).access((data) => {
       dispatch(actionChoiceUpdateEvaluation(choiceId, evaluation))
+      dispatch(actionChoiceChanged())
+    })
+  }
+}
+
+export function actionAsyncChoiceImageNew(choiceWithImage){
+  let formData = new FormData()
+  formData.append("image", choiceWithImage.image)
+  formData.append("choice_id", choiceWithImage.choice_id)
+
+  return (dispatch) =>{
+    return REQUEST_GETTERS.IMAGE_NEW(formData).sendDataWithFile((data) => {
       dispatch(actionChoiceChanged())
     })
   }
