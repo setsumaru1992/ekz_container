@@ -62,15 +62,24 @@ class EkzShowElem extends Component {
       )
     } else if (choice.url != "") {
       imageField = (
+        <div style={{
+          position: "relative",
+          width: "100%",
+          padding: `calc(100 / 100 * 100%) 0 0`,
+          overflow: "auto",
+        }}>
         <iframe
           src={choice.url}
           style={{
-            height: "400px",
-            width: "100%"
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100%",
+            width: "100%",
           }}
           allowFullScreen={true}
-          allowpaymentrequest={true}
         />
+        </div>
       )
     }
 
