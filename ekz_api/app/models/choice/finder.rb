@@ -5,8 +5,8 @@ module Choice::Finder
   class_methods do
     def find_by_theme_id(theme_id)
       Choice.where(theme_id: theme_id).eager_load(:choice_images)
-        .select("choices.*, choice_images.image_filename")
-        .order("evaluation DESC").order("updated_at DESC")
+        .select("choices.*, choice_images.image_filename, choice_images.id AS image_id")
+        .order("evaluation DESC").order("updated_at DESC").order("image_id DESC")
     end
 
     def find_by_ids(choice_ids)

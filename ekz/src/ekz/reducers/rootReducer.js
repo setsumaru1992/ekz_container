@@ -9,6 +9,7 @@ import themesViewReducer from "~/reducers/themesViewReducer"
 import authAppReducer from "~/reducers/authAppReducer"
 import signupAppReducer from "~/reducers/signupAppReducer"
 import profileAppReducer from "~/reducers/profileAppReducer"
+import messageViewReducer from "~/reducers/messageViewReducer"
 import devReducer from "~/reducers/devReducer"
 /*
 conbineReducerを使った場合はstate取得時にネストを考慮。mapStateToPropsにrootでネストしたreducerからstateの値を取得
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   themesViewReducer,
   profileAppReducer,
   signupAppReducer,
+  messageViewReducer,
   authManager: authAppReducer,
   devReducer,
   form: reduxFormReducer

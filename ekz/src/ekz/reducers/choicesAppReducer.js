@@ -1,7 +1,8 @@
 import {requestGetterWithoutParam} from "~/common/request"
-import {actionChoiceVisibleForm} from "~/reducers/choicesViewReducer"
+import {actionChoiceVisibleForm, actionChoiceVisibleFileForm} from "~/reducers/choicesViewReducer"
 import {HTTP_METHODS} from "~/common/const"
 import ChoiceState from "~/models/choice/choiceState"
+import {actionShowMessage, MESSAGE_TYPE_ERROR} from "~/reducers/messageViewReducer"
 
 export const ACTION_CHOICE_LIST = "ACTION_CHOICE_LIST"
 export const ACTION_CHOICE_DETAIL = "ACTION_CHOICE_DETAIL"
@@ -68,9 +69,9 @@ export function actionAsyncChoiceDetail(choiceId){
   }
 }
 
-export function actionChoiceChanged(){
-  return {
-    type: ACTION_CHOICE_CHANGED,
+export function actionChoiceChanged(message = ""){
+  return (dispatch) => {
+    dispatch(actionShowMessage(message))
   }
 }
 
@@ -128,6 +129,9 @@ export function actionAsyncChoiceImageNew(choiceWithImage){
   return (dispatch) =>{
     return REQUEST_GETTERS.IMAGE_NEW(formData).sendDataWithFile((data) => {
       dispatch(actionChoiceChanged())
+      dispatch(actionChoiceVisibleFileForm(choiceWithImage.choice_id))
+    }, (e, status, message) => {
+      dispatch(actionShowMessage(`Error: ${status} ${message}`, MESSAGE_TYPE_ERROR))
     })
   }
 }

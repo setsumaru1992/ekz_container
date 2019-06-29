@@ -17,6 +17,7 @@ import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 
+
 class ChoiceShowElem extends Component {
   /*
   componentWillMount, componentDidMount（mount時に１回起動）以外で

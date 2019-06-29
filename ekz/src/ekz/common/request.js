@@ -46,25 +46,30 @@ export class Request {
       )
   }
 
-  sendDataWithFile(callback, defaultRetVal = null) {
+  sendDataWithFile(callback, errorHandle = null, defaultRetVal = null) {
     let access = getHttpAccesser(this.methodStr)
     const paramsForAxios = getParamsForAxios(this.params, this.methodStr)
     return access(this.url, paramsForAxios, {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      })
-      .then((response) => {
-        const data = response.data
-        let ret = callback(data)
-        // resolve(ret)
-        return ret
-      }).catch((e) => {
-          console.error(e)
-          // reject(defaultRetVal)
-          return defaultRetVal
-        }
-      )
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    }).then((response) => {
+      const data = response.data
+      let ret = callback(data)
+      // resolve(ret)
+      return ret
+    }).catch((e) => {
+      console.error(e)
+      if(errorHandle != null){
+        const {
+          status,
+          statusText
+        } = e.response
+        errorHandle(e, status, statusText)
+      }
+      // reject(defaultRetVal)
+      return defaultRetVal
+    })
   }
 
   // accessって名前使いたいけどaccessを使われている間はsend

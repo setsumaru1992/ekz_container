@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import {Navbar, Nav, } from "react-bootstrap"
 import {LinkContainer}  from "react-router-bootstrap"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
+import MessageField from "~/views/components/common/messageField"
 
 class Layout extends Component {
   render() {
@@ -33,7 +34,8 @@ class Layout extends Component {
       </Nav>
     )
     return (
-        <div>
+        <div style={{backgroundColor: "#EEEEEE"}}>
+          <MessageField />
           <Navbar bg="dark" variant="dark">
             <Navbar.Brand href="/">ekz</Navbar.Brand>
             {needLogin

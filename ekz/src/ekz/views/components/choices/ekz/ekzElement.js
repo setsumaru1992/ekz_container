@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types"
 import {NavLink} from "react-router-dom"
 import {Card, Col, Button} from "react-bootstrap"
@@ -40,15 +40,38 @@ class EkzShowElem extends Component {
     const choiceName = choice.name.length > dispNameLength
       ? `${choice.name.substr(0, dispNameLength - 1)}...`
       : choice.name
-    if(choice.url){
+    if (choice.url) {
       nameTag = (
         <a href="#"
-           onMouseDown={() => {window.open(choice.url, new Date().getTime())}}
+           onMouseDown={() => {
+             window.open(choice.url, new Date().getTime())
+           }}
         >
           {choiceName}
         </a>)
     } else {
       nameTag = choiceName
+    }
+
+    let imageField = null
+    if (choice.image_filename) {
+      imageField = (
+        <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">
+          <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"/>
+        </a>
+      )
+    } else if (choice.url != "") {
+      imageField = (
+        <iframe
+          src={choice.url}
+          style={{
+            height: "400px",
+            width: "100%"
+          }}
+          allowFullScreen={true}
+          allowpaymentrequest={true}
+        />
+      )
     }
 
     return (
@@ -59,28 +82,28 @@ class EkzShowElem extends Component {
           textAlign: "center",
           background: "#fff",
         }}>
-        {/*<Card.Img />*/}
-        <h3 style={{
-          height: "40px",
-          fontSize: "18px",
-          fontWeight: "700",
-          fontStyle: "normal",
-          marginBottom: "6px"
-        }}>{nameTag}</h3>
+          {/*<Card.Img />*/}
+          <h3 style={{
+            height: "40px",
+            fontSize: "18px",
+            fontWeight: "700",
+            fontStyle: "normal",
+            marginBottom: "6px"
+          }}>{nameTag}</h3>
           <Card.Body>
-            {choice.image_filename
-              ? <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">
-                  <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />
-                </a>
-              : null}
+            {imageField}
             <div>
               {choiceEvaluationButtonGroup(
                 choice.id, themeId, choice.evaluation,
-                (value, event)=>{actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)}
+                (value, event) => {
+                  actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)
+                }
               )}
             </div>
-            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
-            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleFileForm(choice.id)}>アップロード</Button>&emsp;
+            <Button variant="outline-primary"
+                    onClick={() => actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
+            <Button variant="outline-primary"
+                    onClick={() => actionChoiceVisibleFileForm(choice.id)}>アップロード</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
               if (!deleteOk) return
@@ -102,7 +125,7 @@ class EkzShowElem extends Component {
               : null}
 
             {visibleFormMap[`${themeId}_${choice.id}`]
-              ? <ChoiceEdit themeId={themeId} choice={choice} />
+              ? <ChoiceEdit themeId={themeId} choice={choice}/>
               : ""
             }
           </Card.Body>
