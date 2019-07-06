@@ -50,6 +50,9 @@ class Layout extends Component {
           <div className="container">
             <div style={{
               backgroundColor: "rgba(255,255,255,0.9)",
+              margin: "10px 0px",
+              padding: "20px 20px",
+              borderRadius: "20px",
             }}>
             {this.props.children}
             </div>
