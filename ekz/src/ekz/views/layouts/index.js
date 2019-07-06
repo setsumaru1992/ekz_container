@@ -34,7 +34,12 @@ class Layout extends Component {
       </Nav>
     )
     return (
-        <div style={{backgroundColor: "#EEEEEE"}}>
+        <div style={{
+          // backgroundColor: "#EEEEEE",
+          backgroundImage: "url(https://cdn.pixabay.com/photo/2018/07/14/13/03/the-john-rylands-library-3537566_960_720.jpg)",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+        }}>
           <MessageField />
           <Navbar bg="dark" variant="dark">
             <Navbar.Brand href="/">ekz</Navbar.Brand>
@@ -43,7 +48,11 @@ class Layout extends Component {
               : <LoginedNavi/>}
           </Navbar>
           <div className="container">
+            <div style={{
+              backgroundColor: "rgba(255,255,255,0.9)",
+            }}>
             {this.props.children}
+            </div>
           </div>
         </div>
     );
