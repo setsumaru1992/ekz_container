@@ -8,7 +8,8 @@ class ChoiceImageNew extends Component {
   render() {
     const {
       actionAsyncChoiceImageNew,
-      choiceId
+      choiceId,
+      themeId,
     } = this.props
     const ChoiceImageForm = choiceImageFormCreator()
     return (
@@ -18,6 +19,7 @@ class ChoiceImageNew extends Component {
         initialValues={{
           id: "",
           choice_id: choiceId,
+          themeId: themeId,
         }}
       />
     )
@@ -26,6 +28,7 @@ class ChoiceImageNew extends Component {
 
 ChoiceImageNew.propTypes = {
   choiceId: PropTypes.number,
+  themeId: PropTypes.number,
 }
 
 export default connectViewToStateAndActionCreaters(ChoiceImageNew,

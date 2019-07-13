@@ -81,7 +81,7 @@ class ChoiceShowElem extends Component {
               )}
             </div>
             <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
-            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleFileForm(choice.id)}>アップロード</Button>&emsp;
+            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleFileForm(choice.id)}>画像アップロード</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
               if (!deleteOk) return
@@ -99,7 +99,7 @@ class ChoiceShowElem extends Component {
               More...
             </NavLink>
             {visibleFileFormMap[`${choice.id}_`]
-              ? <ChoiceImageNew choiceId={choice.id}/>
+              ? <ChoiceImageNew choiceId={choice.id} themeId={themeId}/>
               : null}
 
             {visibleFormMap[`${themeId}_${choice.id}`]

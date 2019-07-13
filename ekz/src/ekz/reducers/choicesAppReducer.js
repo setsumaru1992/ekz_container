@@ -130,6 +130,7 @@ export function actionAsyncChoiceImageNew(choiceWithImage){
     return REQUEST_GETTERS.IMAGE_NEW(formData).sendDataWithFile((data) => {
       dispatch(actionChoiceChanged())
       dispatch(actionChoiceVisibleFileForm(choiceWithImage.choice_id))
+      dispatch(actionAsyncChoiceList(choiceWithImage.themeId))
     }, (e, status, message) => {
       dispatch(actionShowMessage(`Error: ${status} ${message}`, MESSAGE_TYPE_ERROR))
     })

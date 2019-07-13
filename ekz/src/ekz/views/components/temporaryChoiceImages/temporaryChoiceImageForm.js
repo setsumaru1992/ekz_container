@@ -21,14 +21,15 @@ const choiceImageFormCreator =(choiceId = null, imageId = null) => {
   const choiceImageForm = formCreator(
     formName,
     (handleSubmit, pristine, reset, submitting) => {return (
-      <Form onSubmit={handleSubmit} action="#">
+      <Form onSubmit={handleSubmit} name="uploadForm" action="#">
         <Field
           component={inputFileField}
           name="image"
-          label="画像"/>
+          label="画像"
+        />
         <Form.Group>
           <Col smoffset={2} sm={5}>
-            <Button variant={"outline-primary"} type="submit" disabled={pristine || submitting}>登録</Button>
+            <Button variant={"outline-primary"} type="submit" className={"upload-button"} disabled={pristine || submitting}>アップロード</Button>
             <Button variant={"outline-secondary"} type="button" disabled={pristine || submitting} onClick={reset}>クリア</Button>
           </Col>
         </Form.Group>
