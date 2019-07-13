@@ -13,7 +13,8 @@ node_modules/
 
 # production
 build/
-/ekz_api/public/
+/ekz_api/public/*
+!/ekz_api/public/uploads
 
 # misc
 .DS_Store/
