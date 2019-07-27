@@ -4,6 +4,7 @@ import {Navbar, Nav, } from "react-bootstrap"
 import {LinkContainer}  from "react-router-bootstrap"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import MessageField from "~/views/components/common/messageField"
+import {isSmartPhone} from "~/common/userAgentChecker"
 
 class Layout extends Component {
   render() {
@@ -33,6 +34,19 @@ class Layout extends Component {
         </LinkContainer>
       </Nav>
     )
+
+    let containerStyle = {
+      backgroundColor: "rgba(255,255,255,0.9)",
+      borderRadius: "20px",
+    }
+    if(isSmartPhone()){
+      containerStyle["padding"] = "20px 5px"
+      containerStyle["margin"] = "10px -10px"
+    } else {
+      containerStyle["padding"] = "20px 20px"
+      containerStyle["margin"] = "10px 0px"
+    }
+
     return (
         <div style={{
           // backgroundColor: "#EEEEEE",
@@ -48,12 +62,7 @@ class Layout extends Component {
               : <LoginedNavi/>}
           </Navbar>
           <div className="container">
-            <div style={{
-              backgroundColor: "rgba(255,255,255,0.9)",
-              margin: "10px 0px",
-              padding: "20px 20px",
-              borderRadius: "20px",
-            }}>
+            <div style={containerStyle}>
             {this.props.children}
             </div>
           </div>

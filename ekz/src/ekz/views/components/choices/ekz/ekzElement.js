@@ -16,6 +16,7 @@ import {EKZ_IMAGE_ROOT} from "~/common/const"
 import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
+import {isSmartPhone} from "~/common/userAgentChecker"
 
 class EkzShowElem extends Component {
   /*
@@ -83,14 +84,21 @@ class EkzShowElem extends Component {
       )
     }
 
+    let cardStyle = {
+      padding: "20px 25px",
+      margin: "10px 3px",
+      textAlign: "center",
+      background: "#fff",
+    }
+    if(isSmartPhone()){
+      cardStyle["padding"] = "20px 0px"
+    } else {
+      cardStyle["padding"] = "20px 25px"
+    }
+
     return (
       <Col xs={12} md={12}>
-        <Card style={{
-          padding: "20px 25px",
-          margin: "10px 3px",
-          textAlign: "center",
-          background: "#fff",
-        }}>
+        <Card style={cardStyle}>
           {/*<Card.Img />*/}
           <h3 style={{
             height: "40px",
