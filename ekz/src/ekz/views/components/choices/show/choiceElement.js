@@ -43,8 +43,11 @@ class ChoiceShowElem extends Component {
       : choice.name
     if(choice.url){
       nameTag = (
-        <a href="#"
-           onMouseDown={() => {window.open(choice.url, new Date().getTime())}}
+        <a href={choice.url}
+           onMouseDown={(e) => {
+             e.preventDefault()
+             window.open(choice.url, new Date().getTime())}
+           }
         >
           {choiceName}
         </a>)
