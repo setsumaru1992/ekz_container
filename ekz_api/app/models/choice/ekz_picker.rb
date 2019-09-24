@@ -55,8 +55,8 @@ module Choice::EkzPicker
       ) if all_exist_flags.select {|exist_flag| exist_flag}.size == 1
 
       while true
-        # 2/3でGood
-        if rand(3) != 0 && exist_good_choice_size
+        # 1/2でGood
+        if rand(2) != 0 && exist_good_choice_size
           good_choice_size = 1
           return [good_choice_size, normal_choice_size, bad_choice_size]
         end
