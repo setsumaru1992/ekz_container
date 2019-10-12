@@ -25,10 +25,13 @@ export default class ChoiceCommentState extends ChoiceCommentStateRecord {
   addComment(choiceId, comment) {
     let commentMap = this.getCommentMap()
     let comments = commentMap[choiceId]
-    comments.append(comment)
+    if(!(comments instanceof Array)){
+      comments = []
+    }
+    comments.push(comment)
     const newCommentKeyValue = {}
     newCommentKeyValue[choiceId] = comments
-    Object.assign(commentMap, newCommentKeyValue)
+    commentMap = Object.assign({}, commentMap, newCommentKeyValue)
     return updateStateField(this, {
       commentMap: commentMap,
     })

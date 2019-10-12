@@ -2,10 +2,12 @@ import {patch, updateObject} from "~/reducers/utils/stateUtils"
 
 export const ACTION_CHOICE_VISIBLE_FORM = "ACTION_CHOICE_VISIBLE_FORM"
 export const ACTION_CHOICE_VISIBLE_FILE_FORM = "ACTION_CHOICE_VISIBLE_FILE_FORM"
+export const ACTION_CHOICE_VISIBLE_COMMTNT_FORM = "ACTION_CHOICE_VISIBLE_COMMTNT_FORM"
 
 const initialState = {
   visibleFormMap: {},
   visibleFileFormMap: {},
+  visibleCommentFormMap: {},
 }
 
 export function actionChoiceVisibleForm(themeId, choiceId = ""){
@@ -21,6 +23,14 @@ export function actionChoiceVisibleFileForm(choiceId, imageId = ""){
     type: ACTION_CHOICE_VISIBLE_FILE_FORM,
     choiceId,
     imageId,
+  }
+}
+
+export function actionChoiceVisibleCommentForm(choiceId, commentId = ""){
+  return  {
+    type: ACTION_CHOICE_VISIBLE_COMMTNT_FORM,
+    choiceId,
+    commentId,
   }
 }
 
@@ -51,6 +61,19 @@ export default function choicesAppReducer(state = initialState, action){
       )
       return patch(state, {
         visibleFileFormMap: newVisibleFileFormMap
+      })
+    case ACTION_CHOICE_VISIBLE_COMMTNT_FORM:
+      let newVisibleCommentFormMap = {}
+      const targetKeyOfCommentForm = `${action.choiceId}_${action.commentId}`
+      const currentBoolValOfCommentForm = state.visibleCommentFormMap[targetKeyOfCommentForm]
+      Object.keys(state.visibleCommentFormMap).forEach((key) => {
+        newVisibleCommentFormMap[key] = false
+      })
+      newVisibleCommentFormMap =  updateObject(
+        newVisibleCommentFormMap, targetKeyOfCommentForm, !currentBoolValOfCommentForm
+      )
+      return patch(state, {
+        visibleCommentFormMap: newVisibleCommentFormMap
       })
     default:
       return state

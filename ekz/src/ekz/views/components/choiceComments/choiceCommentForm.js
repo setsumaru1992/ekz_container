@@ -21,7 +21,8 @@ const choiceCommentFormCreator =(choiceId = null, commentId = null) => {
   if(commentId != null) formName = `${formName}_${String(commentId)}`
   const choiceCommentForm = formCreator(
     formName,
-    (handleSubmit, pristine, reset, submitting) => {return (
+    (handleSubmit, pristine, reset, submitting) => {
+      return (
       <Form onSubmit={handleSubmit} action="#">
         <Field
           component={textareaField}

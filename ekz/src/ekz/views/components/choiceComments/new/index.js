@@ -9,13 +9,14 @@ class ChoiceCommentNew extends Component {
   render() {
     const {
       choiceId,
-      actionAsyncChoiceImageNew,
+      actionAsyncChoiceCommentNew,
       accessKey,
     } = this.props
-    const ChoiceCommentForm = choiceCommentFormCreator(choiceId)
+    const ChoiceCommentForm = choiceCommentFormCreator()
     return (
       <ChoiceCommentForm
-        onSubmit={actionAsyncChoiceImageNew}
+        onSubmit={actionAsyncChoiceCommentNew}
+        // stateの更新によってinitialValuesが無化されるので常駐フォームは対策必要。choice情報や既存のコメント
         initialValues={{
           id: "",
           comment: "",
@@ -37,5 +38,5 @@ export default connectViewToStateAndActionCreaters(ChoiceCommentNew,
     return {
       accessKey: state.authManager.getAccessKey()
     }
-  }, {actionAsyncChoiceImageNew: actionAsyncChoiceCommentNew}
+  }, {actionAsyncChoiceCommentNew}
 )

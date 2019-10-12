@@ -58,7 +58,7 @@ function actionChoiceCommentNew(choiceId, comment){
 export function actionAsyncChoiceCommentNew(commentForm){
   return (dispatch) =>{
     return REQUEST_GETTERS.NEW(commentForm).access((data) => {
-      dispatch(actionChoiceComments(commentForm.choice_id, data.comment))
+      dispatch(actionChoiceCommentNew(commentForm.choice_id, data.comment))
     })
   }
 }

@@ -9,10 +9,9 @@ class ChoiceCommentsController < ApplicationController
   def new
     user_id = AuthManager.authenticate(choice_comment_params[:access_key])
     # 暫定　あとでEntity化
-    comment_model = Comment.new
+    comment_model = Choice.find(choice_comment_params[:choice_id]).comments.build
     comment_model.content = choice_comment_params[:comment]
     comment_model.created_by = user_id
-    comment_model.choice = Choice.find(choice_comment_params[:choice_id])
     comment_model.save!
 
     render json: {
