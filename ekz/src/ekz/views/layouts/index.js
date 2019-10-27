@@ -61,7 +61,7 @@ class Layout extends Component {
               ? <NotLoginNavi/>
               : <LoginedNavi/>}
           </Navbar>
-          <div className="container">
+          <div className="container-fluid">
             <div style={containerStyle}>
             {this.props.children}
             </div>
