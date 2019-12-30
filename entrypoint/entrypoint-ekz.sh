@@ -1,4 +1,4 @@
-cd $(dirname $0 && pwd)
+cd $(dirname $0 >> /dev/null && pwd)
 cd ..
 CONTAINER_ROOT="$(pwd)"
 
