@@ -75,26 +75,9 @@ class EkzShowElem extends Component {
           <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"/>
         </a>
       )
-    } else if (choice.url != "") {
+    } else if (choice.webpage_capture) {
       imageField = (
-        <div style={{
-          position: "relative",
-          width: "100%",
-          padding: `calc(100 / 100 * 100%) 0 0`,
-          overflow: "auto",
-        }}>
-        <iframe
-          src={choice.url}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            height: "100%",
-            width: "100%",
-          }}
-          allowFullScreen={true}
-        />
-        </div>
+        <img src={`${choice.webpage_capture.url}`}  width="150px" height="150px"/>
       )
     }
 

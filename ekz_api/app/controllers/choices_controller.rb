@@ -27,6 +27,14 @@ class ChoicesController < ApplicationController
     ekz_hash_list = ekz_list.map do |choice|
       choice_hash = choice.attributes
       choice_hash["image_filename"] = choice.choice_images.first.image_filename if choice.choice_images.present?
+      if choice.choice_webpage_capture.present?
+        begin
+          choice_hash["webpage_capture"] = choice.choice_webpage_capture.image.url
+        rescue => e
+          Rails.logger.error(e.message)
+          Rails.logger.error(e.backtrace.join("\n"))
+        end
+      end
       Rails.logger.info(choice_hash)
       choice_hash
     end
