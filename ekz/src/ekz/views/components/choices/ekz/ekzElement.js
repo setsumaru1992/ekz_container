@@ -77,7 +77,7 @@ class EkzShowElem extends Component {
       )
     } else if (choice.webpage_capture) {
       imageField = (
-        <img src={`${choice.webpage_capture.url}`}  width="150px" height="150px"/>
+        <img src={`${choice.webpage_capture}`}  width="150px" height="150px"/>
       )
     }
 
