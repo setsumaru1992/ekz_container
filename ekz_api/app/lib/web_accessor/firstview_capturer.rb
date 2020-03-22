@@ -17,7 +17,7 @@ module WebAccessor
     private
 
     def screenshot_path(url)
-      Rails.root.join("tmp", "screenshot_#{url.split("?")[0].gsub(//, "_").gsub(/[:\/\/|\/]/, "_")}.png")
+      Rails.root.join("tmp", "screenshot_#{url.split("?")[0].gsub(/:/, "").gsub(/\//, "")}.png")
     end
 
   end
