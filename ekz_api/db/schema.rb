@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_26_131619) do
+ActiveRecord::Schema.define(version: 2020_03_22_093116) do
 
   create_table "access_keys", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 2019_05_26_131619) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["choice_id"], name: "index_choice_images_on_choice_id"
+  end
+
+  create_table "choice_webpage_captures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "choice_id"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["choice_id"], name: "index_choice_webpage_captures_on_choice_id"
   end
 
   create_table "choices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -93,6 +101,7 @@ ActiveRecord::Schema.define(version: 2019_05_26_131619) do
   end
 
   add_foreign_key "choice_images", "choices"
+  add_foreign_key "choice_webpage_captures", "choices"
   add_foreign_key "choices", "themes"
   add_foreign_key "comments", "choices"
   add_foreign_key "user_group_relations", "user_groups"

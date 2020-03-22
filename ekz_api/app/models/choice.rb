@@ -4,4 +4,5 @@ class Choice < ApplicationRecord
   belongs_to :theme
   has_many :comments
   has_many :choice_images
+  has_one :choice_webpage_capture
 end
