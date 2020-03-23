@@ -57,8 +57,9 @@ class EkzShowElem extends Component {
       : choice.name
     if (choice.url) {
       nameTag = (
-        <a href="#"
-           onMouseDown={() => {
+        <a href={choice.url}
+           onMouseDown={(e) => {
+             e.preventDefault()
              window.open(choice.url, new Date().getTime())
            }}
         >
@@ -68,13 +69,25 @@ class EkzShowElem extends Component {
       nameTag = choiceName
     }
 
-    let imageUrl = "https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png"
+    let imageSrc = "https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png"
+    let imageUrl = "#"
     if (choice.image_filename) {
-      imageUrl = `${EKZ_IMAGE_ROOT}${choice.image_filename.url}`
+      imageSrc = `${EKZ_IMAGE_ROOT}${choice.image_filename.url}`
+      imageUrl = imageSrc
     } else if (choice.webpage_capture) {
-      imageUrl = choice.webpage_capture
+      imageSrc = choice.webpage_capture
+      imageUrl = choice.url
     }
-    let imageField = (<img src={imageUrl} style={{width: "100%", padding: "0px 20px"}} />)
+    let imageField = (
+      <a href={imageUrl}
+         onMouseDown={(e) => {
+           e.preventDefault()
+           window.open(imageUrl, new Date().getTime())
+         }}
+      >
+        <img src={imageSrc} style={{width: "100%", padding: "0px 20px"}} />
+      </a>
+     )
 
     const comments = commentMap[choice.id] ? commentMap[choice.id] : []
     return (
@@ -178,4 +191,5 @@ export default connectViewToStateAndActionCreaters(EkzShowElem,
     actionAsyncChoiceComments,
   }
 )
+
 
