@@ -68,30 +68,14 @@ class EkzShowElem extends Component {
       nameTag = choiceName
     }
 
-    let imageField = null
+    let imageUrl = "https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png"
     if (choice.image_filename) {
-      imageField = (
-        <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">
-          <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"/>
-        </a>
-      )
+      imageUrl = `${EKZ_IMAGE_ROOT}${choice.image_filename.url}`
     } else if (choice.webpage_capture) {
-      imageField = (
-        <img src={`${choice.webpage_capture}`}  width="150px" height="150px"/>
-      )
+      imageUrl = choice.webpage_capture
     }
+    let imageField = (<img src={imageUrl} style={{width: "100%", padding: "0px 20px"}} />)
 
-    let cardStyle = {
-      padding: "20px 25px",
-      margin: "10px 3px",
-      textAlign: "center",
-      background: "#fff",
-    }
-    if(isSmartPhone()){
-      cardStyle["padding"] = "20px 0px"
-    } else {
-      cardStyle["padding"] = "20px 25px"
-    }
     const comments = commentMap[choice.id] ? commentMap[choice.id] : []
     return (
       <Col xs={12} md={12}>
@@ -194,3 +178,4 @@ export default connectViewToStateAndActionCreaters(EkzShowElem,
     actionAsyncChoiceComments,
   }
 )
+
