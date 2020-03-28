@@ -48,12 +48,7 @@ class Layout extends Component {
     }
 
     return (
-        <div style={{
-          // backgroundColor: "#EEEEEE",
-          backgroundImage: "url(https://cdn.pixabay.com/photo/2018/07/14/13/03/the-john-rylands-library-3537566_960_720.jpg)",
-          backgroundAttachment: "fixed",
-          backgroundSize: "cover",
-        }}>
+        <div>
           <MessageField />
           <Navbar bg="dark" variant="dark">
             <Navbar.Brand href="/">ekz</Navbar.Brand>
@@ -82,3 +77,4 @@ export default connectViewToStateAndActionCreaters(Layout,
     }
   }, {}
 )
+
