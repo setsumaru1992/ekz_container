@@ -37,7 +37,12 @@ class ChoiceEkz extends Component {
         {this.themeContainer(theme, visibleFormMap, actionChoiceVisibleForm)}
         <div style={{position: "relative"}}>
           {this.switchEkzAreaContainer(switchAreaWidth, theme.id, actionAsyncEkzList)}
-          <div style={{margin: `0px ${switchAreaWidth}`}}>
+          <div style={{
+            margin: `0px ${switchAreaWidth}`,
+            borderStyle: "solid",
+            borderWidth: "8px 0px",
+            borderColor: "#F5F5F5",
+          }}>
             {ekzList.map((choice) =>
               <EkzElem choice={choice} themeId={theme.id} key={choice.id} />
             )}
@@ -52,15 +57,17 @@ class ChoiceEkz extends Component {
       width: switchAreaWidth,
       height: "100%",
       position: "absolute",
-
+      //textAlign: "", // 枠側で決めないと設定できないため。テキスト側で設定したかったが。
+      backgroundColor: "#F5F5F5",
     }
-    const leftSwitchAreaStyle = Object.assign({left: "0px"}, switchAreaBaseStyle)
-    const rightSwitchAreaStyle = Object.assign({right: "0px"}, switchAreaBaseStyle)
+    const leftSwitchAreaStyle = Object.assign({left: "0px", textAlign: "left"}, switchAreaBaseStyle)
+    const rightSwitchAreaStyle = Object.assign({right: "0px", textAlign: "center"}, switchAreaBaseStyle)
+
     const textStyle = {
-      textAlign: "center",
       height: "100%",
       position: "absolute",
       transform: "translateY(50%)", // https://saruwakakun.com/html-css/basic/centering
+      color: "black"
     }
 
     return(
@@ -101,13 +108,17 @@ class ChoiceEkz extends Component {
           height: "1rem",
           lineHeight: "initial"
         }}>
-          &gt;{theme.name}
+          <NavLink
+            to={{
+              pathname: "/mypage/theme"
+            }}>テーマ</NavLink>
+          &gt; {theme.name}
         </h2>
-        <NavLink
+        (<NavLink
           to={{
             pathname: "/mypage/choice",
             search: `?t=${theme.id}`
-          }}> (リストを表示)</NavLink>
+          }}>リストを表示</NavLink>)
       </div>
     )
   }
@@ -139,6 +150,3 @@ export default connectViewToStateAndActionCreaters(ChoiceEkz,
     }
   }, {actionAsyncEkzList, actionChoiceVisibleForm}
 )
-
-
-
