@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types"
 import {NavLink} from "react-router-dom"
 import {Card, Col, Button, Table} from "react-bootstrap"
@@ -50,11 +50,65 @@ class EkzShowElem extends Component {
       actionChoiceVisibleCommentForm,
       commentMap,
     } = this.props
+
+    return (
+      <Col xs={12} md={12}>
+        {this.choiceUpperContentContainer(choice, themeId, visibleFileFormMap, visibleFormMap, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy, actionChoiceVisibleForm)}
+        {this.imageAreaContainer(choice)}
+        <div>
+          {choiceEvaluationButtonGroup(
+            choice.id, themeId, choice.evaluation,
+            (value, event) => {
+              actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)
+            }
+          )}
+        </div>
+        <div>
+          <Button variant="outline-primary"
+                  onClick={() => actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>
+        </div>
+        {this.commentAreaContainer(commentMap, visibleCommentFormMap, choice.id, actionChoiceVisibleCommentForm)}
+      </Col>
+    )
+  }
+
+  choiceUpperContentContainer(choice, themeId, visibleFileFormMap, visibleFormMap, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy, actionChoiceVisibleForm){
+    return (
+      <Fragment>
+        <div style={{display: "flex"}}>
+          <div style={{display: "flex"}}>
+            {this.choicePropertyContainer(choice, themeId, actionChoiceVisibleForm)}
+          </div>
+          <div style={{display: "flex", marginLeft: "auto"}}>
+            {this.choiceMenuArea(choice.id, themeId, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy)}
+          </div>
+        </div>
+        {this.choiceUpdateArea(choice, themeId, visibleFileFormMap, visibleFormMap)}
+      </Fragment>
+    )
+  }
+
+  choicePropertyContainer(choice, themeId, actionChoiceVisibleForm){
+    const showChoicePropertyEditIcon = () => {return this.choicePropertyEditIcon(actionChoiceVisibleForm, themeId, choice.id)}
+    return (
+      <div>
+        {this.choiceNameArea(choice, showChoicePropertyEditIcon)}
+        {this.choiceDescriptionArea(choice.description, showChoicePropertyEditIcon)}
+      </div>
+    )
+  }
+
+  choiceNameArea(choice, showChoicePropertyEditIcon){
+    const extractString = (str, maxLength) => {
+      if(str.length > maxLength){
+        return `${str.substr(0, maxLength - 1)}...`
+      }else{
+        return str
+      }
+    }
+    const choiceName = extractString(choice.name, 20)
+
     let nameTag = null
-    const dispNameLength = 30
-    const choiceName = choice.name.length > dispNameLength
-      ? `${choice.name.substr(0, dispNameLength - 1)}...`
-      : choice.name
     if (choice.url) {
       nameTag = (
         <a href={choice.url}
@@ -63,22 +117,112 @@ class EkzShowElem extends Component {
              window.open(choice.url, new Date().getTime())
            }}
         >
-          {choiceName}
-        </a>)
+          {choiceName}<br />({extractString(choice.url, 20)})
+        </a>
+      )
     } else {
       nameTag = choiceName
     }
 
+    const fontSize = "16px"
+    return(
+      <div style={{
+        fontSize: fontSize,
+        display: "inline-flex"
+      }}>
+        <h1 style={{
+          fontSize: fontSize
+        }}>
+          {nameTag}
+        </h1>
+        &nbsp;{showChoicePropertyEditIcon()}&nbsp;{this.choiceEvaluateIcon()}
+      </div>
+    )
+  }
+
+  choiceDescriptionArea(choiceDescription, showChoicePropertyEditIcon){
+    if(!choiceDescription || choiceDescription == "") return null
+    return (
+      <Fragment>
+        <div style={{display: "inline-flex"}}>
+          <div dangerouslySetInnerHTML={{__html: choiceDescription.replace(/\n/g, "<br />")}} />
+          &nbsp;{showChoicePropertyEditIcon()}
+        </div>
+      </Fragment>
+    )
+  }
+
+  choicePropertyEditIcon(actionChoiceVisibleForm, themeId, choiceId){
+    return (
+      <Fragment>
+        <i className="fas fa-pen fa-fw" onClick={() => actionChoiceVisibleForm(themeId, choiceId)}></i>
+      </Fragment>
+    )
+  }
+
+  choiceEvaluateIcon(){
+    const activeStyle = {color: "black"}
+    const inactiveStyle = {color: "#CCCCCC"}
+    const style = inactiveStyle
+    return (
+      <Fragment>
+        <i className="fas fa-thumbs-up fa-fw" style={style}></i>(作成中)
+      </Fragment>
+    )
+  }
+
+  choiceMenuArea(choiceId, themeId, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy){
+    const iconStyle = {color: "black"}
+    return (
+      <Fragment>
+        <NavLink
+          to={{
+            pathname: `/mypage/choice/${choiceId}`,
+          }}
+          style={{
+            marginRight: "auto"
+          }}
+        >
+          <i className="far fa-list-alt fa-fw" style={iconStyle}></i>
+        </NavLink>&nbsp;
+
+        <a href="#"><i className="fas fa-upload fa-fw" style={iconStyle} onClick={() => actionChoiceVisibleFileForm(choiceId)}></i></a>&nbsp;
+
+        <a href="#"><i className="fas fa-trash fa-fw" style={iconStyle} onClick={() => {
+          const deleteOk = window.confirm("本当に削除してもよろしいですか？")
+          if (!deleteOk) return
+          actionAsyncChoiceDestroy(choiceId, themeId)
+        }}></i></a>
+      </Fragment>
+    )
+  }
+
+  choiceUpdateArea(choice, themeId, visibleFileFormMap, visibleFormMap){
+    return (
+      <Fragment>
+        {visibleFileFormMap[`${choice.id}_`]
+          ? <ChoiceImageNew choiceId={choice.id} themeId={themeId}/>
+          : null}
+
+        {visibleFormMap[`${themeId}_${choice.id}`]
+          ? <ChoiceEdit themeId={themeId} choice={choice}/>
+          : null
+        }
+      </Fragment>
+    )
+  }
+
+  imageAreaContainer(choice){
     let imageSrc = "https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png"
-    let imageUrl = "#"
     if (choice.image_filename) {
       imageSrc = `${EKZ_IMAGE_ROOT}${choice.image_filename.url}`
-      imageUrl = imageSrc
     } else if (choice.webpage_capture) {
       imageSrc = choice.webpage_capture
-      imageUrl = choice.url
     }
-    let imageField = (
+
+    let imageUrl = choice.url ? choice.url : "#"
+
+    return (
       <a href={imageUrl}
          onMouseDown={(e) => {
            e.preventDefault()
@@ -87,83 +231,43 @@ class EkzShowElem extends Component {
       >
         <img src={imageSrc} style={{width: "100%", padding: "0px 20px"}} />
       </a>
-     )
+    )
+  }
 
-    const comments = commentMap[choice.id] ? commentMap[choice.id] : []
+  commentAreaContainer(commentMap, visibleCommentFormMap, choiceId, actionChoiceVisibleCommentForm){
+    const comments = commentMap[choiceId] ? commentMap[choiceId] : []
     return (
-      <Col xs={12} md={12}>
-          <h1 style={{
-            fontSize: "30px"
-          }}>{nameTag}</h1>
-            {imageField}
-            <div>
-              {choiceEvaluationButtonGroup(
-                choice.id, themeId, choice.evaluation,
-                (value, event) => {
-                  actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId)
-                }
-              )}
-            </div>
+      <Fragment>
         <div>
+          <div>
+            コメント一覧
             <Button variant="outline-primary"
-                    onClick={() => actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
-            <Button variant="outline-primary"
-                    onClick={() => actionChoiceVisibleFileForm(choice.id)}>画像アップロード</Button>&emsp;
-            <Button variant="outline-primary" onClick={() => {
-              const deleteOk = window.confirm("本当に削除してもよろしいですか？")
-              if (!deleteOk) return
-              actionAsyncChoiceDestroy(choice.id, themeId)
-            }}
-            >削除</Button>
-        </div>
-          {visibleFileFormMap[`${choice.id}_`]
-            ? <ChoiceImageNew choiceId={choice.id} themeId={themeId}/>
+                    onClick={() => actionChoiceVisibleCommentForm(choiceId)}>コメント追加</Button>
+          </div>
+          {visibleCommentFormMap[`${choiceId}_`]
+            ? <ChoiceCommentNew choiceId={choiceId}/>
             : null}
-
-          {visibleFormMap[`${themeId}_${choice.id}`]
-            ? <ChoiceEdit themeId={themeId} choice={choice}/>
-            : ""
-          }
-        <div>
-            <div>
-              コメント一覧
-              <Button variant="outline-primary"
-                      onClick={() => actionChoiceVisibleCommentForm(choice.id)}>コメント追加</Button>
-            </div>
-          {visibleCommentFormMap[`${choice.id}_`]
-            ? <ChoiceCommentNew choiceId={choice.id}/>
-            : null}
-        <Table>
-          <tbody>
-          {comments.map(comment => {
-            const rawDateStr = comment.created_at
-            const dateStr = `${rawDateStr.substr(0,4)}/${rawDateStr.substr(5,2)}/${rawDateStr.substr(8,2)} ${rawDateStr.substr(11,2)}:${rawDateStr.substr(14,2)}`
-            return (<tr key={comment.id}>
-              <td>
-                <div style={{
-                  fontSize: "10px",
-                  color: "grey",
-                }}>{dateStr}&nbsp;by&nbsp;{comment.created_by}</div>
-                {comment.content}
-                <div>編集 &emsp; 削除</div>
-                </td>
-            </tr>
-            )})
-          }
-          </tbody>
-        </Table>
+          <Table>
+            <tbody>
+            {comments.map(comment => {
+              const rawDateStr = comment.created_at
+              const dateStr = `${rawDateStr.substr(0,4)}/${rawDateStr.substr(5,2)}/${rawDateStr.substr(8,2)} ${rawDateStr.substr(11,2)}:${rawDateStr.substr(14,2)}`
+              return (<tr key={comment.id}>
+                  <td>
+                    <div style={{
+                      fontSize: "10px",
+                      color: "grey",
+                    }}>{dateStr}&nbsp;by&nbsp;{comment.created_by}</div>
+                    {comment.content}
+                    <div>編集 &emsp; 削除</div>
+                  </td>
+                </tr>
+              )})
+            }
+            </tbody>
+          </Table>
         </div>
-        <NavLink
-          to={{
-            pathname: `/mypage/choice/${choice.id}`,
-          }}
-          style={{
-            marginRight: "auto"
-          }}
-        >
-          More...
-        </NavLink>
-      </Col>
+      </Fragment>
     )
   }
 }
@@ -191,5 +295,4 @@ export default connectViewToStateAndActionCreaters(EkzShowElem,
     actionAsyncChoiceComments,
   }
 )
-
 

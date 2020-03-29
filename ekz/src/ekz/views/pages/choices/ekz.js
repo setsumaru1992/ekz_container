@@ -98,21 +98,21 @@ class ChoiceEkz extends Component {
   }
 
   themeNameArea(theme){
+    const fontSize = "0.8rem"
     return (
       <div style={{
         display: "-webkit-inline-box",
-        fontSize: "1rem",
+        fontSize: fontSize,
       }}>
         <h2 style={{
-          fontSize: "1rem",
-          height: "1rem",
+          fontSize: fontSize,
           lineHeight: "initial"
         }}>
           <NavLink
             to={{
               pathname: "/mypage/theme"
             }}>テーマ</NavLink>
-          &gt; {theme.name}
+          &nbsp;&gt;&nbsp;{theme.name}
         </h2>
         (<NavLink
           to={{
