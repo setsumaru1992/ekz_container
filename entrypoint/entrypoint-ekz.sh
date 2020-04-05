@@ -42,7 +42,7 @@ killProcess () {
     port=$1
     headerSample="PID"
     pid=$(lsof -i :$port | grep -v $headerSample | head -n 1 | awk '{print $2}')
-    if [ "$pid" <> "" ]; then
+    if [ ! "$pid" = "" ]; then
         execCmd="kill -9 $pid"
         echo "$execCmd"
         bash -c "$execCmd"
