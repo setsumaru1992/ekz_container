@@ -25,6 +25,7 @@ class ChoiceShow extends Component {
       choiceList,
       visibleFormMap,
       actionChoiceVisibleForm,
+      actionAsyncChoiceList,
       theme,
     } = this.props
     return (
@@ -46,6 +47,13 @@ class ChoiceShow extends Component {
           ? <ChoiceNew themeId={theme.id} />
           : ""
         }
+        <input
+          type="text" name="searchWord" id="searchWord"
+          onInput={() => {
+            const searchWord = document.getElementById("searchWord").value
+            actionAsyncChoiceList(theme.id, searchWord)
+          }}
+        />
         <Form.Row>
           {choiceList.map((choice) =>
             <ChoiceShowElem choice={choice} themeId={theme.id} key={choice.id} />

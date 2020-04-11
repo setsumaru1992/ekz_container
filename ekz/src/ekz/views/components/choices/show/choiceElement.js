@@ -56,7 +56,7 @@ class ChoiceShowElem extends Component {
     }
 
     return (
-      <Col xs={12} md={12}>
+      <Col xs={12} sm={6} md={4} lg={3}>
         <Card style={{
           padding: "20px 25px",
           margin: "10px 3px",
@@ -72,11 +72,12 @@ class ChoiceShowElem extends Component {
           marginBottom: "6px"
         }}>{nameTag}</h3>
           <Card.Body>
-            {choice.image_filename
-              ? <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">
-                <img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />
-              </a>
-              : null}
+            {/*{choice.image_filename*/}
+              {/*? <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">*/}
+                {/*<img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />*/}
+              {/*</a>*/}
+              {/*: null}*/}
+            {this.imageAreaContainer(choice)}
             <div>
               {choiceEvaluationButtonGroup(
                 choice.id, themeId, choice.evaluation,
@@ -112,6 +113,28 @@ class ChoiceShowElem extends Component {
           </Card.Body>
         </Card>
       </Col>
+    )
+  }
+
+  imageAreaContainer(choice){
+    let imageSrc = "https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png"
+    if (choice.image_filename) {
+      imageSrc = `${EKZ_IMAGE_ROOT}${choice.image_filename.url}`
+    } else if (choice.webpage_capture) {
+      imageSrc = choice.webpage_capture
+    }
+
+    let imageUrl = choice.url ? choice.url : "#"
+
+    return (
+      <a href={imageUrl}
+         onMouseDown={(e) => {
+           e.preventDefault()
+           window.open(imageUrl, new Date().getTime())
+         }}
+      >
+        <img src={imageSrc} style={{width: "100%", padding: "0px 20px"}} />
+      </a>
     )
   }
 }

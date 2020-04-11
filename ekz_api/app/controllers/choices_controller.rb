@@ -1,9 +1,31 @@
 class ChoicesController < ApplicationController
   def show
     choice_list = Choice.find_by_theme_id(choice_params[:theme_id])
+    if choice_params[:search_word].present?
+      search_word = choice_params[:search_word]
+      choice_list = choice_list
+        .where(
+          %Q(name LIKE '%#{search_word}%'
+          OR EXISTS(
+              SELECT *
+              FROM choice_tags ct
+              WHERE ct.choice_id = choices.id
+                AND  ct.name LIKE '%#{search_word}%'
+            )
+          )
+        )
+    end
     choice_hash_list = choice_list.map do |choice|
       choice_hash = choice.attributes
       choice_hash["image_filename"] = choice.choice_images.first.image_filename if choice.choice_images.present?
+      if choice.choice_webpage_capture.present?
+        begin
+          choice_hash["webpage_capture"] = choice.choice_webpage_capture.image.url
+        rescue => e
+          Rails.logger.error(e.message)
+          Rails.logger.error(e.backtrace.join("\n"))
+        end
+      end
       choice_hash
     end
     render json: {
@@ -77,7 +99,7 @@ class ChoicesController < ApplicationController
 
   def choice_params
     params.permit(
-      :id, :name, :url, :evaluation, :description, :theme_id, :ids,
+      :id, :name, :url, :evaluation, :description, :theme_id, :ids, :search_word,
       :description, :choice, image: []
     )
   end

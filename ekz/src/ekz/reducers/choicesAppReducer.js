@@ -11,7 +11,7 @@ export const ACTION_CHOICE_CHANGED = "ACTION_CHOICE_CHANGED"
 
 const URL_BASE = "choices/"
 const REQUEST_GETTERS = {
-  GET_ALL: requestGetterWithoutParam(URL_BASE + "show", HTTP_METHODS.GET),
+  SEARCH: requestGetterWithoutParam(URL_BASE + "show", HTTP_METHODS.GET),
   DETAIL: requestGetterWithoutParam(URL_BASE + "detail", HTTP_METHODS.GET),
   NEW: requestGetterWithoutParam(URL_BASE + "new", HTTP_METHODS.POST),
   IMAGE_NEW: requestGetterWithoutParam("choice_images/" + "new", HTTP_METHODS.POST),
@@ -46,9 +46,9 @@ function actionChoiceList(theme, choiceList){
   }
 }
 
-export function actionAsyncChoiceList(themeId){
+export function actionAsyncChoiceList(themeId, searchWord = ""){
   return (dispatch) =>{
-    return REQUEST_GETTERS.GET_ALL({theme_id: themeId}).access((data) => {
+    return REQUEST_GETTERS.SEARCH({theme_id: themeId, search_word: searchWord}).access((data) => {
       dispatch(actionChoiceList(data.theme, data.choice_list))
     })
   }
