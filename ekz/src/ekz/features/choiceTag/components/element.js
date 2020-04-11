@@ -11,7 +11,10 @@ class ChoiceTagElement extends Component {
       removeTag
     } = this.props
     return (<Fragment>
-      {tag.name} <span onClick={() => {removeTag(tag.choice_id, tag.id)}}>×</span>&nbsp;
+      <div>
+        {tag.name} <span onClick={() => {removeTag(tag.choice_id, tag.id)}}>×</span>&nbsp;
+      </div>
+      <span></span>
     </Fragment>)
   }
 }

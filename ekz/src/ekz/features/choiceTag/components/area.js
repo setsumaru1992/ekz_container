@@ -4,7 +4,8 @@ import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connec
 
 import {choiceTags} from "~/features/choiceTag/models/appModels/choiceTagAppReducer"
 import NewTag from "~/features/choiceTag/components/newTag"
-import ChoiceTagElement from "~/features/choiceTag/components/element"
+import TagElement from "~/features/choiceTag/components/element"
+import TagWrapper from "~/features/choiceTag/components/tagWrapper"
 
 class ChoiceTagArea extends Component {
   componentWillMount() {
@@ -21,8 +22,8 @@ class ChoiceTagArea extends Component {
       choiceId
     } = this.props
     return (<div>
-      {tags ? tags.map(tag => <ChoiceTagElement tag={tag} key={tag.id}/>): null}
-      <NewTag choiceId={choiceId} />
+      {tags ? tags.map(tag => <TagWrapper key={tag.id}><TagElement tag={tag}/></TagWrapper>): null}
+      <TagWrapper><NewTag choiceId={choiceId} /></TagWrapper>
     </div>)
   }
 }
