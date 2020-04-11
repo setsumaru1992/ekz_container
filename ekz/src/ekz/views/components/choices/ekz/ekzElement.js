@@ -18,6 +18,7 @@ import {EKZ_IMAGE_ROOT} from "~/common/const"
 import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import ChoiceCommentNew from "~/views/components/choiceComments/new"
+import {ChoiceTagArea} from "~/features/choiceTag"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 import {isSmartPhone} from "~/common/userAgentChecker"
 
@@ -54,6 +55,7 @@ class EkzShowElem extends Component {
     return (
       <Col xs={12} md={12}>
         {this.choiceUpperContentContainer(choice, themeId, visibleFileFormMap, visibleFormMap, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy, actionChoiceVisibleForm)}
+        <ChoiceTagArea choiceId={choice.id} />
         {this.imageAreaContainer(choice)}
         <div>
           {choiceEvaluationButtonGroup(
@@ -92,8 +94,12 @@ class EkzShowElem extends Component {
     const showChoicePropertyEditIcon = () => {return this.choicePropertyEditIcon(actionChoiceVisibleForm, themeId, choice.id)}
     return (
       <div>
+        <div>
         {this.choiceNameArea(choice, showChoicePropertyEditIcon)}
+        </div>
+        <div>
         {this.choiceDescriptionArea(choice.description, showChoicePropertyEditIcon)}
+        </div>
       </div>
     )
   }

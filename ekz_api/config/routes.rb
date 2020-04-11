@@ -18,6 +18,17 @@ Rails.application.routes.draw do
         patch  'update'
         patch  'update_evaluation'
         delete 'destroy'
+
+        scope ":choice_id" do
+          namespace :tags do
+            root action: :index
+            post "" , action: :new
+
+            scope ":id" do
+              delete "", action: :destroy
+            end
+          end
+        end
       end
 
       namespace :choice_comments do

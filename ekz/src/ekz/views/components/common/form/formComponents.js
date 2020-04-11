@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {
   Col,
   Form,
@@ -35,6 +35,19 @@ export const inputField = (field) => {
   )
 }
 
+export const oneInlineInputField = (field) => {
+  return (
+    <Fragment>
+      <Form.Control
+        {...field.input}
+        placeholder={field.placeholder}
+        type={field.type}
+        isInvalid={isInvalid(field)}
+      />
+      <Form.Control.Feedback type="invalid">{noticeOf(field)}</Form.Control.Feedback>
+    </Fragment>
+  )
+}
 
 export const inputFileField = (field) => {
   return (

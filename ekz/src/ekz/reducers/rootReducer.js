@@ -11,6 +11,8 @@ import signupAppReducer from "~/reducers/signupAppReducer"
 import profileAppReducer from "~/reducers/profileAppReducer"
 import messageViewReducer from "~/reducers/messageViewReducer"
 import devReducer from "~/reducers/devReducer"
+import choiceTagAppReducer from "~/features/choiceTag/models/appModels/choiceTagAppReducer"
+import choiceTagViewReducer from "~/features/choiceTag/models/viewModels/choiceTagViewReducer"
 /*
 conbineReducerを使った場合はstate取得時にネストを考慮。mapStateToPropsにrootでネストしたreducerからstateの値を取得
 https://qiita.com/usagi-f/items/ae568fb64c2eac882d05
@@ -27,7 +29,9 @@ const rootReducer = combineReducers({
   messageViewReducer,
   authManager: authAppReducer,
   devReducer,
-  form: reduxFormReducer
+  form: reduxFormReducer,
+  choiceTagAppReducer,
+  choiceTagViewReducer
 })
 
 export default rootReducer
