@@ -1,10 +1,9 @@
 class ChoicesController < ApplicationController
   def show
-    choice_list = Choice.find_by_theme_id(choice_params[:theme_id])
+    choice_list = Choice.find_by_theme_id(choice_params[:theme_id]).limit(50)
     if choice_params[:search_word].present?
       search_word = choice_params[:search_word]
-      choice_list = choice_list
-        .where(
+      choice_list = choice_list.where(
           %Q(name LIKE '%#{search_word}%'
           OR EXISTS(
               SELECT *

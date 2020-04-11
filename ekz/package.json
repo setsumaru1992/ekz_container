@@ -126,6 +126,7 @@
     "babel-plugin-root-import": "^6.1.0",
     "bootstrap": "3",
     "immutable": "^4.0.0-rc.12",
+    "lozad": "^1.14.0",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-redux": "^6.0.0",
     "react-router-bootstrap": "^0.24.4",

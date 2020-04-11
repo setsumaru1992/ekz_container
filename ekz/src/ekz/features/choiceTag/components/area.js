@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react"
 import PropTypes from "prop-types"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 
-import {choiceTags} from "~/features/choiceTag/models/appModels/choiceTagAppReducer"
+import {refleshChoiceTags} from "~/features/choiceTag/models/appModels/choiceTagAppReducer"
 import NewTag from "~/features/choiceTag/components/newTag"
 import TagElement from "~/features/choiceTag/components/element"
 import TagWrapper from "~/features/choiceTag/components/tagWrapper"
@@ -10,17 +10,18 @@ import TagWrapper from "~/features/choiceTag/components/tagWrapper"
 class ChoiceTagArea extends Component {
   componentWillMount() {
     const {
-      choiceTags,
+      refleshChoiceTags,
       choiceId
     } = this.props
-    choiceTags(choiceId)
+    refleshChoiceTags(choiceId)
   }
 
   render() {
     const {
-      tags,
+      choiceTags,
       choiceId
     } = this.props
+    const tags = choiceTags[choiceId]
     return (<div>
       {tags ? tags.map(tag => <TagWrapper key={tag.id}><TagElement tag={tag}/></TagWrapper>): null}
       <TagWrapper><NewTag choiceId={choiceId} /></TagWrapper>
@@ -35,6 +36,6 @@ ChoiceTagArea.propTypes = {
 export default connectViewToStateAndActionCreaters(ChoiceTagArea,
   (state) => {
   return {
-    tags: state.choiceTagAppReducer.list
-  }}, {choiceTags}
+    choiceTags: state.choiceTagAppReducer.choiceTags
+  }}, {refleshChoiceTags}
 )

@@ -8,6 +8,7 @@ import ChoiceNew from "~/views/components/choices/new"
 import Button from "react-bootstrap/es/Button";
 import {Form} from "react-bootstrap"
 import {NavLink} from "react-router-dom"
+import lozad from 'lozad';
 
 class ChoiceShow extends Component {
 
@@ -18,6 +19,14 @@ class ChoiceShow extends Component {
     } = this.props
     const themeId = new QueryStringParser(location).getThemeId()
     actionAsyncChoiceList(themeId)
+  }
+
+  componentDidMount(){
+    lozad().observe();
+  }
+
+  componentDidUpdate(){
+    lozad().observe();
   }
 
   render() {
@@ -47,6 +56,7 @@ class ChoiceShow extends Component {
           ? <ChoiceNew themeId={theme.id} />
           : ""
         }
+        TODO 数が多くて重くて表示件数を50件にしたためページング実装<br />
         <input
           type="text" name="searchWord" id="searchWord"
           onInput={() => {

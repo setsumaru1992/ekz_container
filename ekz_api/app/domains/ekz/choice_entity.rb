@@ -107,6 +107,14 @@ module Ekz
 
     def destroy(params)
       result = initial_result
+      if @choice_model.choice_webpage_capture.present?
+        @choice_model.choice_webpage_capture.destroy!
+      end
+
+      if @choice_model.choice_images.present?
+        @choice_model.choice_images.destroy!
+      end
+
       @choice_model.destroy!
       result
     end

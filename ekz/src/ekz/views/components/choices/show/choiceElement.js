@@ -16,7 +16,7 @@ import {
 import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
-
+import {ChoiceTagArea} from "~/features/choiceTag"
 
 class ChoiceShowElem extends Component {
   /*
@@ -72,11 +72,7 @@ class ChoiceShowElem extends Component {
           marginBottom: "6px"
         }}>{nameTag}</h3>
           <Card.Body>
-            {/*{choice.image_filename*/}
-              {/*? <a href={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} target="blank">*/}
-                {/*<img src={`${EKZ_IMAGE_ROOT}${choice.image_filename.url}`} width="150px" height="150px"  />*/}
-              {/*</a>*/}
-              {/*: null}*/}
+            <ChoiceTagArea choiceId={choice.id} />
             {this.imageAreaContainer(choice)}
             <div>
               {choiceEvaluationButtonGroup(
@@ -133,7 +129,11 @@ class ChoiceShowElem extends Component {
            window.open(imageUrl, new Date().getTime())
          }}
       >
-        <img src={imageSrc} style={{width: "100%", padding: "0px 20px"}} />
+        <img
+          className="lozad"
+          data-src={imageSrc}
+          style={{width: "100%", padding: "0px 20px"}}
+        />
       </a>
     )
   }

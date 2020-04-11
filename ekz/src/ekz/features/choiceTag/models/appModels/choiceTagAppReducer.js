@@ -21,18 +21,19 @@ const URLS = {
 }
 
 
-export function choiceTags(choiceId){
+export function refleshChoiceTags(choiceId){
   return (dispatch) => {
     return new Request().access(URLS.tags(choiceId), {}, data => {
-      dispatch(actionChoiceTags(data.tags))
+      dispatch(actionChoiceTags(data.tags, choiceId))
     })
   }
 }
 
-function actionChoiceTags(list){
+function actionChoiceTags(list, choiceId){
   return {
     type: ACTION_CHOICE_TAGS,
-    list: list
+    list,
+    choiceId
   }
 }
 const ACTION_CHOICE_TAGS = "ACTION_CHOICE_TAGS"
@@ -40,9 +41,8 @@ const ACTION_CHOICE_TAGS = "ACTION_CHOICE_TAGS"
 export function createTag(formdata){
   const choiceId = formdata.choice_id
   return (dispatch) => {
-    console.log(formdata)
     return new Request().access(URLS.new(choiceId), formdata, data => {
-      dispatch(choiceTags(choiceId))
+      dispatch(refleshChoiceTags(choiceId))
       dispatch(toggleFormVisible(choiceId))
     })
   }
@@ -51,19 +51,21 @@ export function createTag(formdata){
 export function removeTag(choiceId, tagId){
   return (dispatch) => {
     return new Request().access(URLS.delete(choiceId, tagId), {}, data => {
-      dispatch(choiceTags(choiceId))
+      dispatch(refleshChoiceTags(choiceId))
     })
   }
 }
 
 let sampleState = {
-  list: []
+  choiceTags: {}
 }
 
 export default function choiceTagAppReducer(state = sampleState, action){
   switch (action.type) {
     case ACTION_CHOICE_TAGS:
-      return {list: action.list}
+      let newChoiceTags = Object.assign({}, state.choiceTags)
+      newChoiceTags[action.choiceId] = action.list
+      return {choiceTags: newChoiceTags}
     default:
       return state
   }
