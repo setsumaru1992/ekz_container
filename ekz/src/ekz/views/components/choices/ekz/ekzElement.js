@@ -10,13 +10,11 @@ import {
 } from "~/reducers/ekzAppReducer"
 import {
   actionChoiceVisibleForm,
-  actionChoiceVisibleFileForm,
   actionChoiceVisibleCommentForm,
 } from "~/reducers/choicesViewReducer"
 import {actionAsyncChoiceComments} from "~/reducers/choiceCommentsAppReducer";
 import {EKZ_IMAGE_ROOT} from "~/common/const"
 import ChoiceEdit from "~/views/components/choices/edit"
-import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import ChoiceCommentNew from "~/views/components/choiceComments/new"
 import {ChoiceTagArea} from "~/features/choice/tag"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
@@ -45,16 +43,14 @@ class EkzShowElem extends Component {
       actionAsyncChoiceUpdateEvaluation,
       actionChoiceVisibleForm,
       visibleFormMap,
-      visibleFileFormMap,
       visibleCommentFormMap,
-      actionChoiceVisibleFileForm,
       actionChoiceVisibleCommentForm,
       commentMap,
     } = this.props
 
     return (
       <Col xs={12} md={12}>
-        {this.choiceUpperContentContainer(choice, themeId, visibleFileFormMap, visibleFormMap, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy, actionChoiceVisibleForm)}
+        {this.choiceUpperContentContainer(choice, themeId, visibleFormMap, actionAsyncChoiceDestroy, actionChoiceVisibleForm)}
         <ChoiceTagArea choiceId={choice.id} />
         {this.imageAreaContainer(choice)}
         <div>
@@ -74,7 +70,7 @@ class EkzShowElem extends Component {
     )
   }
 
-  choiceUpperContentContainer(choice, themeId, visibleFileFormMap, visibleFormMap, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy, actionChoiceVisibleForm){
+  choiceUpperContentContainer(choice, themeId, visibleFormMap, actionAsyncChoiceDestroy, actionChoiceVisibleForm){
     return (
       <Fragment>
         <div style={{display: "flex"}}>
@@ -82,10 +78,10 @@ class EkzShowElem extends Component {
             {this.choicePropertyContainer(choice, themeId, actionChoiceVisibleForm)}
           </div>
           <div style={{display: "flex", marginLeft: "auto"}}>
-            {this.choiceMenuArea(choice.id, themeId, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy)}
+            {this.choiceMenuArea(choice.id, themeId, actionAsyncChoiceDestroy)}
           </div>
         </div>
-        {this.choiceUpdateArea(choice, themeId, visibleFileFormMap, visibleFormMap)}
+        {this.choiceUpdateArea(choice, themeId, visibleFormMap)}
       </Fragment>
     )
   }
@@ -177,7 +173,7 @@ class EkzShowElem extends Component {
     )
   }
 
-  choiceMenuArea(choiceId, themeId, actionChoiceVisibleFileForm, actionAsyncChoiceDestroy){
+  choiceMenuArea(choiceId, themeId, actionAsyncChoiceDestroy){
     const iconStyle = {color: "black"}
     return (
       <Fragment>
@@ -192,8 +188,6 @@ class EkzShowElem extends Component {
           <i className="far fa-list-alt fa-fw" style={iconStyle}></i>
         </NavLink>&nbsp;
 
-        <a href="#"><i className="fas fa-upload fa-fw" style={iconStyle} onClick={() => actionChoiceVisibleFileForm(choiceId)}></i></a>&nbsp;
-
         <a href="#"><i className="fas fa-trash fa-fw" style={iconStyle} onClick={() => {
           const deleteOk = window.confirm("本当に削除してもよろしいですか？")
           if (!deleteOk) return
@@ -203,13 +197,9 @@ class EkzShowElem extends Component {
     )
   }
 
-  choiceUpdateArea(choice, themeId, visibleFileFormMap, visibleFormMap){
+  choiceUpdateArea(choice, themeId, visibleFormMap){
     return (
       <Fragment>
-        {visibleFileFormMap[`${choice.id}_`]
-          ? <ChoiceImageNew choiceId={choice.id} themeId={themeId}/>
-          : null}
-
         {visibleFormMap[`${themeId}_${choice.id}`]
           ? <ChoiceEdit themeId={themeId} choice={choice}/>
           : null
@@ -287,7 +277,6 @@ export default connectViewToStateAndActionCreaters(EkzShowElem,
   (state) => {
     return {
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
-      visibleFileFormMap: state.choicesViewReducer.visibleFileFormMap,
       visibleCommentFormMap: state.choicesViewReducer.visibleCommentFormMap,
       commentMap: state.choiceCommentsAppReducer.getCommentMap(),
     }
@@ -296,7 +285,6 @@ export default connectViewToStateAndActionCreaters(EkzShowElem,
     actionAsyncChoiceUpdateEvaluation,
     actionChoiceUpdateEvaluation,
     actionChoiceVisibleForm,
-    actionChoiceVisibleFileForm,
     actionChoiceVisibleCommentForm,
     actionAsyncChoiceComments,
   }

@@ -11,10 +11,8 @@ import {
 } from "~/reducers/choicesAppReducer"
 import {
   actionChoiceVisibleForm,
-  actionChoiceVisibleFileForm,
 } from "~/reducers/choicesViewReducer"
 import ChoiceEdit from "~/views/components/choices/edit"
-import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 import {ChoiceTagArea} from "~/features/choice/tag"
 
@@ -33,8 +31,6 @@ class ChoiceShowElem extends Component {
       actionAsyncChoiceUpdateEvaluation,
       actionChoiceVisibleForm,
       visibleFormMap,
-      visibleFileFormMap,
-      actionChoiceVisibleFileForm,
     } = this.props
     let nameTag = null
     const dispNameLength = 50
@@ -81,7 +77,6 @@ class ChoiceShowElem extends Component {
               )}
             </div>
             <Button variant="outline-primary" onClick={()=>actionChoiceVisibleForm(themeId, choice.id)}>編集</Button>&emsp;
-            <Button variant="outline-primary" onClick={()=>actionChoiceVisibleFileForm(choice.id)}>画像アップロード</Button>&emsp;
             <Button variant="outline-primary" onClick={() => {
               const deleteOk = window.confirm("本当に削除してもよろしいですか？")
               if (!deleteOk) return
@@ -98,9 +93,6 @@ class ChoiceShowElem extends Component {
             >
               More...
             </NavLink>
-            {visibleFileFormMap[`${choice.id}_`]
-              ? <ChoiceImageNew choiceId={choice.id} themeId={themeId}/>
-              : null}
 
             {visibleFormMap[`${themeId}_${choice.id}`]
               ? <ChoiceEdit themeId={themeId} choice={choice} />
@@ -148,13 +140,11 @@ export default connectViewToStateAndActionCreaters(ChoiceShowElem,
   (state) => {
     return {
       visibleFormMap: state.choicesViewReducer.visibleFormMap,
-      visibleFileFormMap: state.choicesViewReducer.visibleFileFormMap,
     }
   }, {
     actionAsyncChoiceDestroy,
     actionAsyncChoiceUpdateEvaluation,
     actionChoiceUpdateEvaluation,
     actionChoiceVisibleForm,
-    actionChoiceVisibleFileForm,
   }
 )

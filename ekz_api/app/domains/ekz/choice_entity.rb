@@ -90,12 +90,6 @@ module Ekz
       result
     end
 
-    def create_image(params)
-      image_model = @choice_model.choice_images.build
-      image_model.image_filename = params[:image]
-      image_model.save!
-    end
-
     def regist_webpage_capture
       return if @url.blank?
 
