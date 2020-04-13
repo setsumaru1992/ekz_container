@@ -3,7 +3,7 @@ import {
   HTTP_METHODS,
   Url,
 } from "~/lib/apiServerAccess"
-import {toggleFormVisible} from "~/features/choiceTag/models/viewModels/choiceTagViewReducer"
+import {toggleFormVisible} from "~/features/choice/tag/models/viewModels/choiceTagViewReducer"
 
 const choiceTagUrlCreator = (argPath, methodStr = HTTP_METHODS.GET) => {
   return (choiceId, tagId = null) => {

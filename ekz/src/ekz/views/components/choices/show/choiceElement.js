@@ -16,7 +16,7 @@ import {
 import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
-import {ChoiceTagArea} from "~/features/choiceTag"
+import {ChoiceTagArea} from "~/features/choice/tag"
 
 class ChoiceShowElem extends Component {
   /*

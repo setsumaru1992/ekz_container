@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react"
 import PropTypes from "prop-types"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 
-import {removeTag} from "~/features/choiceTag/models/appModels/choiceTagAppReducer"
+import {removeTag} from "~/features/choice/tag/models/appModels/choiceTagAppReducer"
 
 class ChoiceTagElement extends Component {
   render() {

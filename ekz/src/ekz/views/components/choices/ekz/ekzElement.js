@@ -18,7 +18,7 @@ import {EKZ_IMAGE_ROOT} from "~/common/const"
 import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceImageNew from "~/views/components/temporaryChoiceImages/new"
 import ChoiceCommentNew from "~/views/components/choiceComments/new"
-import {ChoiceTagArea} from "~/features/choiceTag"
+import {ChoiceTagArea} from "~/features/choice/tag"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 import {isSmartPhone} from "~/common/userAgentChecker"
 

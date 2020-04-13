@@ -1,6 +1,6 @@
 class ChoicesController < ApplicationController
   def show
-    choice_list = Choice.find_by_theme_id(choice_params[:theme_id]).limit(50)
+    choice_list = Choice.find_by_theme_id(choice_params[:theme_id]).limit(100)
     if choice_params[:search_word].present?
       search_word = choice_params[:search_word]
       choice_list = choice_list.where(
@@ -99,7 +99,7 @@ class ChoicesController < ApplicationController
   def choice_params
     params.permit(
       :id, :name, :url, :evaluation, :description, :theme_id, :ids, :search_word,
-      :description, :choice, image: []
+      :description, :choice, :image
     )
   end
 end

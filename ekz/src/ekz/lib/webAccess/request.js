@@ -1,10 +1,10 @@
 import axios from "axios"
 
 export const HTTP_METHODS = {
-  GET: "GET",
-  POST: "POST",
-  PATCH: "PATCH",
-  DELETE: "DELETE"
+  GET: "get",
+  POST: "post",
+  PATCH: "patch",
+  DELETE: "delete"
 }
 
 export class Url {
@@ -27,31 +27,17 @@ export class Request {
   react内でasyncが使えるのはredux内くらい redux-chunkを使った時点で非同期はそれに任せる
   https://kibotsu.com/redmine/issues/1853
    */
-  async access(url /* Url型 */, params = {}, callback, defaultRetVal = null) {
+  async access(url /* Url型 */, params = {}, callback, errorHandle = null, defaultRetVal = null) {
     let execAccess = this.accessFunction(url.methodStr)
     const paramsForAxios = this.convertParamsForAxios(params, url.methodStr)
-    return execAccess(url.to_s(), paramsForAxios)
-      .then((response) => {
-        const data = response.data
-        let ret = callback(data)
-        // resolve(ret)
-        return ret
-      }).catch((e) => {
-          console.error(e)
-          // reject(defaultRetVal)
-          return defaultRetVal
-        }
-      )
-  }
 
-  sendDataWithFile(url /* Url型 */, params = {}, callback, errorHandle = null, defaultRetVal = null) {
-    let execAccess = this.accessFunction(url.methodStr)
-    const paramsForAxios = this.convertParamsForAxios(params, url.methodStr)
-    return execAccess(url.to_s(), paramsForAxios, {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    }).then((response) => {
+    let accessParam = {}
+    if (params instanceof FormData) {
+      accessParam["headers"] = {'content-type': 'multipart/form-data',}
+    }
+
+    return execAccess(url.to_s(), paramsForAxios, accessParam)
+      .then((response) => {
       const data = response.data
       let ret = callback(data)
       // resolve(ret)

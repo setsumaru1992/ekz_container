@@ -17,11 +17,12 @@ class ChoiceNew extends Component {
       <ChoiceForm
         onSubmit={actionAsyncChoiceNew}
         initialValues={{
-          id: "",
+          id: null,
           name: "",
           url: "",
           description: "",
           evaluation: 0,
+          image: null,
           theme_id: themeId
         }}
       />

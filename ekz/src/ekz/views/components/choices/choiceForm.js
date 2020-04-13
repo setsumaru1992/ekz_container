@@ -45,6 +45,11 @@ const choiceFormCreator =(themeId = null, choiceId = null) => {
         <Field
           component={choiceEvaluationField}
           name="evaluation"/>
+        <Field
+          component={inputFileField}
+          name="image"
+          label="画像"
+        />
         <Form.Group>
           <Col smoffset={2} sm={5}>
             <Button variant={"outline-primary"} type="submit" disabled={pristine || submitting}>登録</Button>

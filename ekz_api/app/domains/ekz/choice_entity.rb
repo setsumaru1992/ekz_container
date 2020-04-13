@@ -60,6 +60,12 @@ module Ekz
 
       regist_webpage_capture
 
+      return result if params[:image].blank?
+
+      image_model = @choice_model.choice_images.build
+      image_model.image_filename = params[:image]
+      image_model.save!
+
       result
     end
 
@@ -74,6 +80,12 @@ module Ekz
       @choice_model.evaluation = params[:evaluation]
       @choice_model.description = params[:description]
       @choice_model.save!
+
+      return result if params[:image].blank?
+
+      image_model = @choice_model.choice_images.build
+      image_model.image_filename = params[:image]
+      image_model.save!
 
       result
     end
@@ -112,7 +124,7 @@ module Ekz
       end
 
       if @choice_model.choice_images.present?
-        @choice_model.choice_images.destroy!
+        @choice_model.choice_images.destroy_all
       end
 
       @choice_model.destroy!

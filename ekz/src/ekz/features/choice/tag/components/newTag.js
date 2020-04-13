@@ -2,9 +2,9 @@ import React, {Component, Fragment} from "react"
 import PropTypes from "prop-types"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 
-import {createTag} from "~/features/choiceTag/models/appModels/choiceTagAppReducer"
-import {toggleFormVisible} from "~/features/choiceTag/models/viewModels/choiceTagViewReducer"
-import formCreator from "~/features/choiceTag/components/form"
+import {createTag} from "~/features/choice/tag/models/appModels/choiceTagAppReducer"
+import {toggleFormVisible} from "~/features/choice/tag/models/viewModels/choiceTagViewReducer"
+import formCreator from "~/features/choice/tag/components/form"
 
 class NewTag extends Component {
   render() {
