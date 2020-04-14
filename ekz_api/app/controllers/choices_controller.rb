@@ -16,7 +16,7 @@ class ChoicesController < ApplicationController
     end
     choice_hash_list = choice_list.map do |choice|
       choice_hash = choice.attributes
-      choice_hash["image_filename"] = choice.choice_images.first.image_filename if choice.choice_images.present?
+      choice_hash["image_filename"] = choice.choice_images.last.image_filename if choice.choice_images.present?
       if choice.choice_webpage_capture.present?
         begin
           choice_hash["webpage_capture"] = choice.choice_webpage_capture.image.url

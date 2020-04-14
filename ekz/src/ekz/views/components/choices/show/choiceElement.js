@@ -107,7 +107,7 @@ class ChoiceShowElem extends Component {
   imageAreaContainer(choice){
     let imageSrc = "https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png"
     if (choice.image_filename) {
-      imageSrc = `${EKZ_IMAGE_ROOT}${choice.image_filename.url}`
+      imageSrc = choice.image_filename.url
     } else if (choice.webpage_capture) {
       imageSrc = choice.webpage_capture
     }
