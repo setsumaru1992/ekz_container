@@ -27,6 +27,11 @@ class EkzShowElem extends Component {
   stateを更新できないため、evaluationやリストの更新は個々のelementではなくて一括で行う
   */
 
+  static propTypes = {
+    choice: PropTypes.object,
+    themeId: PropTypes.number
+  }
+
   componentWillMount() {
     const {
       choice,
@@ -266,11 +271,6 @@ class EkzShowElem extends Component {
       </Fragment>
     )
   }
-}
-
-EkzShowElem.propTypes = {
-  choice: PropTypes.object,
-  themeId: PropTypes.number
 }
 
 export default connectViewToStateAndActionCreaters(EkzShowElem,

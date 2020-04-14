@@ -4,9 +4,11 @@ import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connec
 import {actionAsyncChoiceNew} from "~/reducers/choicesAppReducer"
 import choiceFormCreator from "~/views/components/choices/choiceForm"
 
-
-
 class ChoiceNew extends Component {
+  static propTypes = {
+    themeId: PropTypes.number,
+  }
+
   render() {
     const {
       themeId,
@@ -28,10 +30,6 @@ class ChoiceNew extends Component {
       />
     )
   }
-}
-
-ChoiceNew.propTypes = {
-  themeId: PropTypes.number,
 }
 
 export default connectViewToStateAndActionCreaters(ChoiceNew,
