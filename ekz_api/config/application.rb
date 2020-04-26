@@ -35,17 +35,17 @@ module EkzApi
       g.template_engine false
       g.test_framework false
     end
-  end
-end
 
-# https://qiita.com/guri3/items/268dc4f8be4bafe5029f
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins "*"
+    # https://qiita.com/guri3/items/268dc4f8be4bafe5029f
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins "*"
 
-    resource "*",
-             headers: :any,
-             methods: [:get, :post, :put, :patch, :delete, :options, :head],
-             expose: ['Per-Page', 'Total', 'Link']
+        resource "*",
+                 headers: :any,
+                 methods: [:get, :post, :put, :patch, :delete, :options, :head],
+                 expose: ['Per-Page', 'Total', 'Link']
+      end
+    end
   end
 end
