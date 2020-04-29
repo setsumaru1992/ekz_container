@@ -6,5 +6,9 @@ module Types
     def test_field
       "Hello World"
     end
+
+    field :delete_tag, resolver: Mutations::DeleteTag # do
+    #   argument :id, Int, required: true
+    # end
   end
 end

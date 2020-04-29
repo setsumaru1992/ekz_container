@@ -16,7 +16,8 @@ import {actionAsyncChoiceComments} from "~/reducers/choiceCommentsAppReducer";
 import {EKZ_IMAGE_ROOT} from "~/common/const"
 import ChoiceEdit from "~/views/components/choices/edit"
 import ChoiceCommentNew from "~/views/components/choiceComments/new"
-import {ChoiceTagArea} from "~/features/choice/tag"
+// import {ChoiceTagArea} from "~/features/choice/tag"
+import {ChoiceTagArea} from "#/features/choice/tag/compornents"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 import {isSmartPhone} from "~/common/userAgentChecker"
 
