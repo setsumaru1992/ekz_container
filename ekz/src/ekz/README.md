@@ -26,7 +26,7 @@ viewのためのアプリケーションだから同列。
     - ~Layout.js
     - ~
 - features
-  - ~Future
+  - ~Features
     - components
     - viewModels
       - reducer(s)

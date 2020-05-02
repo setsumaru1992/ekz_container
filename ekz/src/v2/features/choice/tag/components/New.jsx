@@ -1,30 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {gql} from 'apollo-boost';
-import { graphql, Mutation } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Wrapper from './Wrapper';
-import tagQuery from '../models/appModels/tagQuery';
-
-const createTagMutation = gql`
-mutation ($choiceId: Int!, $name: String!){
-  createTag(input:{choiceId: $choiceId, name: $name}) {
-    id
-  }
-}
-`
-//
-// const NewTagForm = (props) => {
-//   const { choiceId, toggleFormVisible } = props;
-//   return (
-//
-//   )
-// }
-//
-// NewTagForm.propTypes = {
-//   choiceId: PropTypes.number,
-//   toggleFormVisible: PropTypes.func
-// }
+import { TAG_QUERY } from '../models/queries';
+import { CREATE_TAG_MUTATION } from '../models/mutations';
 
 const New = (props) => {
   const { choiceId } = props;
@@ -39,11 +19,9 @@ const New = (props) => {
     <React.Fragment>
       <Wrapper>
         <span style={style}>
-          {/*<NewTagForm choiceId={choiceId} toggleFormVisible={toggleFormVisible}/>*/}
-          {/*graphql(createTagMutation, {name: 'createTagMutation'})(*/}
-          <Mutation mutation={createTagMutation} refetchQueries={[{query: tagQuery, variables: {choiceId: choiceId}}]}>
+          <Mutation mutation={CREATE_TAG_MUTATION} refetchQueries={[{query: TAG_QUERY, variables: {choiceId: choiceId}}]}>
             {(createTag,{loading}) => (
-          <Formik
+            <Formik
               initialValues={{
                 name: '',
                 choiceId: choiceId,
@@ -56,7 +34,6 @@ const New = (props) => {
                 return errors;
               }}
               onSubmit={async (values, { props, setSubmitting, resetForm }) => {
-                // const { createTag } = props
                 await createTag({variables: values})
                 setSubmitting(false);
                 toggleFormVisible()
@@ -75,7 +52,6 @@ const New = (props) => {
             </Formik>
             )}
           </Mutation>
-          {/*)*/}
         </span>
         { formVisible
           ? <span onClick={toggleFormVisible}>×</span>

@@ -2,16 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {gql} from 'apollo-boost';
 import {Mutation} from 'react-apollo';
-import tagQuery from '../models/appModels/tagQuery';
 import Wrapper from './Wrapper';
-
-const deleteTagMutation = gql`
-mutation ($id: Int!){
-  deleteTag(input:{id: $id}) {
-    id
-  }
-}
-`
+import { TAG_QUERY } from '../models/queries';
+import { DELETE_TAG_MUTAION } from '../models/mutations';
 
 class DeleteIcon extends React.Component {
   static propTypes = {
@@ -24,9 +17,9 @@ class DeleteIcon extends React.Component {
     return (
       <React.Fragment>
         <Mutation
-          mutation={deleteTagMutation}
+          mutation={DELETE_TAG_MUTAION}
           variables={{id: id}}
-          refetchQueries={[{query: tagQuery, variables: {choiceId: choiceId}}]}
+          refetchQueries={[{query: TAG_QUERY, variables: {choiceId: choiceId}}]}
         >
         {(execDelete) =>
           (<React.Fragment>

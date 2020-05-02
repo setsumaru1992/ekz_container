@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Query} from 'react-apollo';
 import Element from './Element';
 import New from './New';
-import tagQuery from '../models/appModels/tagQuery';
+import { TAG_QUERY } from '../models/queries';
 
 class Area extends React.Component {
   static propTypes = {
@@ -15,7 +15,7 @@ class Area extends React.Component {
     let raisedError = null
     return (<React.Fragment>
       <Query
-        query={tagQuery}
+        query={TAG_QUERY}
         variables={{choiceId: choiceId}}
       >
         {({data, loading, error}) => {

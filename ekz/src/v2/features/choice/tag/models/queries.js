@@ -1,6 +1,6 @@
 import {gql} from 'apollo-boost';
 
-export default gql`
+export const TAG_QUERY = gql`
   query ($choiceId: Int!) {
     tags(choiceId: $choiceId) {
       id
