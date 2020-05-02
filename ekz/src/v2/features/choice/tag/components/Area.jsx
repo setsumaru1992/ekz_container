@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Query} from 'react-apollo';
-import Wrapper from './Wrapper';
 import Element from './Element';
 import New from './New';
 import tagQuery from '../models/appModels/tagQuery';
@@ -29,16 +28,17 @@ class Area extends React.Component {
             return null
           }
 
-          const {tags} = data
+          const { tags } = data
           return (
             <React.Fragment>
               {tags.map(
-                (tag) => <Wrapper key={tag.id}><Element tag={tag} /></Wrapper>
+                (tag) => <Element key={tag.id} tag={tag} />
               )}
-            </React.Fragment>)
+            </React.Fragment>
+          )
         }}
       </Query>
-      <Wrapper><New choiceId={choiceId}/></Wrapper>
+      <New choiceId={choiceId}/>
     </React.Fragment>)
   }
 }

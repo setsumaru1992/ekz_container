@@ -5,8 +5,8 @@ module Mutations
     field :id, Int, null: true
 
     def resolve(id:)
-      choice_tag = ChoiceTag.find(id)
-      choice_tag.destroy
+      tag = ChoiceTag.find(id)
+      tag.destroy
       {id: id}
     end
   end
