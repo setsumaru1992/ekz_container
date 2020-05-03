@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-  end
-  post "/graphql", to: "graphql#execute"
+
   scope :api do
     scope :v1 do
       namespace :themes do
@@ -55,6 +52,14 @@ Rails.application.routes.draw do
 
       scope :signup do
         post   "regist", controller: :signups, action: :regist
+      end
+    end
+
+    scope :v2 do
+      post "/graphql", to: "graphql#execute"
+
+      if Rails.env.development?
+        mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api/v2/graphql"
       end
     end
   end
