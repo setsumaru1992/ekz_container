@@ -3,7 +3,11 @@ require_relative 'boot'
 require 'rails/all'
 require 'dotenv'
 
-Dotenv.load! "../.env"
+# TODO dockerコンテナ環境前の環境定義ファイル適用
+env_path = "../.env"
+if File.exist?(env_path)
+  Dotenv.load! env_path
+end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
