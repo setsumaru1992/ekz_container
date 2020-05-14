@@ -22,10 +22,16 @@
     "react": "^16.7.0",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.7.0",
+    "react-native-web": "^0.12.2",
     "typescript": "^3.9.3"
   },
   "license": "ISC",
   "devDependencies": {
-    "babel-plugin-graphql-tag": "^2.5.0"
+    "@types/jest": "^25.2.3",
+    "@types/react": "^16.9.35",
+    "@types/react-native": "^0.62.11",
+    "@types/react-test-renderer": "^16.9.2",
+    "babel-plugin-graphql-tag": "^2.5.0",
+    "babel-plugin-react-native-web": "^0.12.2"
   }
 }
