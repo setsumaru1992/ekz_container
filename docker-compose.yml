@@ -3,13 +3,13 @@ services:
   ekz_view:
     container_name: ekz_view
     build: ./ekz_view
-    command: "next dev"
+    command: "/root/ekz_view/entrypoint.sh"
     ports:
-      - "18070:3000"
+      - "18070:18072"
     volumes:
       - ./ekz_view:/root/ekz_view
-    depends_on:
-      - ekz_api
+    # depends_on:
+    #   - ekz_api
 
   ekz_api:
     container_name: ekz_api
