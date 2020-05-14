@@ -1,5 +1,16 @@
 version: '3'
 services:
+  ekz_view:
+    container_name: ekz_view
+    build: ./ekz_view
+    command: "next dev"
+    ports:
+      - "18070:3000"
+    volumes:
+      - ./ekz_view:/root/ekz_view
+    depends_on:
+      - ekz_api
+
   ekz_api:
     container_name: ekz_api
     build: ./ekz_api

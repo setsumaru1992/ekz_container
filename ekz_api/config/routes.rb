@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: "debug#debug"
 
   scope :api do
     scope :v1 do

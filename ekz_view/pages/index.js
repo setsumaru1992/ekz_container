@@ -5,6 +5,11 @@ import Submit from '../components/Submit'
 import PostList from '../components/PostList'
 import { withApollo } from '../lib/apollo'
 
+/*
+以下を入れる
+- react-native-web
+- typescript
+*/
 const IndexPage = () => (
   <App>
     <Header />
