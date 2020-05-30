@@ -1,5 +1,5 @@
 class DebugController < ApplicationController
   def debug
-    render json: {status: "success"}
+    render json: {connection: "success"}
   end
 end

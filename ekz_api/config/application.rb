@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'sprockets/railtie'
 require 'dotenv'
 
 # TODO dockerコンテナ環境前の環境定義ファイル適用
