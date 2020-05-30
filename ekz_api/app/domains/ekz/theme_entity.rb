@@ -12,7 +12,7 @@ module Ekz
       end
     end
 
-    def save_new_model(params, user_id)
+    def save_new_model(user_id, params)
       result = initial_result
       @theme_model.name = params[:name]
       @theme_model.created_by = user_id

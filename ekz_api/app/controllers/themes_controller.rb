@@ -11,7 +11,7 @@ class ThemesController < AbstractMypageController
 
   def new
     theme_entity = Ekz::ThemeFactory.create_by_theme_id(theme_params[:id])
-    theme_entity.save_new_model(theme_params, @user_id)
+    theme_entity.save_new_model(@user_id, theme_params)
     render json: {}
   end
 
