@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionAsyncChoiceUpdate} from "~/reducers/choicesAppReducer"
 import choiceFormCreator from "~/views/components/choices/choiceForm"
-import authCookieManager from "~/models/auth/authCookieManager";
 
 
 
@@ -28,8 +27,7 @@ class ChoiceEdit extends Component {
           url: choice.url,
           description: choice.description,
           evaluation: choice.evaluation,
-          theme_id: themeId,
-          access_key: authCookieManager.getAccessKey()
+          theme_id: themeId
         }}
       />
     )

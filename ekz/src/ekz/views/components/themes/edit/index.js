@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import {connectViewToStateAndActionCreaters} from "~/views/features/utils/connectorViewToOther"
 import {actionAsyncThemeUpdate} from "~/reducers/themesAppReducer"
 import themeFormCreator from "~/views/components/themes/themeForm"
+import authCookieManager from "~/models/auth/authCookieManager";
 
 class ThemeEdit extends Component {
   render() {
@@ -18,6 +19,7 @@ class ThemeEdit extends Component {
         initialValues={{
           id: theme.id,
           name: theme.name,
+          access_key: authCookieManager.getAccessKey()
         }}
       />
     )
