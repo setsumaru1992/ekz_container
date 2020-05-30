@@ -6,7 +6,7 @@ module Theme::Finder
   end
 
   class_methods do
-    def find_with_last_choice_updated(params)
+    def find_with_last_choice_updated(user_id)
       Theme
         .select("
           themes.id
@@ -25,6 +25,7 @@ module Theme::Finder
             GROUP BY themes_of_subquery.id
           ) AS last_updated
           ")
+        # .user_in(user_id.to_i)
         .user_in(1)
         .order("last_updated DESC")
         .order("created_at DESC")

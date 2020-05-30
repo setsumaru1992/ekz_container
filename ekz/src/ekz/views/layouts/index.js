@@ -26,8 +26,11 @@ class Layout extends Component {
     )
     const NotLoginNavi = () => (
       <Nav className="mr-auto">
-        <LinkContainer to={"/signup"}>
+        {/* <LinkContainer to={"/signup"}>
           <Nav.Link>新規登録</Nav.Link>
+        </LinkContainer> */}
+        <LinkContainer to={"#"}>
+          <Nav.Link>新規登録(準備中)</Nav.Link>
         </LinkContainer>
         <LinkContainer to={"/login"}>
           <Nav.Link>ログイン</Nav.Link>

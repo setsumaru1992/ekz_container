@@ -3,5 +3,9 @@ module Types
     field :tags, resolver: Queries::Tags do
       argument :choice_id, Int, required: true
     end
+
+    field :themes, resolver: Queries::Themes do
+      argument :choice_id, Int, required: true
+    end
   end
 end

@@ -1,11 +1,11 @@
-class ThemesController < ApplicationController
+class ThemesController < AbstractMypageController
 
   def index
   end
 
   def show
     render json: {
-      theme_list: Theme.find_with_last_choice_updated(theme_params)
+      theme_list: Theme.find_with_last_choice_updated(@user_id)
     }
   end
 

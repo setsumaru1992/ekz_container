@@ -1,6 +1,7 @@
 import {requestGetterWithoutParam} from "~/common/request"
 import {patch} from "~/reducers/utils/stateUtils"
 import {HTTP_METHODS} from "~/common/const"
+import authCookieManager from "../models/auth/authCookieManager";
 
 export const ACTION_THEME_LIST = "ACTION_THEME_LIST"
 export const ACTION_THEME_CHANGED = "ACTION_THEME_CHANGED"
@@ -42,7 +43,7 @@ function actionThemeList(themeList){
 
 export function actionAsyncThemeList(){
   return (dispatch) =>{
-    return REQUEST_GETTERS.GET_ALL({}).access((data) => {
+    return REQUEST_GETTERS.GET_ALL({access_key: authCookieManager.getAccessKey()}).access((data) => {
       dispatch(actionThemeList(data.theme_list))
     })
   }
