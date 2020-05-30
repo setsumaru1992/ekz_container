@@ -25,8 +25,7 @@ module Theme::Finder
             GROUP BY themes_of_subquery.id
           ) AS last_updated
           ")
-        # .user_in(user_id.to_i)
-        .user_in(1)
+        .user_in(user_id.to_i)
         .order("last_updated DESC")
         .order("created_at DESC")
     end
