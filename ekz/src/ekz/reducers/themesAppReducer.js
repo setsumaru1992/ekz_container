@@ -75,7 +75,7 @@ export function actionAsyncThemeUpdate(theme){
 
 export function actionAsyncThemeDestroy(themeId){
   return (dispatch) =>{
-    return REQUEST_GETTERS.DESTROY({id: themeId}).access((data) => {
+    return REQUEST_GETTERS.DESTROY({id: themeId, access_key: authCookieManager.getAccessKey()}).access((data) => {
       dispatch(actionThemeChanged())
       dispatch(actionAsyncThemeList())
     })

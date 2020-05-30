@@ -12,11 +12,11 @@ module Ekz
       end
     end
 
-    def save_new_model(params)
+    def save_new_model(params, user_id)
       result = initial_result
       @theme_model.name = params[:name]
-      @theme_model.created_by = 1
-      @theme_model.updated_by = 1
+      @theme_model.created_by = user_id
+      @theme_model.updated_by = user_id
       @theme_model.save!
       result
     end
