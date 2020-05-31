@@ -1,5 +1,13 @@
-import List, { ThemesType } from './components/List';
+import List, { 
+  ListType, 
+  ThemeType 
+} from './components/List';
+import { THEMES_QUERY } from './models/queries';
 
-export type ThemesType = ThemesType;
+export type ThemesListAreaType = ListType;
+export type ThemeType = ThemeType;
 
-export { List }
+export { 
+  List as ThemeListArea,
+  THEMES_QUERY,
+}

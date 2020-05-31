@@ -7,5 +7,9 @@ module Types
     field :themes, resolver: Queries::Themes do
       argument :access_key, String, required: true
     end
+
+    field :profile, resolver: Queries::Profile do
+      argument :access_key, String, required: true
+    end 
   end
 end

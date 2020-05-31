@@ -1,6 +1,7 @@
 // TODO: ライブラリを使ってこのファイルを破棄する
 class CookieManager {
   get(key){
+    if(this.cookieHashMap() == null) return null;
     let cookieVal = this.cookieHashMap()[key]
     if(cookieVal !== undefined && cookieVal != null){
       return decodeURIComponent(cookieVal)
@@ -37,10 +38,15 @@ class CookieManager {
   }
 
   cookie(){
-    return window.document.cookie
+    if(typeof window !== 'undefined'){
+      return window.document.cookie
+    } else {
+      return null
+    }
   }
 
   cookieHashMap(){
+    if(this.cookie() == null) return null;
     let cookieHashMap = {}
     const cookieArray = this.cookie().split(";")
     cookieArray.forEach((cookieStr) => {

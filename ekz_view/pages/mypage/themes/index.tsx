@@ -1,22 +1,32 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
-import { withApollo } from '../../lib/apollo';
-import { List, ThemesType } from '../../features/theme';
-import authCookieManager from '../../features/auth/authCookieManager';
+import { withApollo } from '../../../lib/apollo';
+import { 
+  ThemeListArea, 
+  ThemesListAreaType, 
+  ThemeType,
+} from '../../../features/theme';
+import authCookieManager from '../../../features/auth/authCookieManager';
 
 const GET_THEMES = gql`
 query ($accessKey: String!){
+  
   themes(accessKey: $accessKey){
     id
     name
     description
   }
+
+  profile(accessKey: $accessKey){
+    dispName
+    email
+  }
 }
 `;
 
-type Props = ThemesType
+type Props = ThemesListAreaType
 
 const Themes : React.FC<Props> = ({themes}) => {
   // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
@@ -26,14 +36,13 @@ const Themes : React.FC<Props> = ({themes}) => {
   });
   if (error) return <h1>Error</h1>;
   if (loading) return <Text>Loading...</Text>;
-  const themeInformations = data.themes;
-  const str = themeInformations && themeInformations.map((themeInformation) => themeInformation.name)
-  console.log(str)
+  const themeInformations: ThemeType[] = data.themes;
   return(
-    <View>
-      <List/>
-      <Text>{str}</Text>
-    </View>
+    <React.Fragment>
+      {/* profileは複数のクエリをさばく練習として使用 */}
+      <Text>ユーザ名：{data.profile && data.profile.email}</Text>
+      <ThemeListArea themes={themeInformations} />
+    </React.Fragment>
   )
 }
 
