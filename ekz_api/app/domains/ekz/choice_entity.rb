@@ -17,7 +17,12 @@ module Ekz
     end.flatten
 
     class << self
-      def existing_entities(&brock)
+      def existing_entities(conditions:, &block)
+        target_ids = if conditions.present?
+          Choice.where(conditions).ids
+        else
+          Choice.all.ids
+        end
         Choice.all.ids.map do |id|
           entity = self.new(id: id)
           if block_given?

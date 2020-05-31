@@ -2,8 +2,9 @@ module Queries
   class Themes < BaseQuery
     type [Types::Theme::ThemeType], null: false
 
-    def resolve(choice_id:)
-      Theme.find_with_last_choice_updated(choice_id)
+    def resolve(access_key:)
+      user_id = AuthManager.authenticate(access_key)
+      Theme.find_with_last_choice_updated(user_id)
     end
   end
 end

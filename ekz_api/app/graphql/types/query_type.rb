@@ -5,7 +5,7 @@ module Types
     end
 
     field :themes, resolver: Queries::Themes do
-      argument :choice_id, Int, required: true
+      argument :access_key, String, required: true
     end
   end
 end

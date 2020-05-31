@@ -1,23 +1,39 @@
 import React from 'react';
-// import { GetServerSideProps } from 'next';
+import gql from 'graphql-tag';
+import { StyleSheet, Text, View } from 'react-native';
+import { useQuery } from '@apollo/react-hooks';
 import { withApollo } from '../../lib/apollo';
-import { List } from '../../features/theme';
+import { List, ThemesType } from '../../features/theme';
+import authCookieManager from '../../features/auth/authCookieManager';
 
-interface Props {
-  themes: {
-    id: number;
-    name: string;
-    description: string;
-  }[];
+const GET_THEMES = gql`
+query ($accessKey: String!){
+  themes(accessKey: $accessKey){
+    id
+    name
+    description
+  }
 }
+`;
+
+type Props = ThemesType
 
 const Themes : React.FC<Props> = ({themes}) => {
+  // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
+  const accessKey = authCookieManager.getAccessKey();
+  const { loading, data, error } = useQuery(GET_THEMES, {
+    variables: {accessKey},
+  });
+  if (error) return <h1>Error</h1>;
+  if (loading) return <Text>Loading...</Text>;
+  const themeInformations = data.themes;
+  const str = themeInformations && themeInformations.map((themeInformation) => themeInformation.name)
+  console.log(str)
   return(
-    <React.Fragment>
+    <View>
       <List/>
-      {themes && themes.map((theme) => theme.name)}
-    </React.Fragment>
-    
+      <Text>{str}</Text>
+    </View>
   )
 }
 
@@ -31,7 +47,7 @@ export const getServerSideProps = async (context) => {
   const data: Props = {
     themes: [{
       id: 1,
-      name: "apple",
+      name: "ダミーテーマデータ",
       description: "descriptiondescription"
     }]
   }
