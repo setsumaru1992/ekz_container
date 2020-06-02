@@ -1,0 +1,13 @@
+query hogehoge ($accessKey: String!){
+  
+  themes(accessKey: $accessKey){
+    id
+    name
+    description
+  }
+
+  profile(accessKey: $accessKey){
+    dispName
+    email
+  }
+}

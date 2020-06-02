@@ -1,0 +1,12 @@
+overwrite: true
+schema: "http://ekz_api:18071/api/v2/graphql"
+documents: "features/**/*.graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
