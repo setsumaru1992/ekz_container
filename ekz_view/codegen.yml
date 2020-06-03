@@ -1,12 +1,23 @@
 overwrite: true
 schema: "http://ekz_api:18071/api/v2/graphql"
-documents: "features/**/*.graphql"
+config:
+  withHOC: false
+  withComponent: false
+  withHooks: true
 generates:
-  src/generated/graphql.tsx:
+  # TODO: コンポーネントごとにファイルを作るのはやりすぎな気がするが、一旦やってメリデメを理解して継続するか決める
+  src/features/theme/models/graphql.tsx:
+    documents: "src/features/theme/models/**/*.{ts,tsx}"
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+  # src/features/choice/models/graphql.tsx:
+  #   documents: "src/features/choice/models/**/*.{ts,tsx}"
+  #   plugins:
+  #     - "typescript"
+  #     - "typescript-operations"
+  #     - "typescript-react-apollo"
   ./graphql.schema.json:
     plugins:
       - "introspection"

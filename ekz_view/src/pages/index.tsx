@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { withApollo } from '../lib/apollo';
+import { withApollo } from '../../lib/apollo';
 
 const IndexPage = () => (
   <View style={styles.container}>

@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { withApollo } from '../../../../lib/apollo';
+import { withApollo } from '../../../../../lib/apollo';
 
 const ChoiceList = () => (
   <View>

@@ -1,10 +1,7 @@
 import gql from 'graphql-tag';
-import * as React from 'react';
 import * as ApolloReactCommon from '@apollo/react-common';
-import * as ApolloReactComponents from '@apollo/react-components';
-import * as ApolloReactHoc from '@apollo/react-hoc';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -103,12 +100,12 @@ export type Theme = {
   name: Scalars['String'];
 };
 
-export type HogehogeQueryVariables = {
+export type ThemesQueryVariables = {
   accessKey: Scalars['String'];
 };
 
 
-export type HogehogeQuery = (
+export type ThemesQuery = (
   { __typename?: 'Query' }
   & { themes: Array<(
     { __typename?: 'Theme' }
@@ -120,8 +117,8 @@ export type HogehogeQuery = (
 );
 
 
-export const HogehogeDocument = gql`
-    query hogehoge($accessKey: String!) {
+export const ThemesDocument = gql`
+    query themes($accessKey: String!) {
   themes(accessKey: $accessKey) {
     id
     name
@@ -133,23 +130,29 @@ export const HogehogeDocument = gql`
   }
 }
     `;
-export type HogehogeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<HogehogeQuery, HogehogeQueryVariables>, 'query'> & ({ variables: HogehogeQueryVariables; skip?: boolean; } | { skip: boolean; });
 
-    export const HogehogeComponent = (props: HogehogeComponentProps) => (
-      <ApolloReactComponents.Query<HogehogeQuery, HogehogeQueryVariables> query={HogehogeDocument} {...props} />
-    );
-    
-export type HogehogeProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<HogehogeQuery, HogehogeQueryVariables>
-    } & TChildProps;
-export function withHogehoge<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  HogehogeQuery,
-  HogehogeQueryVariables,
-  HogehogeProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, HogehogeQuery, HogehogeQueryVariables, HogehogeProps<TChildProps, TDataName>>(HogehogeDocument, {
-      alias: 'hogehoge',
-      ...operationOptions
-    });
-};
-export type HogehogeQueryResult = ApolloReactCommon.QueryResult<HogehogeQuery, HogehogeQueryVariables>;
+/**
+ * __useThemesQuery__
+ *
+ * To run a query within a React component, call `useThemesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useThemesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useThemesQuery({
+ *   variables: {
+ *      accessKey: // value for 'accessKey'
+ *   },
+ * });
+ */
+export function useThemesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
+        return ApolloReactHooks.useQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, baseOptions);
+      }
+export function useThemesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, baseOptions);
+        }
+export type ThemesQueryHookResult = ReturnType<typeof useThemesQuery>;
+export type ThemesLazyQueryHookResult = ReturnType<typeof useThemesLazyQuery>;
+export type ThemesQueryResult = ApolloReactCommon.QueryResult<ThemesQuery, ThemesQueryVariables>;
