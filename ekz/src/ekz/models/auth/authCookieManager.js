@@ -5,10 +5,10 @@ const COOKIE_REMIND_TOKEN_NAME = "rt"
 const minute = 60
 const hour = 60 * minute
 const day = 24 * hour
-//const month = 31 * day
+const month = 31 * day
 const year = 365 * day
 const COOKIE_ACCESS_KEY_ATTR = {
-  maxAge: 1 * hour,
+  maxAge: 1 * month,
 }
 const COOKIE_REMIND_TOKEN_ATTR = {
   maxAge: 20 * year,
