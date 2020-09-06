@@ -17,7 +17,7 @@ module Ekz
     end.flatten
 
     class << self
-      def existing_entities(conditions:, &block)
+      def existing_entities(conditions: nil, &block)
         target_ids = if conditions.present?
           Choice.where(conditions).ids
         else
