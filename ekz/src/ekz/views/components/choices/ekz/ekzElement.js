@@ -120,10 +120,14 @@ class EkzShowElem extends Component {
     if (choice.url) {
       nameTag = (
         <a href={choice.url}
-           onMouseDown={(e) => {
-             e.preventDefault()
-             window.open(choice.url, new Date().getTime())
-           }}
+          onMouseDown={(e) => {
+            e.preventDefault()
+            if(isSmartPhone){
+              window.open(choice.url, "ekzlink")
+            } else {
+              window.open(choice.url, new Date().getTime())
+            }
+          }}
         >
           {choiceName}<br />({extractString(choice.url, 20)})
         </a>
