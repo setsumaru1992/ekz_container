@@ -21,6 +21,10 @@ import {ChoiceTagArea} from "#/features/choice/tag"
 import {choiceEvaluationButtonGroup} from "~/views/components/choices/choiceEvaluationField"
 import {isSmartPhone} from "~/common/userAgentChecker"
 
+const openUrlInNewTab = (url) => {
+  window.open(url, new Date().getTime())
+}
+
 class EkzShowElem extends Component {
   /*
   componentWillMount, componentDidMount（mount時に１回起動）以外で
@@ -122,12 +126,9 @@ class EkzShowElem extends Component {
         <a href={choice.url}
           onMouseDown={(e) => {
             e.preventDefault()
-            if(isSmartPhone){
-              window.open(choice.url, "ekzlink")
-            } else {
-              window.open(choice.url, new Date().getTime())
-            }
+            openUrlInNewTab(choice.url)
           }}
+          onClick={(e) => {e.preventDefault()}}
         >
           {choiceName}<br />({extractString(choice.url, 20)})
         </a>
@@ -232,8 +233,9 @@ class EkzShowElem extends Component {
       <a href={imageUrl}
          onMouseDown={(e) => {
            e.preventDefault()
-           window.open(imageUrl, new Date().getTime())
+           openUrlInNewTab(imageUrl)
          }}
+         onClick={(e) => {e.preventDefault()}}
       >
         <img src={imageSrc} style={{width: "100%", padding: "0px 20px"}} />
       </a>
