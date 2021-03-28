@@ -2,7 +2,7 @@ let apiHost = ""
 if(window.location.href.indexOf("localhost") > 0){
   apiHost = "http://localhost:18071"
 } else {
-  apiHost = "https://ekz.jp"
+  apiHost = "http://ekz.jp"
 }
 export const EKZ_API_ROOT = apiHost + "/api/v1/"
 
