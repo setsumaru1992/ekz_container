@@ -23,7 +23,7 @@ module Ekz
         else
           Choice.all.ids
         end
-        Choice.all.ids.map do |id|
+        target_ids.sort.reverse.map do |id|
           entity = self.new(id: id)
           if block_given?
             yield entity

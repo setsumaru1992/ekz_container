@@ -12,7 +12,7 @@ module WebAccessor
     #     - ブロック外の値を使うとしても、ブロック内で"="で丸々置き換えて、そのブロックで独立した値を使えるようにする
     #       - ブロック内の値をメソッドの返り値として返却するためにブロック外で変数定義する場合
     def access(pre_access_params: {}, post_access_params: {}, &process)
-      max_retry_count = 5
+      max_retry_count = 2
       retry_count = 0
       begin
         @accessor ||= gen_accessor
@@ -24,7 +24,7 @@ module WebAccessor
           Rails.logger.warn(e)
           retry_count += 1
           Rails.logger.warn("リトライ #{retry_count}/#{max_retry_count}")
-          sleep 120
+          sleep 10
           retry
         else
           screenshot_path = Rails.root.join("tmp", "error_crawl_#{Time.now.strftime("%Y%m%d%H%M%S")}.png")
