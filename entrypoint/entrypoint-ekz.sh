@@ -54,7 +54,11 @@ API_ROOT="${CONTAINER_ROOT}/ekz_api"
 cd ${API_ROOT}
 
 echo "========== bundle install =========="
-bundle install
+if [ "$EKZ_RAILS_ENV" = "production" ]; then
+    bundle install --without development
+else
+    bundle install
+fi
 
 rails assets:precompile
 
