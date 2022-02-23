@@ -10,7 +10,7 @@ module AuthManager
 
     def authenticate(access_key)
       access_key_model = AccessKey.find_by(access_key: access_key)
-      return false if access_key_model.blank?
+      return if access_key_model.blank?
       update_access_key_expire(access_key_model)
       access_key_model.user_id
     end
