@@ -27,8 +27,8 @@ const generateUrl = () => {
     protcol = 'http';
     host = 'localhost:18071';
   } else {
-    protcol = 'https';
-    host = 'ekz.jp';
+    protcol = 'http';
+    host = 'ekz.kibotsu.com';
   }
   return `${protcol}://${host}/api/v2/graphql`;
 }

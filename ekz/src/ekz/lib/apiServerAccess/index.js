@@ -8,7 +8,7 @@ let apiHost = ""
 if(window.location.href.indexOf("localhost") > 0){
   apiHost = "http://localhost:18071"
 } else {
-  apiHost = "http://ekz.jp"
+  apiHost = "http://ekz.kibotsu.com"
 }
 const EKZ_API_ROOT = apiHost + "/api/v1"
 

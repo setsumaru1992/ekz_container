@@ -60,12 +60,12 @@ else
     bundle install
 fi
 
-rails assets:precompile
+bundle exec rails assets:precompile
 
 rm -f ${API_ROOT}/tmp/pids/server.pid
 killProcess ${EKZ_API_PORT}
 # cp /etc/opt/stock_view_rb/master.key config/
-rails server -p ${EKZ_API_PORT} -e ${EKZ_RAILS_ENV} &
+bundle exec rails server -p ${EKZ_API_PORT} -e ${EKZ_RAILS_ENV} &
 
 echo "========== start ekz(react) =========="
 EKZ_ROOT="${CONTAINER_ROOT}/ekz"

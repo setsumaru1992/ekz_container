@@ -6,8 +6,8 @@ if(window.location.href.indexOf("localhost") > 0){
   protcol = 'http';
   host = 'localhost:18071';
 } else {
-  protcol = 'https';
-  host = 'ekz.jp';
+  protcol = 'http';
+  host = 'ekz.kibotsu.com';
 }
 const url = `${protcol}://${host}/api/v2/graphql`;
 
