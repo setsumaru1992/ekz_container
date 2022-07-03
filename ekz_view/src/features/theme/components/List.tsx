@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { StyleSheet, Text, View } from 'react-native';
 import { withApollo } from '../../../lib/apollo';
 import { useThemesQuery } from '../models/graphql';
 import authCookieManager from '../../../features/auth/authCookieManager';
@@ -16,22 +15,22 @@ const Themes : React.FC<Props> = (props: {}) => {
       },
     });
   if (error) return <h1>Error</h1>;
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <div>Loading...</div>;
   return(
-    <View>
+    <div>
     {/* profileは複数のクエリをさばく練習として使用 */}
-    <Text>ユーザ名：{data.profile && data.profile.email}</Text>
+    ユーザ名：{data.profile && data.profile.email}
       {data.themes && data.themes.map((theme) => {return (
-        <View key={theme.id}>
+        <div key={theme.id}>
           <Link 
             href="/mypage/themes/[themeName]"
             as={`/mypage/themes/${theme.name}`}
           >
             <a>{theme.name}</a>
           </Link>
-        </View>
+        </div>
       )})}
-    </View>
+    </div>
   )
 }
 

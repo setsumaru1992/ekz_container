@@ -10,7 +10,7 @@ class CookieManager {
     }
   }
 
-  set(key, value, attr={maxAge: undefined, expires: undefined, path: undefined, domain: undefined, secure: undefined}){
+  set(key, value, attr: any={maxAge: undefined, expires: undefined, path: undefined, domain: undefined, secure: undefined}){
     let cookieStr = `${key}=${encodeURIComponent(value)};`
     const genKvWithEqualStr = (attrHash, attrKeyStr, cookieKey=null) => {
       cookieKey = cookieKey != null ? cookieKey : attrKeyStr
