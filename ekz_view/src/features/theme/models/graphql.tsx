@@ -147,12 +147,12 @@ export const ThemesDocument = gql`
  *   },
  * });
  */
-export function useThemesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
-        return ApolloReactHooks.useQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, baseOptions);
-      }
-export function useThemesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, baseOptions);
-        }
-export type ThemesQueryHookResult = ReturnType<typeof useThemesQuery>;
-export type ThemesLazyQueryHookResult = ReturnType<typeof useThemesLazyQuery>;
-export type ThemesQueryResult = ApolloReactCommon.QueryResult<ThemesQuery, ThemesQueryVariables>;
+// export function useThemesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
+//         return ApolloReactHooks.useQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, baseOptions);
+//       }
+// export function useThemesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
+//           return ApolloReactHooks.useLazyQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, baseOptions);
+//         }
+// export type ThemesQueryHookResult = ReturnType<typeof useThemesQuery>;
+// export type ThemesLazyQueryHookResult = ReturnType<typeof useThemesLazyQuery>;
+// export type ThemesQueryResult = ApolloReactCommon.QueryResult<ThemesQuery, ThemesQueryVariables>;
