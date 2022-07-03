@@ -34,9 +34,9 @@
     "@graphql-codegen/typescript-react-apollo": "3.2.16",
     "@types/jest": "^28.1.4",
     "@types/react": "^18.0.14",
-    "@types/react-native": "^0.69.1",
     "@types/react-test-renderer": "^18.0.0",
     "babel-plugin-graphql-tag": "^3.3.0",
-    "babel-plugin-react-native-web": "^0.18.4"
+    "babel-plugin-react-native-web": "^0.18.4",
+    "get-graphql-schema": "^2.1.2"
   }
 }
