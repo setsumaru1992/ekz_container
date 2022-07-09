@@ -8,6 +8,7 @@
     "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@apollo/react-hooks": "4.0.0",
     "@apollo/react-ssr": "4.0.0",
     "apollo-boost": "^0.4.9",
