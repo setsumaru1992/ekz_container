@@ -152,7 +152,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.2",
     "babel-plugin-root-import": "^6.1.0",
     "bootstrap": "3",
     "immutable": "^4.0.0-rc.12",
