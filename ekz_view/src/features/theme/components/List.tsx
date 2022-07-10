@@ -2,8 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useQuery } from '@apollo/client';
 import { THEMES_QUERY } from '../models/queries';
-import { withApollo } from '../../../lib/apollo';
-import { useThemesQuery } from '../models/graphql';
+// import { useThemesQuery } from '../models/graphql';
 import authCookieManager from '../../../features/auth/authCookieManager';
 
 type Props = {};
@@ -36,4 +35,4 @@ const Themes : React.FC<Props> = (props: {}) => {
   )
 }
 
-export default withApollo()(Themes)
+export default Themes
