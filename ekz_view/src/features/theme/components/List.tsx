@@ -1,29 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { THEMES_QUERY } from '../models/queries';
 import { withApollo } from '../../../lib/apollo';
 import { useThemesQuery } from '../models/graphql';
 import authCookieManager from '../../../features/auth/authCookieManager';
 
-const ThemesDocument = gql`
-    query themes($accessKey: String!) {
-  themes(accessKey: $accessKey) {
-    id
-    name
-    description
-  }
-  profile(accessKey: $accessKey) {
-    dispName
-    email
-  }
-}
-    `;
-
 type Props = {};
 
 const Themes : React.FC<Props> = (props: {}) => {
-  const { themes } = props;
-  const { data, loading, error } = useQuery(ThemesDocument,{
+  // const { data, loading, error } = useQuery(THEMES_QUERY,{
+  const { data, loading, error } = useThemesQuery({
       variables: {
         // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
         accessKey: authCookieManager.getAccessKey(),
