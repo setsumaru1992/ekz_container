@@ -9,8 +9,8 @@ import authCookieManager from '../../../features/auth/authCookieManager';
 type Props = {};
 
 const Themes : React.FC<Props> = (props: {}) => {
-  // const { data, loading, error } = useQuery(THEMES_QUERY,{
-  const { data, loading, error } = useThemesQuery({
+  // const { data, loading, error } = useThemesQuery({
+  const { data, loading, error } = useQuery(THEMES_QUERY,{
       variables: {
         // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
         accessKey: authCookieManager.getAccessKey(),
