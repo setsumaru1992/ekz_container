@@ -16,23 +16,23 @@ services:
     build: ./ekz_api
     command: "/root/ekz_api/entrypoint.sh"
     ports:
-      - "18071:18071"
+      - "18071:18030"
     env_file: /etc/opt/app_setting_files/ekz_container/.env
     volumes:
       - ./ekz_api:/root/ekz_api
-    depends_on:
-      - ekz_chrome
-
-  ekz_chrome:
-    image: selenium/node-chrome:3.141.59-20200409
-    depends_on:
-      - ekz_selenium_hub
-    environment:
-      - HUB_HOST=ekz_selenium_hub
-      - HUB_PORT=4444
-  
-  ekz_selenium_hub:
-    image: selenium/hub:3.141.59-20200409
-    container_name: ekz_selenium_hub
-    ports:
-      - "4444:4444"
+#    depends_on:
+#      - ekz_chrome
+#
+#  ekz_chrome:
+#    image: selenium/node-chrome:3.141.59-20200409
+#    depends_on:
+#      - ekz_selenium_hub
+#    environment:
+#      - HUB_HOST=ekz_selenium_hub
+#      - HUB_PORT=4444
+#
+#  ekz_selenium_hub:
+#    image: selenium/hub:3.141.59-20200409
+#    container_name: ekz_selenium_hub
+#    ports:
+#      - "4444:4444"
