@@ -1,10 +1,11 @@
 import React from 'react';
-import { withApollo } from '../lib/apollo';
+import apolloClient from '../../apolloClient'
+import { ApolloProvider } from '@apollo/client';
 
 const IndexPage = () => (
-  <div>
+  <ApolloProvider client={ apolloClient }>
       aa
-  </div>
+  </ApolloProvider>
 )
 
-export default withApollo({ ssr: true })(IndexPage)
+export default IndexPage
