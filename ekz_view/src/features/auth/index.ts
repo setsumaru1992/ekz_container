@@ -1,3 +1,3 @@
-import AuthManager from './AuthManager';
+import AuthManager from "./AuthManager";
 
-export { AuthManager }
+export { AuthManager };

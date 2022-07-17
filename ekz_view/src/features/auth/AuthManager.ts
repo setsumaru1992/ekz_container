@@ -1,7 +1,7 @@
-import authCookieManager from './authCookieManager';
+import authCookieManager from "./authCookieManager";
 
 export default class AuthManager {
-  getAccessKey(){
-    return authCookieManager.getAccessKey()
+  getAccessKey() {
+    return authCookieManager.getAccessKey();
   }
 }

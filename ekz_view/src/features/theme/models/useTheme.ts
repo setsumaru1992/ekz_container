@@ -9,7 +9,7 @@ export const useTheme = () => {
       accessKey: authCookieManager.getAccessKey(),
     },
   });
-}
+};
 
 export const useThemeByServerside = async (nextJsContext) => {
   return apolloClient.query({
@@ -18,5 +18,5 @@ export const useThemeByServerside = async (nextJsContext) => {
       // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
       accessKey: authCookieManager.getAccessKey(nextJsContext),
     },
-  })
-}
+  });
+};

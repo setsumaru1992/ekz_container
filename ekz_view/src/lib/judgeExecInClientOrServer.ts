@@ -1,8 +1,10 @@
-const isExecInServerSide = typeof window == 'undefined';
+const isExecInServerSide = typeof window == "undefined";
 
 export enum ExecSituation {
   ExecInServerSide,
-  ExecInClientSide
+  ExecInClientSide,
 }
 
-export default isExecInServerSide ? ExecSituation.ExecInServerSide : ExecSituation.ExecInClientSide;
+export default isExecInServerSide
+  ? ExecSituation.ExecInServerSide
+  : ExecSituation.ExecInClientSide;
