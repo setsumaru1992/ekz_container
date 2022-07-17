@@ -1,11 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import ErrorBoundary from '../../common/components/ErrorBoundary'
-import { useQuery } from '@apollo/client';
-import { THEMES_QUERY } from '../models/queries';
-// import { useThemesQuery } from '../models/graphql';
+import { useThemesQuery } from '../models/graphql';
 import authCookieManager from '../../../features/auth/authCookieManager';
 import { Theme } from "../models/graphql";
+import {useTheme} from "../models/useTheme";
 
 type Props = {
   themes?: Theme[];
@@ -17,13 +16,7 @@ export default (props: Props) => {
   if(themesFromProps){
     themes = themesFromProps;
   } else {
-    // const { data, loading } = useThemesQuery({
-    const { data, loading } = useQuery(THEMES_QUERY,{
-      variables: {
-        // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-        accessKey: authCookieManager.getAccessKey(),
-      },
-    });
+    const { data, loading } = useTheme();
     themes = data?.themes || themesFromProps || [];
     if(loading) return <div>Loading...</div>;
   }

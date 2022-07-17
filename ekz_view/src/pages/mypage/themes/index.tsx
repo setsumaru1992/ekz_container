@@ -1,12 +1,10 @@
 import React from 'react';
 import { ThemeListArea } from '../../../features/theme';
 import { Theme } from '../../../features/theme/models/graphql';
-import { THEMES_QUERY } from '../../../features/theme/models/queries';
 import { GetServerSideProps } from "next";
-import { withApollo } from "../../../lib/apollo";
 import { ApolloProvider } from '@apollo/client';
 import apolloClient from '../../../../apolloClient'
-import authCookieManager from "../../../features/auth/authCookieManager";
+import { useThemeByServerside } from "../../../features/theme";
 
 type Props = {
   themes: Theme[];
@@ -19,14 +17,7 @@ const dummyThemes = [{
 }]
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data, error } = await apolloClient.query({
-    query: THEMES_QUERY,
-    variables: {
-      // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-      accessKey: authCookieManager.getAccessKey(context),
-    },
-  })
-
+  const { data } = await useThemeByServerside(context)
   return { props: { themes: data.themes }}
 }
 
@@ -39,4 +30,4 @@ const Themes : React.FC<Props> = (props) => {
   )
 }
 
-export default withApollo()(Themes)
+export default Themes
