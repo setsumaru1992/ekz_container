@@ -12,25 +12,22 @@ type Props = {
   themes: Theme[];
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const props: Props = {
-    themes: [{
-      id: "1",
-      name: "ダミーテーマデータ",
-      description: "descriptiondescription"
-    }]
-  }
-  return { props }
+const dummyThemes = [{
+  id: "1",
+  name: "ダミーテーマデータ",
+  description: "descriptiondescription"
+}]
 
-  // const { data, error } = await apolloClient.query({
-  //   query: THEMES_QUERY,
-  //   variables: {
-  //     // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-  //     accessKey: authCookieManager.getAccessKey(),
-  //   },
-  // })
-  //
-  // return { props: { themes: data.themes }}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { data, error } = await apolloClient.query({
+    query: THEMES_QUERY,
+    variables: {
+      // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
+      accessKey: authCookieManager.getAccessKey(context),
+    },
+  })
+
+  return { props: { themes: data.themes }}
 }
 
 const Themes : React.FC<Props> = (props) => {

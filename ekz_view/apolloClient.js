@@ -1,18 +1,20 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 import fetch from 'isomorphic-unfetch'
+import judgeExecInClientOrServer, { ExecSituation } from "./src/lib/judgeExecInClientOrServer";
 
 const generateUrl = () => {
-  let protcol = null;
-  let host = null;
-  if(typeof window == 'undefined'){
-    protcol = 'http';
-    host = 'ekz_api:18030';
-  } else if (window.location.href.indexOf("localhost") > 0){
-    protcol = 'http';
-    host = 'localhost:18030';
-  } else {
-    protcol = 'http';
-    host = 'ekz.kibotsu.com';
+  let protcol;
+  let host;
+  switch (judgeExecInClientOrServer){
+    case ExecSituation.ExecInServerSide:
+      protcol = 'http';
+      host = 'ekz_api:18030';
+    case ExecSituation.ExecInServerSide:
+      protcol = 'http';
+      host = 'localhost:18030';
+    default:
+      protcol = 'http';
+      host = 'ekz.kibotsu.com';
   }
   return `${protcol}://${host}/api/v2/graphql`;
 }

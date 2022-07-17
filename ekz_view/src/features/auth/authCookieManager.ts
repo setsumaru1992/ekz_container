@@ -1,3 +1,4 @@
+import nookies from 'nookies'
 import cookieManager from "../cookie/cookieManager"
 
 const COOKIE_ACCESS_KEY_NAME = "ak"
@@ -16,8 +17,9 @@ const COOKIE_REMIND_TOKEN_ATTR = {
 
 class AuthCookieManager {
 
-  getAccessKey(){
-    return cookieManager.get(COOKIE_ACCESS_KEY_NAME)
+  getAccessKey(nextJsContext = null){
+    const cookies = nookies.get(nextJsContext);
+    return cookies[COOKIE_ACCESS_KEY_NAME];
   }
 
   setAccessKey(accessKey){

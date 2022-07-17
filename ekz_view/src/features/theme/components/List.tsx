@@ -12,18 +12,6 @@ type Props = {
 };
 
 export default (props: Props) => {
-  // const { themes: initialThemes } = props;
-  // // const { data, loading } = useThemesQuery({
-  // const { data, loading } = useQuery(THEMES_QUERY,{
-  //     variables: {
-  //       // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-  //       accessKey: authCookieManager.getAccessKey(),
-  //     },
-  //   });
-  //
-  // const themes = data?.themes || initialThemes || [];
-  // if (!initialThemes && loading) return <div>Loading...</div>;
-
   const { themes: themesFromProps } = props;
   let themes;
   if(themesFromProps){
