@@ -1,8 +1,7 @@
-function InfoBox({ children }) {
-  return (
-    <div className="info">
-      <style jsx>
-        {`
+const InfoBox = ({ children }) => (
+  <div className="info">
+    <style jsx>
+      {`
           .info {
             margin-top: 20px;
             margin-bottom: 20px;
@@ -12,10 +11,9 @@ function InfoBox({ children }) {
             border-bottom: 1px solid #ececec;
           }
         `}
-      </style>
-      {children}
-    </div>
-  );
-}
+    </style>
+    {children}
+  </div>
+);
 
 export default InfoBox;

@@ -1,7 +1,14 @@
 import React from 'react';
 
+interface Props {
+  children: any;
+}
+interface State {
+  hasError: boolean;
+}
+
 // next devがわかりやすくエラー出してくれるから頑張らなくて良いんだけど、本番実装するときにはこれでくくる。1個だけこれ使うコンポーネント用意する
-export default class ErrorBoundary extends React.Component {
+export default class ErrorBoundary extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -17,10 +24,12 @@ export default class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.hasError) {
+    const { children } = this.props;
+    const { hasError } = this.state;
+    if (hasError) {
       return <h1>エラーが発生しました。</h1>;
     }
 
-    return this.props.children;
+    return children;
   }
 }

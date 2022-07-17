@@ -1,22 +1,21 @@
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 
-function Header({ router: { pathname } }) {
-  return (
-    <header>
-      <Link href="/">
-        <a className={pathname === '/' ? 'is-active' : ''}>Home</a>
-      </Link>
-      <Link href="/client-only">
-        <a className={pathname === '/client-only' ? 'is-active' : ''}>
-          Client-Only
-        </a>
-      </Link>
-      <Link href="/about">
-        <a className={pathname === '/about' ? 'is-active' : ''}>About</a>
-      </Link>
-      <style jsx>
-        {`
+const Header = ({ router: { pathname } }) => (
+  <header>
+    <Link href="/">
+      <a className={pathname === '/' ? 'is-active' : ''}>Home</a>
+    </Link>
+    <Link href="/client-only">
+      <a className={pathname === '/client-only' ? 'is-active' : ''}>
+        Client-Only
+      </a>
+    </Link>
+    <Link href="/about">
+      <a className={pathname === '/about' ? 'is-active' : ''}>About</a>
+    </Link>
+    <style jsx>
+      {`
           header {
             margin-bottom: 25px;
           }
@@ -29,9 +28,8 @@ function Header({ router: { pathname } }) {
             text-decoration: underline;
           }
         `}
-      </style>
-    </header>
-  );
-}
+    </style>
+  </header>
+);
 
 export default withRouter(Header);

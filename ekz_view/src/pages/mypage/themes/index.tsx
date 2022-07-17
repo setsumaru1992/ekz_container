@@ -1,10 +1,9 @@
 import React from 'react';
-import { ThemeListArea } from '../../../features/theme';
-import { Theme } from '../../../features/theme/models/graphql';
-import { GetServerSideProps } from 'next';
 import { ApolloProvider } from '@apollo/client';
+import { GetServerSideProps } from 'next';
+import { Theme } from '../../../features/theme/models/graphql';
 import apolloClient from '../../../../apolloClient';
-import { useThemeByServerside } from '../../../features/theme';
+import { useThemeByServerside, ThemeListArea } from '../../../features/theme';
 
 type Props = {
   themes: Theme[];

@@ -1,13 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
-import { useThemesQuery } from '../models/graphql';
-import authCookieManager from '../../../features/auth/authCookieManager';
 import { Theme } from '../models/graphql';
 import { useTheme } from '../models/useTheme';
 
 type Props = {
-  themes?: Theme[];
+  themes: Theme[];
 };
 
 export default (props: Props) => {
@@ -24,7 +22,7 @@ export default (props: Props) => {
   return (
     <ErrorBoundary>
       {/* profileは複数のクエリをさばく練習として使用 */}
-      {/*ユーザ名：{data.profile && data.profile.email}*/}
+      {/* ユーザ名：{data.profile && data.profile.email} */}
       {themes.map((theme) => {
         return (
           <div key={theme.id}>
