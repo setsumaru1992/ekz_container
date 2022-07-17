@@ -1,10 +1,10 @@
-import React from "react";
-import Link from "next/link";
-import ErrorBoundary from "../../common/components/ErrorBoundary";
-import { useThemesQuery } from "../models/graphql";
-import authCookieManager from "../../../features/auth/authCookieManager";
-import { Theme } from "../models/graphql";
-import { useTheme } from "../models/useTheme";
+import React from 'react';
+import Link from 'next/link';
+import ErrorBoundary from '../../common/components/ErrorBoundary';
+import { useThemesQuery } from '../models/graphql';
+import authCookieManager from '../../../features/auth/authCookieManager';
+import { Theme } from '../models/graphql';
+import { useTheme } from '../models/useTheme';
 
 type Props = {
   themes?: Theme[];
@@ -30,7 +30,7 @@ export default (props: Props) => {
           <div key={theme.id}>
             <Link
               href={{
-                pathname: "/mypage/themes/[themeId]",
+                pathname: '/mypage/themes/[themeId]',
               }}
               as={`/mypage/themes/${theme.id}`}
             >

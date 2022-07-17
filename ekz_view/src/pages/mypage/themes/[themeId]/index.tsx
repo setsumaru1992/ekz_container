@@ -1,5 +1,5 @@
-import React from "react";
-import { NextPage, GetServerSideProps } from "next";
+import React from 'react';
+import { NextPage, GetServerSideProps } from 'next';
 
 interface Props {
   themeId: number;

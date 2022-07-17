@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // next devがわかりやすくエラー出してくれるから頑張らなくて良いんだけど、本番実装するときにはこれでくくる。1個だけこれ使うコンポーネント用意する
 export default class ErrorBoundary extends React.Component {

@@ -1,10 +1,10 @@
-import React from "react";
-import { ThemeListArea } from "../../../features/theme";
-import { Theme } from "../../../features/theme/models/graphql";
-import { GetServerSideProps } from "next";
-import { ApolloProvider } from "@apollo/client";
-import apolloClient from "../../../../apolloClient";
-import { useThemeByServerside } from "../../../features/theme";
+import React from 'react';
+import { ThemeListArea } from '../../../features/theme';
+import { Theme } from '../../../features/theme/models/graphql';
+import { GetServerSideProps } from 'next';
+import { ApolloProvider } from '@apollo/client';
+import apolloClient from '../../../../apolloClient';
+import { useThemeByServerside } from '../../../features/theme';
 
 type Props = {
   themes: Theme[];
@@ -12,9 +12,9 @@ type Props = {
 
 const dummyThemes = [
   {
-    id: "1",
-    name: "ダミーテーマデータ",
-    description: "descriptiondescription",
+    id: '1',
+    name: 'ダミーテーマデータ',
+    description: 'descriptiondescription',
   },
 ];
 

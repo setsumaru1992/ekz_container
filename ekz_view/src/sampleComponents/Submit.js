@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { ALL_POSTS_QUERY, allPostsQueryVars } from "./PostList";
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { ALL_POSTS_QUERY, allPostsQueryVars } from './PostList';
 
 const CREATE_POST_MUTATION = gql`
   mutation createPost($title: String!, $url: String!) {
@@ -21,8 +21,8 @@ export default function Submit() {
     event.preventDefault();
     const form = event.target;
     const formData = new window.FormData(form);
-    const title = formData.get("title");
-    const url = formData.get("url");
+    const title = formData.get('title');
+    const url = formData.get('url');
     form.reset();
 
     createPost({
@@ -53,20 +53,22 @@ export default function Submit() {
       <button type="submit" disabled={loading}>
         Submit
       </button>
-      <style jsx>{`
-        form {
-          border-bottom: 1px solid #ececec;
-          padding-bottom: 20px;
-          margin-bottom: 20px;
-        }
-        h1 {
-          font-size: 20px;
-        }
-        input {
-          display: block;
-          margin-bottom: 10px;
-        }
-      `}</style>
+      <style jsx>
+        {`
+          form {
+            border-bottom: 1px solid #ececec;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+          }
+          h1 {
+            font-size: 20px;
+          }
+          input {
+            display: block;
+            margin-bottom: 10px;
+          }
+        `}
+      </style>
     </form>
   );
 }

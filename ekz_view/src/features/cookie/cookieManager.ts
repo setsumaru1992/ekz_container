@@ -19,7 +19,7 @@ class CookieManager {
       path: undefined,
       domain: undefined,
       secure: undefined,
-    }
+    },
   ) {
     let cookieStr = `${key}=${encodeURIComponent(value)};`;
     const genKvWithEqualStr = (attrHash, attrKeyStr, cookieKey = null) => {
@@ -28,27 +28,27 @@ class CookieManager {
       if (attrVal !== undefined) {
         return `${cookieKey}=${encodeURIComponent(attrVal)};`;
       } else {
-        return "";
+        return '';
       }
     };
     // maxAgeとexpiresが両方定義されている場合以外にcookieにセット
-    if (!(attr["maxAge"] !== undefined && attr["expires"] !== undefined)) {
-      cookieStr += genKvWithEqualStr(attr, "maxAge", "max-age");
-      cookieStr += genKvWithEqualStr(attr, "expires");
+    if (!(attr['maxAge'] !== undefined && attr['expires'] !== undefined)) {
+      cookieStr += genKvWithEqualStr(attr, 'maxAge', 'max-age');
+      cookieStr += genKvWithEqualStr(attr, 'expires');
     }
-    cookieStr += genKvWithEqualStr(attr, "path");
-    cookieStr += genKvWithEqualStr(attr, "domain");
-    cookieStr += genKvWithEqualStr(attr, "secure");
+    cookieStr += genKvWithEqualStr(attr, 'path');
+    cookieStr += genKvWithEqualStr(attr, 'domain');
+    cookieStr += genKvWithEqualStr(attr, 'secure');
 
     this.setCookie(cookieStr);
   }
 
   delete(key) {
-    this.set(key, "", { maxAge: 0 });
+    this.set(key, '', { maxAge: 0 });
   }
 
   cookie() {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       return window.document.cookie;
     } else {
       return null;
@@ -58,9 +58,9 @@ class CookieManager {
   cookieHashMap() {
     if (this.cookie() == null) return null;
     let cookieHashMap = {};
-    const cookieArray = this.cookie().split(";");
+    const cookieArray = this.cookie().split(';');
     cookieArray.forEach((cookieStr) => {
-      const cookieKV = cookieStr.trim().split("=");
+      const cookieKV = cookieStr.trim().split('=');
       const key = cookieKV[0];
       const value = cookieKV[1];
       cookieHashMap[key] = value;

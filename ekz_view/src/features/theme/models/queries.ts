@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 // profileは複数のクエリをさばく練習として使用
 export const THEMES_QUERY = gql`

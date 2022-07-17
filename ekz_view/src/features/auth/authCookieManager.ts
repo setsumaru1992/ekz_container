@@ -1,8 +1,8 @@
-import nookies from "nookies";
-import cookieManager from "../cookie/cookieManager";
+import nookies from 'nookies';
+import cookieManager from '../cookie/cookieManager';
 
-const COOKIE_ACCESS_KEY_NAME = "ak";
-const COOKIE_REMIND_TOKEN_NAME = "rt";
+const COOKIE_ACCESS_KEY_NAME = 'ak';
+const COOKIE_REMIND_TOKEN_NAME = 'rt';
 const minute = 60;
 const hour = 60 * minute;
 const day = 24 * hour;
@@ -26,7 +26,7 @@ class AuthCookieManager {
     cookieManager.set(
       COOKIE_ACCESS_KEY_NAME,
       accessKey,
-      COOKIE_ACCESS_KEY_ATTR
+      COOKIE_ACCESS_KEY_ATTR,
     );
   }
 
@@ -47,7 +47,7 @@ class AuthCookieManager {
     cookieManager.set(
       COOKIE_REMIND_TOKEN_NAME,
       remindToken,
-      COOKIE_REMIND_TOKEN_ATTR
+      COOKIE_REMIND_TOKEN_ATTR,
     );
   }
 

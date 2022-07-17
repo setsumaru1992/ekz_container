@@ -1,6 +1,6 @@
-import { useThemesQuery, ThemesDocument } from "./graphql";
-import authCookieManager from "../../auth/authCookieManager";
-import apolloClient from "../../../../apolloClient";
+import { useThemesQuery, ThemesDocument } from './graphql';
+import authCookieManager from '../../auth/authCookieManager';
+import apolloClient from '../../../../apolloClient';
 
 export const useTheme = () => {
   return useThemesQuery({
