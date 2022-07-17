@@ -1,5 +1,5 @@
 overwrite: true
-schema: "http://ekz_api:18071/api/v2/graphql"
+schema: "http://ekz_api:18030/api/v2/graphql"
 config:
   withHOC: false
   withComponent: false

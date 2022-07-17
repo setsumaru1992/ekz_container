@@ -6,7 +6,7 @@ import {
 
 let apiHost = ""
 if(window.location.href.indexOf("localhost") > 0){
-  apiHost = "http://localhost:18071"
+  apiHost = "http://localhost:18030"
 } else {
   apiHost = "http://ekz.kibotsu.com"
 }

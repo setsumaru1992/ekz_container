@@ -6,10 +6,10 @@ const generateUrl = () => {
   let host = null;
   if(typeof window == 'undefined'){
     protcol = 'http';
-    host = 'ekz_api:18071';
+    host = 'ekz_api:18030';
   } else if (window.location.href.indexOf("localhost") > 0){
     protcol = 'http';
-    host = 'localhost:18071';
+    host = 'localhost:18030';
   } else {
     protcol = 'http';
     host = 'ekz.kibotsu.com';
