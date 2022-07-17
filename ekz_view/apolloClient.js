@@ -1,23 +1,27 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
-import fetch from 'isomorphic-unfetch'
-import judgeExecInClientOrServer, { ExecSituation } from "./src/lib/judgeExecInClientOrServer";
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import fetch from 'isomorphic-unfetch';
+import judgeExecInClientOrServer, {
+  ExecSituation,
+} from './src/lib/judgeExecInClientOrServer';
 
 const generateUrl = () => {
   let protcol;
   let host;
-  switch (judgeExecInClientOrServer){
+  switch (judgeExecInClientOrServer) {
     case ExecSituation.ExecInServerSide:
       protcol = 'http';
-      host = 'ekz_api:18030';
-    case ExecSituation.ExecInServerSide:
+      host = process.env.API_HOST_AND_PORT_BY_SERVER_SIDE;
+      break;
+    case ExecSituation.ExecInClientSide:
       protcol = 'http';
-      host = 'localhost:18030';
+      host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_DEV;
+      break;
     default:
       protcol = 'http';
-      host = 'ekz.kibotsu.com';
+      host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_PROD;
   }
   return `${protcol}://${host}/api/v2/graphql`;
-}
+};
 
 export const createApolloClient = (initialState, ctx) => {
   // The `ctx` (NextPageContext) will only be present on the server.
@@ -30,7 +34,7 @@ export const createApolloClient = (initialState, ctx) => {
       fetch,
     }),
     cache: new InMemoryCache().restore(initialState),
-  })
-}
+  });
+};
 
-export default createApolloClient()
+export default createApolloClient();

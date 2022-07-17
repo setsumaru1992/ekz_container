@@ -1,5 +1,5 @@
-import axios from "axios"
-import {HTTP_METHODS, EKZ_API_ROOT} from "~/common/const"
+import axios from "axios";
+import { HTTP_METHODS, EKZ_API_ROOT } from "~/common/const";
 
 const axiosConfig = {
   baseURL: EKZ_API_ROOT,
@@ -7,109 +7,110 @@ const axiosConfig = {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
   },
-  responseType: "json"
-}
+  responseType: "json",
+};
 
-let ax = axios.create(axiosConfig)
+let ax = axios.create(axiosConfig);
 
 export function requestGetterWithoutParam(url, methodStr) {
   return (params = {}) => {
-    return new Request(url, params, methodStr)
-  }
+    return new Request(url, params, methodStr);
+  };
 }
 
 export class Request {
   constructor(url, params = {}, methodStr = HTTP_METHODS.GET) {
-    this.url = url
-    this.params = params
-    this.methodStr = methodStr
+    this.url = url;
+    this.params = params;
+    this.methodStr = methodStr;
   }
 
   /*
   react内でasyncが使えるのはredux内くらい redux-chunkを使った時点で非同期はそれに任せる
-  https://kibotsu.com/redmine/issues/1853
    */
   async access(callback, defaultRetVal = null) {
-    let access = getHttpAccesser(this.methodStr)
-    const paramsForAxios = getParamsForAxios(this.params, this.methodStr)
+    let access = getHttpAccesser(this.methodStr);
+    const paramsForAxios = getParamsForAxios(this.params, this.methodStr);
     return access(this.url, paramsForAxios)
       .then((response) => {
-        const data = response.data
-        let ret = callback(data)
+        const data = response.data;
+        let ret = callback(data);
         // resolve(ret)
-        return ret
-      }).catch((e) => {
-          console.error(e)
-          // reject(defaultRetVal)
-          return defaultRetVal
-        }
-      )
+        return ret;
+      })
+      .catch((e) => {
+        console.error(e);
+        // reject(defaultRetVal)
+        return defaultRetVal;
+      });
   }
 
   sendDataWithFile(callback, errorHandle = null, defaultRetVal = null) {
-    let access = getHttpAccesser(this.methodStr)
-    const paramsForAxios = getParamsForAxios(this.params, this.methodStr)
+    let access = getHttpAccesser(this.methodStr);
+    const paramsForAxios = getParamsForAxios(this.params, this.methodStr);
     return access(this.url, paramsForAxios, {
       headers: {
-        'content-type': 'multipart/form-data',
+        "content-type": "multipart/form-data",
       },
-    }).then((response) => {
-      const data = response.data
-      let ret = callback(data)
-      // resolve(ret)
-      return ret
-    }).catch((e) => {
-      console.error(e)
-      if(errorHandle != null){
-        const {
-          status,
-          statusText
-        } = e.response
-        errorHandle(e, status, statusText)
-      }
-      // reject(defaultRetVal)
-      return defaultRetVal
     })
+      .then((response) => {
+        const data = response.data;
+        let ret = callback(data);
+        // resolve(ret)
+        return ret;
+      })
+      .catch((e) => {
+        console.error(e);
+        if (errorHandle != null) {
+          const { status, statusText } = e.response;
+          errorHandle(e, status, statusText);
+        }
+        // reject(defaultRetVal)
+        return defaultRetVal;
+      });
   }
 
   // accessって名前使いたいけどaccessを使われている間はsend
   // awaitを使われる前提
   // 一回これで作ったけど、awaitを認識してくれなかったからaccessを使う
   async send() {
-    let accessMethod = null
+    let accessMethod = null;
     switch (this.methodStr) {
       case HTTP_METHODS.GET:
-        accessMethod = ax.get
-        break
+        accessMethod = ax.get;
+        break;
       case HTTP_METHODS.POST:
-        accessMethod = ax.post
-        break
+        accessMethod = ax.post;
+        break;
       case HTTP_METHODS.DELETE:
-        accessMethod = ax.delete
-        break
+        accessMethod = ax.delete;
+        break;
       case HTTP_METHODS.PATCH:
-        accessMethod = ax.patch
-        break
+        accessMethod = ax.patch;
+        break;
       default:
-        return null
+        return null;
     }
-    const response = await accessMethod(this.url, getParamsForAxios(this.params, this.methodStr))
-    return response.data
+    const response = await accessMethod(
+      this.url,
+      getParamsForAxios(this.params, this.methodStr)
+    );
+    return response.data;
   }
 }
 
 function getHttpAccesser(methodStr) {
   switch (methodStr) {
     case HTTP_METHODS.GET:
-      return ax.get
+      return ax.get;
     case HTTP_METHODS.POST:
-      return ax.post
+      return ax.post;
     case HTTP_METHODS.DELETE:
-      return ax.delete
+      return ax.delete;
     case HTTP_METHODS.PATCH:
-      return ax.patch
+      return ax.patch;
     default:
-      return null
+      return null;
   }
 }
 
@@ -117,13 +118,13 @@ function getParamsForAxios(params, methodStr) {
   switch (methodStr) {
     case HTTP_METHODS.GET:
       return {
-        params: params
-      }
+        params: params,
+      };
     case HTTP_METHODS.DELETE:
       return {
-        data: params
-      }
+        data: params,
+      };
     default:
-      return params
+      return params;
   }
 }

@@ -1,4 +1,4 @@
-const isExecInServerSide = typeof window == 'undefined';
+const isExecInServerSide = typeof window === 'undefined';
 
 export enum ExecSituation {
   ExecInServerSide,

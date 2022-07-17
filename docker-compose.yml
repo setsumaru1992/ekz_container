@@ -4,6 +4,7 @@ services:
     container_name: ekz_view
     build: ./ekz_view
     command: "/root/ekz_view/entrypoint.sh"
+    env_file: /etc/opt/app_setting_files/ekz_container/.env
     ports:
       - "18070:18072"
     volumes:
