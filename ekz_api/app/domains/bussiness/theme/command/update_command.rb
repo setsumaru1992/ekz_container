@@ -1,5 +1,7 @@
 module Bussiness::Theme
-  class Command::CreateCommand < Bussiness::Base::Command
+  class Command::UpdateCommand < Bussiness::Base::Command
+    attribute :id, :integer
+    validates :id, presence: true
     attribute :access_key, :string
     validates :access_key, presence: true
     attribute :name, :string
@@ -7,10 +9,14 @@ module Bussiness::Theme
     attribute :description, :string
 
     def call
-      theme = Theme.new(name: name, description: description)
+      theme = Repository.find(id)
+      theme.name = name
+      theme.description = description
+
       user_id = AuthManager.authenticate(access_key)
-      theme = Repository.add(theme, user_id)
-      theme
+      Repository.update(theme, user_id)
+
+      nil
     end
   end
 end
