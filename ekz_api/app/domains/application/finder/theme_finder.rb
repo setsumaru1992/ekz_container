@@ -4,7 +4,7 @@ module Application::Finder
     validates :access_key, presence: true
 
     def fetch
-      access_user_id = AuthManager.authenticate(access_key)
+      user_id = AuthManager.authenticate(access_key)
       ::Theme
         .select("
           themes.id
@@ -23,7 +23,7 @@ module Application::Finder
             GROUP BY themes_of_subquery.id
           ) AS last_updated
           ")
-        .user_in(access_user_id)
+        .user_in(user_id)
         .order("last_updated DESC")
         .order("created_at DESC")
     end
