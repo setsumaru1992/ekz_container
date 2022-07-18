@@ -23,3 +23,4 @@ module Bussiness::Base
       raise errors_obj.full_messages.join(", and ")
     end
   end
+end

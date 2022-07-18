@@ -3,6 +3,8 @@ module Bussiness::Theme
     class << self
       def find(id)
         theme_record = ::Theme.find(id)
+        return if theme_record.blank?
+
         theme = set_same_name_fields(theme_record, Theme.new, [:id, :name, :description])
         theme
       end
@@ -22,6 +24,11 @@ module Bussiness::Theme
         theme_record = set_same_name_fields(theme_record, updated_theme, [:name, :description])
         theme_record.updated_by = user_id
         theme_record.save!
+      end
+
+      def remove(id)
+        theme_record = ::Theme.find(id)
+        theme_record.destroy!
       end
     end
   end
