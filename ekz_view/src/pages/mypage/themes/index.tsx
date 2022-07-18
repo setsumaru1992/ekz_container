@@ -1,9 +1,8 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/client';
 import { GetServerSideProps } from 'next';
 import { Theme } from '../../../features/theme/models/graphql';
-import apolloClient from '../../../../apolloClient';
-import { useThemeByServerside, ThemeListArea } from '../../../features/theme';
+import { useThemeByServerside, ThemeList } from '../../../features/theme';
+import Layout from '../../../features/common/components/layout';
 
 type Props = {
   themes: Theme[];
@@ -25,9 +24,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Themes: React.FC<Props> = (props) => {
   const { themes } = props;
   return (
-    <ApolloProvider client={apolloClient}>
-      <ThemeListArea themes={themes} />
-    </ApolloProvider>
+    <Layout>
+      <ThemeList themes={themes} />
+    </Layout>
   );
 };
 

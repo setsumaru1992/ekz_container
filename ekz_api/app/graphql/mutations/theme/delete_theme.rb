@@ -1,5 +1,5 @@
 module Mutations::Theme
-  class DeleteTheme < BaseMutation
+  class DeleteTheme < ::Mutations::BaseMutation
     argument :id, Int, required: true
 
     def resolve(access_key:, id:)

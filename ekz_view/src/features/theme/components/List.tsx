@@ -1,8 +1,9 @@
 import React from 'react';
-import Link from 'next/link';
+import Table from 'react-bootstrap/Table';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import { Theme } from '../models/graphql';
 import { useTheme } from '../models/useTheme';
+import ThemeComponent from './Theme';
 
 type Props = {
   themes: Theme[];
@@ -20,23 +21,28 @@ export default (props: Props) => {
   }
 
   return (
-    <ErrorBoundary>
-      {/* profileは複数のクエリをさばく練習として使用 */}
-      {/* ユーザ名：{data.profile && data.profile.email} */}
-      {themes.map((theme) => {
-        return (
-          <div key={theme.id}>
-            <Link
-              href={{
-                pathname: '/mypage/themes/[themeId]',
-              }}
-              as={`/mypage/themes/${theme.id}`}
-            >
-              <a>{theme.name}</a>
-            </Link>
-          </div>
-        );
-      })}
-    </ErrorBoundary>
+    <div>
+      <h1>テーマ一覧</h1>
+      <ErrorBoundary>
+        {/* profileは複数のクエリをさばく練習として使用 */}
+        {/* ユーザ名：{data.profile && data.profile.email} */}
+        <Table bordered hover>
+          <tbody>
+            <tr>
+              <td>新規追加フォームをここに</td>
+            </tr>
+            {themes.map((theme) => {
+              return (
+                <tr key={theme.id}>
+                  <td>
+                    <ThemeComponent theme={theme} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </ErrorBoundary>
+    </div>
   );
 };

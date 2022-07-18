@@ -1,5 +1,5 @@
 module Mutations::Theme
-  class CreateTheme < BaseMutation
+  class UpdateTheme < ::Mutations::BaseMutation
     argument :id, Int, required: true
     argument :access_key, String, required: true
     argument :name, String, required: true
