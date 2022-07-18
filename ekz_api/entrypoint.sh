@@ -15,4 +15,4 @@ RAILS_ENV=${RAILS_ENV} bundle exec rails s -p $port -b "0.0.0.0" &
 
 logfile="log/development.log"
 touch $logfile # 起動時はないため明示的に作成
-tail -f $logfile
+tail -f $logfile > /dev/null

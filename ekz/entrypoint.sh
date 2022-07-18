@@ -5,4 +5,4 @@ yarn install
 yarn start &
 
 # 通常コマンドが失敗するときにコンテナを延命させるデバッグコマンド
-tail -n 1 -f package.json
+tail -n 1 -f package.json > /dev/null
