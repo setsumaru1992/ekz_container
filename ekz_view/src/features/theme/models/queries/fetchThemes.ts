@@ -3,7 +3,7 @@ import {
   useThemesQuery,
   ThemesDocument,
   Theme,
-} from '../../../graphql/generated/graphql';
+} from '../../../../graphql/generated/graphql';
 
 // profileは複数のクエリをさばく練習として使用
 export const THEMES_QUERY = gql`

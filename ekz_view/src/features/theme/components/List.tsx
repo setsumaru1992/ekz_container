@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
-import { Theme } from '../models/queries';
+import { Theme } from '../models/queries/fetchThemes';
 import { useTheme } from '../models/useTheme';
 import ThemeComponent from './Theme';
 

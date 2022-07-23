@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
-import { Theme } from '../models/queries';
+import { Theme } from '../models/queries/fetchThemes';
 
 type Props = {
   theme: Theme;

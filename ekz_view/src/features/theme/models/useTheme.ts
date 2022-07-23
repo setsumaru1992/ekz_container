@@ -1,4 +1,4 @@
-import { useThemesQuery, ThemesDocument } from './queries';
+import { useThemesQuery, ThemesDocument } from './queries/fetchThemes';
 import authCookieManager from '../../auth/authCookieManager';
 import apolloClient from '../../../graphql/apolloClient';
 
