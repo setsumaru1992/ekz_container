@@ -1,6 +1,6 @@
 import List from './components/List';
-import { useThemeByServerside } from './models/useTheme';
+import { prefetchThemesByServerside } from './models/queries/useThemesFetching';
 import { Theme as ThemeType } from './models/queries/fetchThemes';
 
-export { List as ThemeList, useThemeByServerside };
+export { List as ThemeList, prefetchThemesByServerside };
 export type { ThemeType };

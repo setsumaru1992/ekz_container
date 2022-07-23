@@ -171,6 +171,7 @@ export type UpdateThemePayload = {
 export type AddThemeMutationVariables = Exact<{
   accessKey: Scalars['String'];
   name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
 }>;
 
 export type AddThemeMutation = {
@@ -194,8 +195,10 @@ export type ThemesQuery = {
 };
 
 export const AddThemeDocument = gql`
-  mutation addTheme($accessKey: String!, $name: String!) {
-    addTheme(input: { accessKey: $accessKey, name: $name }) {
+  mutation addTheme($accessKey: String!, $name: String!, $description: String) {
+    addTheme(
+      input: { accessKey: $accessKey, name: $name, description: $description }
+    ) {
       id
     }
   }
@@ -220,6 +223,7 @@ export type AddThemeMutationFn = Apollo.MutationFunction<
  *   variables: {
  *      accessKey: // value for 'accessKey'
  *      name: // value for 'name'
+ *      description: // value for 'description'
  *   },
  * });
  */

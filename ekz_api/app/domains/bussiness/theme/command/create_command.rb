@@ -7,7 +7,7 @@ module Bussiness::Theme
     attribute :description, :string
 
     def call
-      theme = Theme.new(name: name, description: description)
+      theme = Bussiness::Theme::Theme.new(name: name, description: description)
       user_id = AuthManager.authenticate(access_key)
       theme = Repository.add(theme, user_id)
       theme

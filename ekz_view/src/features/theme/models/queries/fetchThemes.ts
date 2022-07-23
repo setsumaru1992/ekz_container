@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import {
   useThemesQuery,
+  useThemesLazyQuery,
   ThemesDocument,
   Theme,
 } from '../../../../graphql/generated/graphql';
@@ -21,5 +22,5 @@ export const THEMES_QUERY = gql`
   }
 `;
 
-export { useThemesQuery, ThemesDocument };
+export { useThemesQuery, useThemesLazyQuery, ThemesDocument };
 export type { Theme };

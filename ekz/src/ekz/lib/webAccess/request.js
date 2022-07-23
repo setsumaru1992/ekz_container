@@ -49,7 +49,7 @@ export class Request {
         return ret;
       })
       .catch((e) => {
-        console.error(e);
+        console.fetchError(e);
         if (errorHandle != null) {
           const { status, statusText } = e.response;
           errorHandle(e, status, statusText);

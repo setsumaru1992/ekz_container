@@ -6,7 +6,7 @@ module Mutations::Theme
 
     field :id, Int, null: false
 
-    def resolve(access_key:, name:, description:)
+    def resolve(access_key:, name:, description: nil)
       theme = Bussiness::Theme::Command::CreateCommand.call(
         access_key: access_key,
         name: name,

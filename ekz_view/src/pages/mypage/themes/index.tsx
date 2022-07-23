@@ -1,7 +1,7 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import {
-  useThemeByServerside,
+  prefetchThemesByServerside,
   ThemeList,
   ThemeType,
 } from '../../../features/theme';
@@ -20,7 +20,7 @@ const dummyThemes = [
 ];
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data } = await useThemeByServerside(context);
+  const { data } = await prefetchThemesByServerside(context);
   return { props: { themes: data.themes } };
 };
 

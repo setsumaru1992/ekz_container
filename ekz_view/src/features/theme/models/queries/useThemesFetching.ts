@@ -1,32 +1,42 @@
-import { useThemesQuery, ThemesDocument } from './queries/fetchThemes';
-import authCookieManager from '../../auth/authCookieManager';
-import apolloClient from '../../../graphql/apolloClient';
+import {
+  useThemesQuery,
+  useThemesLazyQuery,
+  ThemesDocument,
+} from './fetchThemes';
+import authCookieManager from '../../../auth/authCookieManager';
+import apolloClient from '../../../../graphql/apolloClient';
 
-export const useTheme = (requireOnlyUpdateMethod = false) => {
-  let themes = null;
-  let dataFetchLoading = false;
-  let dataFetchError = null;
-  if (!requireOnlyUpdateMethod) {
-    const themesQuery = useThemesQuery({
-      variables: {
-        // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-        accessKey: authCookieManager.getAccessKey(),
-      },
-    });
+export default (requireFetchedData = true) => {
+  const variables = {
+    // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
+    accessKey: authCookieManager.getAccessKey(),
+  };
+  const useQueryParameter = {
+    variables,
+    nextFetchPolicy: 'no-cache',
+    // Lazyの方で上手くいったら反映
+  };
 
+  let themesQuery;
+  let themes;
+  if (requireFetchedData) {
+    themesQuery = useThemesQuery({ variables });
     themes = themesQuery.data?.themes;
-    dataFetchLoading = themesQuery.loading;
-    dataFetchError = themesQuery.error;
+  } else {
+    const themesLazyQuery = useThemesLazyQuery({
+      variables,
+      nextFetchPolicy: 'no-cache',
+      notifyOnNetworkStatusChange: true,
+    });
+    // eslint-disable-next-line prefer-destructuring
+    themesQuery = themesLazyQuery[1];
   }
 
-  const addLoading = false; // useMutationで得られたものを使用
-
-  const loading = dataFetchLoading || addLoading;
-  const error = dataFetchError;
   return {
     themes,
-    loading,
-    error,
+    fetchLoading: themesQuery.loading,
+    fetchError: themesQuery.error,
+    refetch: themesQuery.refetch,
   };
 };
 
