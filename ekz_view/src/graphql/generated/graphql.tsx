@@ -2,9 +2,15 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -82,30 +88,25 @@ export type Mutation = {
   addTheme?: Maybe<CreateThemePayload>;
   createTag?: Maybe<CreateTagPayload>;
   deleteTag?: Maybe<DeleteTagPayload>;
-  deleteTheme?: Maybe<DeleteThemePayload>;
+  removeTheme?: Maybe<DeleteThemePayload>;
   updateTheme?: Maybe<UpdateThemePayload>;
 };
-
 
 export type MutationAddThemeArgs = {
   input: CreateThemeInput;
 };
 
-
 export type MutationCreateTagArgs = {
   input: CreateTagInput;
 };
-
 
 export type MutationDeleteTagArgs = {
   input: DeleteTagInput;
 };
 
-
-export type MutationDeleteThemeArgs = {
+export type MutationRemoveThemeArgs = {
   input: DeleteThemeInput;
 };
-
 
 export type MutationUpdateThemeArgs = {
   input: UpdateThemeInput;
@@ -124,16 +125,13 @@ export type Query = {
   themes: Array<Theme>;
 };
 
-
 export type QueryProfileArgs = {
   accessKey: Scalars['String'];
 };
 
-
 export type QueryTagsArgs = {
   choiceId: Scalars['Int'];
 };
-
 
 export type QueryThemesArgs = {
   accessKey: Scalars['String'];
@@ -175,25 +173,37 @@ export type AddThemeMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
 
-
-export type AddThemeMutation = { __typename?: 'Mutation', addTheme?: { __typename?: 'CreateThemePayload', id: number } | null };
+export type AddThemeMutation = {
+  __typename?: 'Mutation';
+  addTheme?: { __typename?: 'CreateThemePayload'; id: number } | null;
+};
 
 export type ThemesQueryVariables = Exact<{
   accessKey: Scalars['String'];
 }>;
 
-
-export type ThemesQuery = { __typename?: 'Query', themes: Array<{ __typename?: 'Theme', id: string, name: string, description?: string | null }>, profile: { __typename?: 'Profile', dispName: string, email: string } };
-
+export type ThemesQuery = {
+  __typename?: 'Query';
+  themes: Array<{
+    __typename?: 'Theme';
+    id: string;
+    name: string;
+    description?: string | null;
+  }>;
+  profile: { __typename?: 'Profile'; dispName: string; email: string };
+};
 
 export const AddThemeDocument = gql`
-    mutation addTheme($accessKey: String!, $name: String!) {
-  addTheme(input: {accessKey: $accessKey, name: $name}) {
-    id
+  mutation addTheme($accessKey: String!, $name: String!) {
+    addTheme(input: { accessKey: $accessKey, name: $name }) {
+      id
+    }
   }
-}
-    `;
-export type AddThemeMutationFn = Apollo.MutationFunction<AddThemeMutation, AddThemeMutationVariables>;
+`;
+export type AddThemeMutationFn = Apollo.MutationFunction<
+  AddThemeMutation,
+  AddThemeMutationVariables
+>;
 
 /**
  * __useAddThemeMutation__
@@ -213,26 +223,37 @@ export type AddThemeMutationFn = Apollo.MutationFunction<AddThemeMutation, AddTh
  *   },
  * });
  */
-export function useAddThemeMutation(baseOptions?: Apollo.MutationHookOptions<AddThemeMutation, AddThemeMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddThemeMutation, AddThemeMutationVariables>(AddThemeDocument, options);
-      }
+export function useAddThemeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddThemeMutation,
+    AddThemeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddThemeMutation, AddThemeMutationVariables>(
+    AddThemeDocument,
+    options,
+  );
+}
 export type AddThemeMutationHookResult = ReturnType<typeof useAddThemeMutation>;
 export type AddThemeMutationResult = Apollo.MutationResult<AddThemeMutation>;
-export type AddThemeMutationOptions = Apollo.BaseMutationOptions<AddThemeMutation, AddThemeMutationVariables>;
+export type AddThemeMutationOptions = Apollo.BaseMutationOptions<
+  AddThemeMutation,
+  AddThemeMutationVariables
+>;
 export const ThemesDocument = gql`
-    query themes($accessKey: String!) {
-  themes(accessKey: $accessKey) {
-    id
-    name
-    description
+  query themes($accessKey: String!) {
+    themes(accessKey: $accessKey) {
+      id
+      name
+      description
+    }
+    profile(accessKey: $accessKey) {
+      dispName
+      email
+    }
   }
-  profile(accessKey: $accessKey) {
-    dispName
-    email
-  }
-}
-    `;
+`;
 
 /**
  * __useThemesQuery__
@@ -250,14 +271,27 @@ export const ThemesDocument = gql`
  *   },
  * });
  */
-export function useThemesQuery(baseOptions: Apollo.QueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, options);
-      }
-export function useThemesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ThemesQuery, ThemesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ThemesQuery, ThemesQueryVariables>(ThemesDocument, options);
-        }
+export function useThemesQuery(
+  baseOptions: Apollo.QueryHookOptions<ThemesQuery, ThemesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ThemesQuery, ThemesQueryVariables>(
+    ThemesDocument,
+    options,
+  );
+}
+export function useThemesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ThemesQuery, ThemesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ThemesQuery, ThemesQueryVariables>(
+    ThemesDocument,
+    options,
+  );
+}
 export type ThemesQueryHookResult = ReturnType<typeof useThemesQuery>;
 export type ThemesLazyQueryHookResult = ReturnType<typeof useThemesLazyQuery>;
-export type ThemesQueryResult = Apollo.QueryResult<ThemesQuery, ThemesQueryVariables>;
+export type ThemesQueryResult = Apollo.QueryResult<
+  ThemesQuery,
+  ThemesQueryVariables
+>;

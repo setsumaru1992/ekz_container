@@ -463,7 +463,7 @@
             "deprecationReason": null
           },
           {
-            "name": "deleteTheme",
+            "name": "removeTheme",
             "description": null,
             "args": [
               {

@@ -30,7 +30,7 @@ export const useTheme = (requireOnlyUpdateMethod = false) => {
   };
 };
 
-export const useThemeByServerside = async (nextJsContext) => {
+export const prefetchThemesByServerside = async (nextJsContext) => {
   return apolloClient.query({
     query: ThemesDocument,
     variables: {
