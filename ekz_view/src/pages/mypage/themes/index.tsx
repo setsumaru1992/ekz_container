@@ -1,11 +1,14 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
-import { Theme } from '../../../features/theme/models/graphql';
-import { useThemeByServerside, ThemeList } from '../../../features/theme';
+import {
+  useThemeByServerside,
+  ThemeList,
+  ThemeType,
+} from '../../../features/theme';
 import Layout from '../../../features/common/components/layout';
 
 type Props = {
-  themes: Theme[];
+  themes: ThemeType[];
 };
 
 const dummyThemes = [

@@ -1,4 +1,9 @@
 import { gql } from '@apollo/client';
+import {
+  useThemesQuery,
+  ThemesDocument,
+  Theme,
+} from '../../../graphql/generated/graphql';
 
 // profileは複数のクエリをさばく練習として使用
 export const THEMES_QUERY = gql`
@@ -15,3 +20,6 @@ export const THEMES_QUERY = gql`
     }
   }
 `;
+
+export { useThemesQuery, ThemesDocument };
+export type { Theme };

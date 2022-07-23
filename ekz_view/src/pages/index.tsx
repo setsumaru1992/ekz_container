@@ -1,6 +1,6 @@
 import React from 'react';
-import apolloClient from '../../apolloClient';
 import { ApolloProvider } from '@apollo/client';
+import apolloClient from '../graphql/apolloClient';
 
 const IndexPage = () => (
   <ApolloProvider client={apolloClient}>aa</ApolloProvider>

@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import fetch from 'isomorphic-unfetch';
 import judgeExecInClientOrServer, {
   ExecSituation,
-} from './src/lib/judgeExecInClientOrServer';
+} from '../lib/judgeExecInClientOrServer';
 
 const generateUrl = () => {
   let protcol;

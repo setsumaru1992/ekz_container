@@ -5,19 +5,12 @@ config:
   withComponent: false
   withHooks: true
 generates:
-  # TODO: コンポーネントごとにファイルを作るのはやりすぎな気がするが、一旦やってメリデメを理解して継続するか決める
-  src/features/theme/models/graphql.tsx:
+  src/graphql/generated/graphql.tsx:
     documents: "src/features/**/models/**/*.{ts,tsx}"
     plugins:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
-  # src/features/choice/models/graphql.tsx:
-  #   documents: "src/features/choice/models/**/*.{ts,tsx}"
-  #   plugins:
-  #     - "typescript"
-  #     - "typescript-operations"
-  #     - "typescript-react-apollo"
   ./graphql.schema.json:
     plugins:
       - "introspection"

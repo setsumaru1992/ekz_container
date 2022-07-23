@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import apolloClient from '../../../../../apolloClient';
+import apolloClient from '../../../../graphql/apolloClient';
 
 interface Props {
   children: React.ReactNode;
