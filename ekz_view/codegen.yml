@@ -7,7 +7,7 @@ config:
 generates:
   # TODO: コンポーネントごとにファイルを作るのはやりすぎな気がするが、一旦やってメリデメを理解して継続するか決める
   src/features/theme/models/graphql.tsx:
-    documents: "src/features/theme/models/**/*.{ts,tsx}"
+    documents: "src/features/**/models/**/*.{ts,tsx}"
     plugins:
       - "typescript"
       - "typescript-operations"
