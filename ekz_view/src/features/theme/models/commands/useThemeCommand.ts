@@ -1,4 +1,5 @@
-import { useAddThemeMutation, useUpdateThemeMutation } from './addTheme';
+import { useAddThemeMutation } from './addTheme';
+import { useUpdateThemeMutation } from './updateTheme';
 import authCookieManager from '../../../auth/authCookieManager';
 
 export type AddTheme = {

@@ -47,6 +47,7 @@ export default (props: Props) => {
       <button type="button" onClick={() => refetch()}>
         再取得
       </button>
+      （意図通り機能していないためデバッグ用に配置）
       <ErrorBoundary>
         <Table bordered hover>
           <tbody>
