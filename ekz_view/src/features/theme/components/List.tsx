@@ -19,7 +19,7 @@ export default (props: Props) => {
     fetchLoading,
     refetch,
   } = useThemeQuery(!themesFromProps);
-  const themes = themesByFetching || themesFromProps;
+  const themes = themesByFetching || themesFromProps || [];
 
   const { addTheme, updateLoading } = useThemeCommand();
 
@@ -44,10 +44,6 @@ export default (props: Props) => {
   return (
     <div>
       <h1>テーマ一覧</h1>
-      <button type="button" onClick={() => refetch()}>
-        再取得
-      </button>
-      （意図通り機能していないためデバッグ用に配置）
       <ErrorBoundary>
         <Table bordered hover>
           <tbody>
@@ -65,7 +61,7 @@ export default (props: Props) => {
               return (
                 <tr key={theme.id}>
                   <td>
-                    <ThemeComponent theme={theme} />
+                    <ThemeComponent theme={theme} refetch={refetch} />
                   </td>
                 </tr>
               );

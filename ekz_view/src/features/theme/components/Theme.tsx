@@ -9,10 +9,11 @@ import useThemeCommand, {
 
 type Props = {
   theme: ThemeType;
+  refetch: any;
 };
 
 export default (props: Props) => {
-  const { theme } = props;
+  const { theme, refetch } = props;
   const [editing, setEditing] = useState(false);
 
   const { updateTheme, updateLoading } = useThemeCommand();
@@ -25,9 +26,8 @@ export default (props: Props) => {
   const onSubmit: SubmitHandler<UpdateTheme> = (input: UpdateTheme) => {
     updateTheme(input, {
       onCompleted: () => {
-        // TODO: 更新データの反映
-
-        reset();
+        refetch();
+        setEditing(false);
       },
     });
   };
