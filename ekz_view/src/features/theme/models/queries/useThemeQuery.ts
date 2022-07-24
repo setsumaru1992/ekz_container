@@ -26,8 +26,8 @@ export default (requireFetchedData = true) => {
     const themesLazyQuery = useThemesLazyQuery({
       variables,
       // 更新後のrefetchが成功しないから実験的に記入
-      nextFetchPolicy: 'no-cache',
-      notifyOnNetworkStatusChange: true,
+      fetchPolicy: 'network-only',
+      nextFetchPolicy: 'network-only',
     });
     // eslint-disable-next-line prefer-destructuring
     themesQuery = themesLazyQuery[1];

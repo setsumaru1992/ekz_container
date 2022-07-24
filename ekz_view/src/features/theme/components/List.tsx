@@ -30,23 +30,24 @@ export default (props: Props) => {
     reset,
   } = useForm<AddTheme>();
   // TODO: 追加処理が成功したらrefetchする（成功時の書き方がわからないため保留中）
-  const onSubmit: SubmitHandler<AddTheme> = (input) =>
+  const onSubmit: SubmitHandler<AddTheme> = (input) => {
     addTheme(input, {
       onCompleted: () => {
         refetch();
         reset();
       },
     });
+  };
 
-  if (fetchLoading) return <div>Loading...</div>; // 必ずhooksがすべて終わった後から分岐を使う
+  if (fetchLoading) return <div>Loading...</div>; // 必ずhooksがすべて終わった後に分岐を使う
 
   return (
     <div>
       <h1>テーマ一覧</h1>
-      <button onClick={() => refetch()}>再取得</button>
+      <button type="button" onClick={() => refetch()}>
+        再取得
+      </button>
       <ErrorBoundary>
-        {/* profileは複数のクエリをさばく練習として使用 */}
-        {/* ユーザ名：{data.profile && data.profile.email} */}
         <Table bordered hover>
           <tbody>
             <tr>
