@@ -3,10 +3,8 @@ import Table from 'react-bootstrap/Table';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import { Theme } from '../models/queries/fetchThemes';
-import useThemesFetching from '../models/queries/useThemesFetching';
-import useThemeUpdating, {
-  AddTheme,
-} from '../models/mutations/useThemeUpdating';
+import useThemeQuery from '../models/queries/useThemeQuery';
+import useThemeCommand, { AddTheme } from '../models/commands/useThemeCommand';
 import ThemeComponent from './Theme';
 
 type Props = {
@@ -20,10 +18,10 @@ export default (props: Props) => {
     themes: themesByFetching,
     fetchLoading,
     refetch,
-  } = useThemesFetching(!themesFromProps);
+  } = useThemeQuery(!themesFromProps);
   const themes = themesByFetching || themesFromProps;
 
-  const { addTheme, updateLoading } = useThemeUpdating();
+  const { addTheme, updateLoading } = useThemeCommand();
 
   const {
     register,

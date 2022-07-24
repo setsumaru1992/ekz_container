@@ -3,9 +3,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 import { Theme as ThemeType } from '../models/queries/fetchThemes';
-import useThemeUpdating, {
+import useThemeCommand, {
   UpdateTheme,
-} from '../models/mutations/useThemeUpdating';
+} from '../models/commands/useThemeCommand';
 
 type Props = {
   theme: ThemeType;
@@ -15,7 +15,7 @@ export default (props: Props) => {
   const { theme } = props;
   const [editing, setEditing] = useState(false);
 
-  const { updateTheme, updateLoading } = useThemeUpdating();
+  const { updateTheme, updateLoading } = useThemeCommand();
   const {
     register,
     handleSubmit,

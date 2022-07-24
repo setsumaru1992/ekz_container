@@ -6,7 +6,6 @@ import {
 import authCookieManager from '../../../auth/authCookieManager';
 import apolloClient from '../../../../graphql/apolloClient';
 
-// TODO: useThemeQueryに名前変更
 export default (requireFetchedData = true) => {
   const variables = {
     // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き

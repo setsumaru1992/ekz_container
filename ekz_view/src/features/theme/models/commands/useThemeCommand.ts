@@ -50,7 +50,6 @@ const useUpdateTheme = () => {
   return { updateTheme, updateLoading, updateError };
 };
 
-// TODO: useThemeCommandに名前変更
 export default () => {
   const { addTheme, addLoading, addError } = useAddTheme();
   const { updateTheme, updateLoading, updateError } = useUpdateTheme();
