@@ -1,14 +1,13 @@
-import { useAddThemeMutation } from './addTheme';
+import { useAddThemeMutation, useUpdateThemeMutation } from './addTheme';
 import authCookieManager from '../../../auth/authCookieManager';
 
-export default () => {
-  const [addThemeMutation, { data, loading, error }] = useAddThemeMutation();
-  /* {
-    variables: {
-      accessKey: authCookieManager.getAccessKey(),
-      name: 'hoge',
-    },
-  }); */
+export type AddTheme = {
+  name: string;
+  description: string;
+};
+const useAddTheme = () => {
+  const [addThemeMutation, { loading: addLoading, error: addError }] =
+    useAddThemeMutation();
   const addTheme = (
     { name, description },
     { onCompleted, refetchQueries = null },
@@ -24,9 +23,42 @@ export default () => {
     });
   };
 
+  return { addTheme, addLoading, addError };
+};
+
+export type UpdateTheme = {
+  id: number;
+  name: string;
+  description: string;
+};
+const useUpdateTheme = () => {
+  const [updateThemeMutation, { loading: updateLoading, error: updateError }] =
+    useUpdateThemeMutation();
+
+  const updateTheme = ({ id, name, description }, { onCompleted }) => {
+    return updateThemeMutation({
+      variables: {
+        accessKey: authCookieManager.getAccessKey(),
+        id,
+        name,
+        description,
+      },
+      onCompleted,
+    });
+  };
+
+  return { updateTheme, updateLoading, updateError };
+};
+
+// TODO: useThemeCommandに名前変更
+export default () => {
+  const { addTheme, addLoading, addError } = useAddTheme();
+  const { updateTheme, updateLoading, updateError } = useUpdateTheme();
+
   return {
     addTheme,
-    updateLoading: loading,
-    updateError: error,
+    updateTheme,
+    updateLoading: addLoading || updateLoading,
+    updateError: addError || updateError,
   };
 };

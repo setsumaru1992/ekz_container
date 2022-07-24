@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap';
-import { Theme } from '../models/queries/fetchThemes';
+import { Theme as ThemeType } from '../models/queries/fetchThemes';
+import useThemeUpdating, {
+  UpdateTheme,
+} from '../models/mutations/useThemeUpdating';
 
 type Props = {
-  theme: Theme;
+  theme: ThemeType;
 };
 
 export default (props: Props) => {
   const { theme } = props;
   const [editing, setEditing] = useState(false);
+
+  const { updateTheme, updateLoading } = useThemeUpdating();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<UpdateTheme>();
+  const onSubmit: SubmitHandler<UpdateTheme> = (input: UpdateTheme) => {
+    updateTheme(input, {
+      onCompleted: () => {
+        // TODO: 更新データの反映
+
+        reset();
+      },
+    });
+  };
+
   const iconStyle = { color: 'black' };
   return (
     <div
@@ -17,32 +39,45 @@ export default (props: Props) => {
         display: 'flex',
       }}
     >
-      {!editing ? (
-        <>
-          <Link
-            href={{
-              pathname: '/mypage/themes/[themeId]',
-            }}
-            as={`/mypage/themes/${theme.id}`}
-          >
-            <a
-              style={{
-                marginRight: 'auto',
+      <div
+        style={{
+          marginRight: 'auto',
+        }}
+      >
+        {!editing ? (
+          <>
+            <Link
+              href={{
+                pathname: '/mypage/themes/[themeId]',
               }}
+              as={`/mypage/themes/${theme.id}`}
             >
-              {theme.name}
-            </a>
-          </Link>
-          {theme.description ? (
-            <>
-              <br />
-              {theme.description}
-            </>
-          ) : null}
-        </>
-      ) : (
-        <>ここに編集フォーム。名前欄・説明欄をそのままテキストボックスへ</>
-      )}
+              <a>{theme.name}</a>
+            </Link>
+            {theme.description ? (
+              <>
+                <br />
+                {theme.description}
+              </>
+            ) : null}
+          </>
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+              type="hidden"
+              {...register('id', { valueAsNumber: true })}
+              value={theme.id}
+            />
+            テーマ名
+            <input
+              {...register('name', { required: true })}
+              defaultValue={theme.name}
+            />
+            {errors.name && <span>This field is required</span>}
+            <input type="submit" disabled={updateLoading} />
+          </form>
+        )}
+      </div>
 
       <div
         style={{
@@ -50,9 +85,13 @@ export default (props: Props) => {
           justifyContent: 'flex-end',
         }}
       >
-        <Button variant="outline-primary" onClick={() => setEditing(!editing)}>
-          {!editing ? '編集' : '編集キャンセル'}
-        </Button>
+        <a href="#">
+          <i
+            className="fas fa-pen fa-fw"
+            style={iconStyle}
+            onClick={() => setEditing(!editing)}
+          />
+        </a>
         <a href="#">
           <i
             className="fas fa-trash fa-fw"

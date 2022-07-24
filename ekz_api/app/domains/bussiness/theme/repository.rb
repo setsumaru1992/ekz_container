@@ -21,7 +21,7 @@ module Bussiness::Theme
 
       def update(updated_theme, user_id)
         theme_record = ::Theme.find(updated_theme.id)
-        theme_record = set_same_name_fields(theme_record, updated_theme, [:name, :description])
+        theme_record = set_same_name_fields(updated_theme, theme_record, [:name, :description])
         theme_record.updated_by = user_id
         theme_record.save!
       end

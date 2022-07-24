@@ -6,6 +6,7 @@ import {
 import authCookieManager from '../../../auth/authCookieManager';
 import apolloClient from '../../../../graphql/apolloClient';
 
+// TODO: useThemeQueryに名前変更
 export default (requireFetchedData = true) => {
   const variables = {
     // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
@@ -25,6 +26,7 @@ export default (requireFetchedData = true) => {
   } else {
     const themesLazyQuery = useThemesLazyQuery({
       variables,
+      // 更新後のrefetchが成功しないから実験的に記入
       nextFetchPolicy: 'no-cache',
       notifyOnNetworkStatusChange: true,
     });

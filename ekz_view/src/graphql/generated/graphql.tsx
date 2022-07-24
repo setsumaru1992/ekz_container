@@ -166,6 +166,7 @@ export type UpdateThemePayload = {
   __typename?: 'UpdateThemePayload';
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
 };
 
 export type AddThemeMutationVariables = Exact<{
@@ -177,6 +178,18 @@ export type AddThemeMutationVariables = Exact<{
 export type AddThemeMutation = {
   __typename?: 'Mutation';
   addTheme?: { __typename?: 'CreateThemePayload'; id: number } | null;
+};
+
+export type UpdateThemeMutationVariables = Exact<{
+  accessKey: Scalars['String'];
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+}>;
+
+export type UpdateThemeMutation = {
+  __typename?: 'Mutation';
+  updateTheme?: { __typename?: 'UpdateThemePayload'; id: number } | null;
 };
 
 export type ThemesQueryVariables = Exact<{
@@ -244,6 +257,71 @@ export type AddThemeMutationResult = Apollo.MutationResult<AddThemeMutation>;
 export type AddThemeMutationOptions = Apollo.BaseMutationOptions<
   AddThemeMutation,
   AddThemeMutationVariables
+>;
+export const UpdateThemeDocument = gql`
+  mutation updateTheme(
+    $accessKey: String!
+    $id: Int!
+    $name: String!
+    $description: String
+  ) {
+    updateTheme(
+      input: {
+        accessKey: $accessKey
+        id: $id
+        name: $name
+        description: $description
+      }
+    ) {
+      id
+    }
+  }
+`;
+export type UpdateThemeMutationFn = Apollo.MutationFunction<
+  UpdateThemeMutation,
+  UpdateThemeMutationVariables
+>;
+
+/**
+ * __useUpdateThemeMutation__
+ *
+ * To run a mutation, you first call `useUpdateThemeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateThemeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateThemeMutation, { data, loading, error }] = useUpdateThemeMutation({
+ *   variables: {
+ *      accessKey: // value for 'accessKey'
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useUpdateThemeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateThemeMutation,
+    UpdateThemeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateThemeMutation, UpdateThemeMutationVariables>(
+    UpdateThemeDocument,
+    options,
+  );
+}
+export type UpdateThemeMutationHookResult = ReturnType<
+  typeof useUpdateThemeMutation
+>;
+export type UpdateThemeMutationResult =
+  Apollo.MutationResult<UpdateThemeMutation>;
+export type UpdateThemeMutationOptions = Apollo.BaseMutationOptions<
+  UpdateThemeMutation,
+  UpdateThemeMutationVariables
 >;
 export const ThemesDocument = gql`
   query themes($accessKey: String!) {

@@ -5,14 +5,16 @@ module Mutations::Theme
     argument :name, String, required: true
     argument :description, String, required: false
 
-    def resolve(access_key:, name:)
+    field :id, Int, null: false
+
+    def resolve(access_key:, id:, name:, description: nil)
       Bussiness::Theme::Command::UpdateCommand.call(
         id: id,
         access_key: access_key,
         name: name,
         description: description,
         )
-      {}
+      { id: id }
     end
   end
 end

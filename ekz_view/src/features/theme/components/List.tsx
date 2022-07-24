@@ -4,16 +4,13 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import { Theme } from '../models/queries/fetchThemes';
 import useThemesFetching from '../models/queries/useThemesFetching';
+import useThemeUpdating, {
+  AddTheme,
+} from '../models/mutations/useThemeUpdating';
 import ThemeComponent from './Theme';
-import useThemeUpdating from '../models/mutations/useThemeUpdating';
 
 type Props = {
   themes: Theme[];
-};
-
-type NewThemeInputs = {
-  name: string;
-  description: string;
 };
 
 export default (props: Props) => {
@@ -33,15 +30,14 @@ export default (props: Props) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<NewThemeInputs>();
+  } = useForm<AddTheme>();
   // TODO: 追加処理が成功したらrefetchする（成功時の書き方がわからないため保留中）
-  const onSubmit: SubmitHandler<NewThemeInputs> = (input) =>
+  const onSubmit: SubmitHandler<AddTheme> = (input) =>
     addTheme(input, {
       onCompleted: () => {
         refetch();
         reset();
       },
-      // refetchQueries: ['themes'],
     });
 
   if (fetchLoading) return <div>Loading...</div>; // 必ずhooksがすべて終わった後から分岐を使う
@@ -49,6 +45,7 @@ export default (props: Props) => {
   return (
     <div>
       <h1>テーマ一覧</h1>
+      <button onClick={() => refetch()}>再取得</button>
       <ErrorBoundary>
         {/* profileは複数のクエリをさばく練習として使用 */}
         {/* ユーザ名：{data.profile && data.profile.email} */}
