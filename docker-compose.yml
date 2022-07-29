@@ -23,7 +23,7 @@ services:
       - ./ekz_api:/root/ekz_api
 
   ekz_chrome:
-    image: selenium/node-chrome:4.3.0-20220726
+    image: seleniarm/node-chromium:4.3.0-20220709
     shm_size: 2gb
     depends_on:
       - ekz_selenium_hub
