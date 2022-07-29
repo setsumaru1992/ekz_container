@@ -16,7 +16,7 @@ export default (props: Props) => {
   const { theme, refetch } = props;
   const [editing, setEditing] = useState(false);
 
-  const { updateTheme, updateLoading } = useThemeCommand();
+  const { updateTheme, removeTheme, commandLoading } = useThemeCommand();
   const {
     register,
     handleSubmit,
@@ -74,7 +74,7 @@ export default (props: Props) => {
               defaultValue={theme.name}
             />
             {errors.name && <span>This field is required</span>}
-            <input type="submit" disabled={updateLoading} />
+            <input type="submit" disabled={commandLoading} />
           </form>
         )}
       </div>
@@ -100,7 +100,14 @@ export default (props: Props) => {
               const deleteOk =
                 window.confirm('本当に削除してもよろしいですか？');
               if (!deleteOk) return;
-              // actionAsyncThemeDestroy(theme.id);
+              removeTheme(
+                { id: Number(theme.id) },
+                {
+                  onCompleted: () => {
+                    refetch();
+                  },
+                },
+              );
             }}
           />
         </a>

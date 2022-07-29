@@ -21,7 +21,7 @@ export default (props: Props) => {
   } = useThemeQuery(!themesFromProps);
   const themes = themesByFetching || themesFromProps || [];
 
-  const { addTheme, updateLoading } = useThemeCommand();
+  const { addTheme, commandLoading } = useThemeCommand();
 
   const {
     register,
@@ -53,7 +53,7 @@ export default (props: Props) => {
                   新テーマ名
                   <input {...register('name', { required: true })} />
                   {errors.name && <span>This field is required</span>}
-                  <input type="submit" disabled={updateLoading} />
+                  <input type="submit" disabled={commandLoading} />
                 </form>
               </td>
             </tr>

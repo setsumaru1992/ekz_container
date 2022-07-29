@@ -1,5 +1,6 @@
 import { useAddThemeMutation } from './addTheme';
 import { useUpdateThemeMutation } from './updateTheme';
+import { useRemoveThemeMutation } from './removeTheme';
 import authCookieManager from '../../../auth/authCookieManager';
 
 export type AddTheme = {
@@ -51,14 +52,31 @@ const useUpdateTheme = () => {
   return { updateTheme, updateLoading, updateError };
 };
 
+const useRemoveTheme = () => {
+  const [removeThemeMutation, { loading: removeLoading, error: removeError }] =
+    useRemoveThemeMutation();
+  const removeTheme = ({ id }, { onCompleted }) => {
+    return removeThemeMutation({
+      variables: {
+        accessKey: authCookieManager.getAccessKey(),
+        id,
+      },
+      onCompleted,
+    });
+  };
+  return { removeTheme, removeLoading, removeError };
+};
+
 export default () => {
   const { addTheme, addLoading, addError } = useAddTheme();
   const { updateTheme, updateLoading, updateError } = useUpdateTheme();
+  const { removeTheme, removeLoading, removeError } = useRemoveTheme();
 
   return {
     addTheme,
     updateTheme,
-    updateLoading: addLoading || updateLoading,
-    updateError: addError || updateError,
+    removeTheme,
+    commandLoading: addLoading || updateLoading || removeLoading,
+    commandError: addError || updateError || removeError,
   };
 };

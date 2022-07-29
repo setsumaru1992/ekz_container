@@ -6,7 +6,7 @@ module Bussiness::Theme
 
     def call
       theme = Repository.find(id)
-      raise "" if theme.blank?
+      raise "指定したテーマは存在しません。" if theme.blank?
 
       Repository.remove(id)
       nil
