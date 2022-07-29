@@ -21,19 +21,19 @@ services:
     env_file: /etc/opt/app_setting_files/ekz_container/.env
     volumes:
       - ./ekz_api:/root/ekz_api
-#    depends_on:
-#      - ekz_chrome
-#
-#  ekz_chrome:
-#    image: selenium/node-chrome:3.141.59-20200409
-#    depends_on:
-#      - ekz_selenium_hub
-#    environment:
-#      - HUB_HOST=ekz_selenium_hub
-#      - HUB_PORT=4444
-#
-#  ekz_selenium_hub:
-#    image: selenium/hub:3.141.59-20200409
-#    container_name: ekz_selenium_hub
-#    ports:
-#      - "4444:4444"
+
+  ekz_chrome:
+    image: selenium/node-chrome:4.3.0-20220726
+    shm_size: 2gb
+    depends_on:
+      - ekz_selenium_hub
+    environment:
+      - SE_EVENT_BUS_HOST=ekz_selenium_hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  ekz_selenium_hub:
+    image: selenium/hub:4.3.0-20220726
+    container_name: ekz_selenium_hub
+    ports:
+      - "4444:4444"

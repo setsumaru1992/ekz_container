@@ -14,8 +14,15 @@ module WebAccessor
     def access(pre_access_params: {}, post_access_params: {}, &process)
       max_retry_count = 2
       retry_count = 0
+
       begin
         @accessor ||= gen_accessor
+      rescue => e
+        Rails.logger.error("Selenium起動失敗")
+        raise e
+      end
+
+      begin
         pre_access(@accessor, pre_access_params)
         yield(@accessor)
         post_access(@accessor, post_access_params)
@@ -28,7 +35,7 @@ module WebAccessor
           retry
         else
           screenshot_path = Rails.root.join("tmp", "error_crawl_#{Time.now.strftime("%Y%m%d%H%M%S")}.png")
-          @accessor.save_screenshot(screenshot_path) if @accessor.present?
+          @accessor.save_screenshot(screenshot_path)
           Rails.logger.error("スクレイピングエラー発生。#{screenshot_path}にスクリーンショットを保存しました。")
           raise e
         end
@@ -43,11 +50,20 @@ module WebAccessor
         options.headless!
         options.add_argument("--no-sandbox")
         options.add_argument('window-size=1280,960')
+        options.add_argument("--remote-debugging-port=9222")
+        options.add_argument("--disable-setuid-sandbox")
       end
+
       client = Selenium::WebDriver::Remote::Http::Default.new
       client.open_timeout = 300
       client.read_timeout = 300
-      Selenium::WebDriver.for(:chrome, options: options, :http_client => client)
+
+      ::Selenium::WebDriver.for(
+        :remote,
+        url: "http://ekz_selenium_hub:4444/wd/hub",
+        capabilities: options,
+        http_client: client,
+        )
     end
 
     def headless?
