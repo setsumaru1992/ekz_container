@@ -23,7 +23,7 @@ services:
       - ./ekz_api:/root/ekz_api
 
   ekz_chrome:
-    image: seleniarm/node-chromium:4.3.0-20220709
+    image: seleniarm/node-chromium:4.3.0-20220709 # armチップ用イメージ
     shm_size: 2gb
     depends_on:
       - ekz_selenium_hub
@@ -36,4 +36,6 @@ services:
     image: selenium/hub:4.3.0-20220726
     container_name: ekz_selenium_hub
     ports:
+      - "4442:4442"
+      - "4443:4443"
       - "4444:4444"
