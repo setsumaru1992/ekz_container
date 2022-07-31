@@ -1,14 +1,13 @@
 module Mutations::Theme
   class CreateTheme < ::Mutations::BaseMutation
-    argument :access_key, String, required: true
     argument :name, String, required: true
     argument :description, String, required: false
 
     field :id, Int, null: false
 
-    def resolve(access_key:, name:, description: nil)
+    def resolve(name:, description: nil)
       theme = Bussiness::Theme::Command::CreateCommand.call(
-        access_key: access_key,
+        user_id: context[:current_user_id],
         name: name,
         description: description,
       )

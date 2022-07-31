@@ -10,18 +10,13 @@ export type AddTheme = {
 const useAddTheme = () => {
   const [addThemeMutation, { loading: addLoading, error: addError }] =
     useAddThemeMutation();
-  const addTheme = (
-    { name, description },
-    { onCompleted, refetchQueries = null },
-  ) => {
+  const addTheme = ({ name, description }, { onCompleted }) => {
     return addThemeMutation({
       variables: {
-        accessKey: authCookieManager.getAccessKey(),
         name,
         description,
       },
       onCompleted,
-      refetchQueries, // 現在実験中だから書いているだけで必須とは限らない
     });
   };
 
