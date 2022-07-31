@@ -52,7 +52,6 @@ const useRemoveTheme = () => {
   const removeTheme = ({ id }, { onCompleted }) => {
     return removeThemeMutation({
       variables: {
-        accessKey: authCookieManager.getAccessKey(),
         id,
       },
       onCompleted,
