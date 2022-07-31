@@ -8,14 +8,14 @@ import {
 
 // profileは複数のクエリをさばく練習として使用
 export const THEMES_QUERY = gql`
-  query themes($accessKey: String!) {
-    themes(accessKey: $accessKey) {
+  query themes {
+    themes {
       id
       name
       description
     }
 
-    profile(accessKey: $accessKey) {
+    profile {
       dispName
       email
     }

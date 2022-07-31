@@ -127,16 +127,8 @@ export type Query = {
   themes: Array<Theme>;
 };
 
-export type QueryProfileArgs = {
-  accessKey: Scalars['String'];
-};
-
 export type QueryTagsArgs = {
   choiceId: Scalars['Int'];
-};
-
-export type QueryThemesArgs = {
-  accessKey: Scalars['String'];
 };
 
 export type Tag = {
@@ -204,9 +196,7 @@ export type UpdateThemeMutation = {
   updateTheme?: { __typename?: 'UpdateThemePayload'; id: number } | null;
 };
 
-export type ThemesQueryVariables = Exact<{
-  accessKey: Scalars['String'];
-}>;
+export type ThemesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ThemesQuery = {
   __typename?: 'Query';
@@ -387,13 +377,13 @@ export type UpdateThemeMutationOptions = Apollo.BaseMutationOptions<
   UpdateThemeMutationVariables
 >;
 export const ThemesDocument = gql`
-  query themes($accessKey: String!) {
-    themes(accessKey: $accessKey) {
+  query themes {
+    themes {
       id
       name
       description
     }
-    profile(accessKey: $accessKey) {
+    profile {
       dispName
       email
     }
@@ -412,12 +402,11 @@ export const ThemesDocument = gql`
  * @example
  * const { data, loading, error } = useThemesQuery({
  *   variables: {
- *      accessKey: // value for 'accessKey'
  *   },
  * });
  */
 export function useThemesQuery(
-  baseOptions: Apollo.QueryHookOptions<ThemesQuery, ThemesQueryVariables>,
+  baseOptions?: Apollo.QueryHookOptions<ThemesQuery, ThemesQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ThemesQuery, ThemesQueryVariables>(

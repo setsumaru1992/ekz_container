@@ -1,10 +1,9 @@
 module Application::Finder
   class ThemeFinder < Bussiness::Base::Finder
-    attribute :access_key, :string
-    validates :access_key, presence: true
+    attribute :user_id, :integer
+    validates :user_id, presence: true
 
     def fetch
-      user_id = AuthManager.authenticate(access_key)
       ::Theme
         .select("
           themes.id

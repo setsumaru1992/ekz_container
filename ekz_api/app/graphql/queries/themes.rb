@@ -2,8 +2,8 @@ module Queries
   class Themes < BaseQuery
     type [Types::Theme::ThemeType], null: false
 
-    def resolve(access_key:)
-      Application::Finder::ThemeFinder.call(access_key: access_key)
+    def resolve()
+      Application::Finder::ThemeFinder.call(user_id: context[:current_user_id])
     end
   end
 end

@@ -3,15 +3,10 @@ import {
   useThemesLazyQuery,
   ThemesDocument,
 } from './fetchThemes';
-import authCookieManager from '../../../auth/authCookieManager';
 import buildApolloClient from '../../../../graphql/buildApolloClient';
 
 export default (requireFetchedData = true) => {
-  const variables = {
-    // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-    accessKey: authCookieManager.getAccessKey(),
-  };
-
+  const variables = {};
   let themesQuery;
   if (requireFetchedData) {
     themesQuery = useThemesQuery({ variables });
@@ -33,9 +28,6 @@ export const prefetchThemesByServerside = async (nextJsContext) => {
   const apolloClient = buildApolloClient(nextJsContext);
   return apolloClient.query({
     query: ThemesDocument,
-    variables: {
-      // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
-      accessKey: authCookieManager.getAccessKey(nextJsContext),
-    },
+    variables: {},
   });
 };

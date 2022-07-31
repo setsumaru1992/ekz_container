@@ -18,6 +18,7 @@ const COOKIE_REMIND_TOKEN_ATTR = {
 class AuthCookieManager {
   getAccessKey(nextJsContext = null) {
     const cookies = nookies.get(nextJsContext);
+    // TODO: ログインページを作っていないためアクセスキーは非Docker起動アプリからCookieの値をコピーし、開発者ツールで直書き
     return cookies[COOKIE_ACCESS_KEY_NAME];
   }
 
