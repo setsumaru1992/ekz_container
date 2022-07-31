@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Link from 'next/link';
-import { Button } from 'react-bootstrap';
 import { Theme as ThemeType } from '../models/queries/fetchThemes';
 import useThemeCommand, {
   UpdateTheme,

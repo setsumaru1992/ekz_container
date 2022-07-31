@@ -5,7 +5,6 @@ import {
   ThemeList,
   ThemeType,
 } from '../../../features/theme';
-import Layout from '../../../features/common/components/layout';
 
 type Props = {
   themes: ThemeType[];
@@ -26,11 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const Themes: React.FC<Props> = (props) => {
   const { themes } = props;
-  return (
-    <Layout>
-      <ThemeList themes={themes} />
-    </Layout>
-  );
+  return <ThemeList themes={themes} />;
 };
 
 export default Themes;

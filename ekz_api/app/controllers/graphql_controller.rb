@@ -8,10 +8,11 @@ class GraphqlController < ApplicationController
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user_id: build_current_user_id(request),
     }
+
     result = EkzApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue => e
@@ -37,6 +38,13 @@ class GraphqlController < ApplicationController
     else
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
     end
+  end
+
+  def build_current_user_id(request)
+    access_key = request.headers["HTTP_AUTHORIZATION"]
+    return if access_key.blank?
+
+    AuthManager.authenticate(access_key)
   end
 
   def handle_error_in_development(e)

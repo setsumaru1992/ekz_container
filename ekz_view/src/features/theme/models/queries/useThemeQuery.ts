@@ -4,7 +4,7 @@ import {
   ThemesDocument,
 } from './fetchThemes';
 import authCookieManager from '../../../auth/authCookieManager';
-import apolloClient from '../../../../graphql/apolloClient';
+import buildApolloClient from '../../../../graphql/buildApolloClient';
 
 export default (requireFetchedData = true) => {
   const variables = {
@@ -30,6 +30,7 @@ export default (requireFetchedData = true) => {
 };
 
 export const prefetchThemesByServerside = async (nextJsContext) => {
+  const apolloClient = buildApolloClient(nextJsContext);
   return apolloClient.query({
     query: ThemesDocument,
     variables: {

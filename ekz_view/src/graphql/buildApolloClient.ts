@@ -3,6 +3,7 @@ import fetch from 'isomorphic-unfetch';
 import judgeExecInClientOrServer, {
   ExecSituation,
 } from '../lib/judgeExecInClientOrServer';
+import authCookieManager from '../features/auth/authCookieManager';
 
 const generateUrl = () => {
   let protcol;
@@ -23,7 +24,18 @@ const generateUrl = () => {
   return `${protcol}://${host}/api/v2/graphql`;
 };
 
-export const createApolloClient = (initialState, ctx) => {
+const getAccessKey = (nextJsContext) => {
+  switch (judgeExecInClientOrServer) {
+    case ExecSituation.ExecInServerSide:
+      return authCookieManager.getAccessKey(nextJsContext);
+    case ExecSituation.ExecInClientSide:
+      return authCookieManager.getAccessKey();
+    default:
+      return null;
+  }
+};
+
+export default (ctx) => {
   // The `ctx` (NextPageContext) will only be present on the server.
   // use it to extract auth headers (ctx.req) or similar.
   return new ApolloClient({
@@ -32,9 +44,8 @@ export const createApolloClient = (initialState, ctx) => {
       uri: generateUrl(),
       // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
       fetch,
+      headers: { Authorization: getAccessKey(ctx) || '' },
     }),
-    cache: new InMemoryCache().restore(initialState),
+    cache: new InMemoryCache(),
   });
 };
-
-export default createApolloClient();
