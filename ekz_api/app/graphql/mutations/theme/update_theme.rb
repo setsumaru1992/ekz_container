@@ -1,16 +1,15 @@
 module Mutations::Theme
   class UpdateTheme < ::Mutations::BaseMutation
     argument :id, Int, required: true
-    argument :access_key, String, required: true
     argument :name, String, required: true
     argument :description, String, required: false
 
     field :id, Int, null: false
 
-    def resolve(access_key:, id:, name:, description: nil)
+    def resolve(id:, name:, description: nil)
       Bussiness::Theme::Command::UpdateCommand.call(
         id: id,
-        access_key: access_key,
+        user_id: context[:current_user_id],
         name: name,
         description: description,
         )

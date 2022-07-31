@@ -35,7 +35,6 @@ const useUpdateTheme = () => {
   const updateTheme = ({ id, name, description }, { onCompleted }) => {
     return updateThemeMutation({
       variables: {
-        accessKey: authCookieManager.getAccessKey(),
         id,
         name,
         description,
