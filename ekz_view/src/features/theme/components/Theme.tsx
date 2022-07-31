@@ -47,9 +47,9 @@ export default (props: Props) => {
           <>
             <Link
               href={{
-                pathname: '/mypage/themes/[themeId]',
+                pathname: '/mypage/themes/[themeId]/choices/ekz',
               }}
-              as={`/mypage/themes/${theme.id}`}
+              as={`/mypage/themes/${theme.id}/choices/ekz`}
             >
               <a>{theme.name}</a>
             </Link>
