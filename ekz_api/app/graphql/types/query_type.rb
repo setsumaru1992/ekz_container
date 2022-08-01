@@ -6,6 +6,10 @@ module Types
 
     field :themes, resolver: Queries::Themes
 
+    field :ekz, resolver: Queries::Ekz do
+      argument :theme_id, Int, required: true
+    end
+
     field :profile, resolver: Queries::Profile
   end
 end

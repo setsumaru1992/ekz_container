@@ -1,12 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
-import { Card, Col, Button, Table } from 'react-bootstrap';
+import { Col, Button, Table } from 'react-bootstrap';
+import { Choice } from '../models/queries/pickEkz';
 
 interface Props {
-  themeId: number;
+  choice: Choice;
 }
 
-const ChoiceName = (choice, showChoicePropertyEditIcon) => {
+const openUrlInNewTab = (url) => {
+  window.open(url, String(new Date().getTime()));
+};
+
+const ChoiceName = (props: {
+  choice: Choice;
+  showChoicePropertyEditIcon: any;
+}) => {
+  const { choice, showChoicePropertyEditIcon } = props;
   const extractString = (str, maxLength) => {
     if (str.length > maxLength) {
       return `${str.substr(0, maxLength - 1)}...`;
@@ -15,7 +24,7 @@ const ChoiceName = (choice, showChoicePropertyEditIcon) => {
   };
   const choiceName = extractString(choice.name, 20);
 
-  let nameTag = null;
+  let nameTag;
   if (choice.url) {
     nameTag = (
       <a
@@ -52,59 +61,8 @@ const ChoiceName = (choice, showChoicePropertyEditIcon) => {
         {nameTag}
       </h1>
       &nbsp;
-      {showChoicePropertyEditIcon()}
-      &nbsp;
-      {this.choiceEvaluateIcon()}
+      {/* {showChoicePropertyEditIcon()} */}
     </div>
-  );
-};
-
-const ChoiceDescriptionArea = (
-  choiceDescription,
-  showChoicePropertyEditIcon,
-) => {
-  if (!choiceDescription || choiceDescription == '') return null;
-  return (
-    <div style={{ display: 'inline-flex' }}>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: choiceDescription.replace(/\n/g, '<br />'),
-        }}
-      />
-      &nbsp;
-      {showChoicePropertyEditIcon()}
-    </div>
-  );
-};
-
-const ChoiceMenuArea = (choiceId, themeId, actionAsyncChoiceDestroy) => {
-  const iconStyle = { color: 'black' };
-  return (
-    <>
-      <Link
-        href={{
-          pathname: '/mypage/themes/[themeId]/choices',
-        }}
-        as={`/mypage/themes/${themeId}/choices`}
-        style={{
-          marginRight: 'auto',
-        }}
-      >
-        <i className="far fa-list-alt fa-fw" style={iconStyle} />
-      </Link>
-      &nbsp;
-      <a href="#">
-        <i
-          className="fas fa-trash fa-fw"
-          style={iconStyle}
-          onClick={() => {
-            const deleteOk = window.confirm('本当に削除してもよろしいですか？');
-            if (!deleteOk) return;
-            actionAsyncChoiceDestroy(choiceId, themeId);
-          }}
-        />
-      </a>
-    </>
   );
 };
 
@@ -118,10 +76,6 @@ const ChoiceUpdateArea = (choice, themeId, visibleFormMap) => {
       編集
     </>
   );
-};
-
-const openUrlInNewTab = (url) => {
-  window.open(url, String(new Date().getTime()));
 };
 
 // 命名はコピー元を踏襲。名前はこれでなければならないわけではない
@@ -210,8 +164,8 @@ const CommentAreaContainer = (
 };
 
 export default (props: Props) => {
-  const { themeId } = props;
-  return <>choiceをprops渡し待ち</>;
+  const { choice } = props;
+  const themeId = null; // 本来指定の必要がないので、変数無いエラーを防ぐためだけに定義
   return (
     <Col xs={12} md={12}>
       <div style={{ display: 'flex' }}>
@@ -221,22 +175,53 @@ export default (props: Props) => {
               <ChoiceName choice={choice} showChoicePropertyEditIcon={null} />
             </div>
             <div>
-              <ChoiceDescriptionArea
-                choiceDescription={null}
-                showChoicePropertyEditIcon={null}
-              />
+              {choice.description && choice.description !== '' && (
+                <div style={{ display: 'inline-flex' }}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: choice.description.replace(/\n/g, '<br />'),
+                    }}
+                  />
+                  &nbsp;
+                  {/* {showChoicePropertyEditIcon()} */}
+                </div>
+              )}
             </div>
           </div>
         </div>
         <div style={{ display: 'flex', marginLeft: 'auto' }}>
-          <ChoiceMenuArea
-            choiceId={null}
-            themeId={themeId}
-            actionAsyncChoiceDestroy={null}
+          {/* 詳細ページ未作成のためコメントアウト */}
+          {/* <Link */}
+          {/*  href={{ */}
+          {/*    pathname: '/mypage/themes/[themeId]/choices', */}
+          {/*  }} */}
+          {/*  as={`/mypage/themes/${themeId}/choices`} */}
+          {/*  style={{ */}
+          {/*    marginRight: 'auto', */}
+          {/*  }} */}
+          {/* > */}
+          {/*  <i className="far fa-list-alt fa-fw" style={iconStyle} /> */}
+          {/* </Link> */}
+          <i
+            className="fas fa-thumbs-up fa-fw"
+            style={false ? { color: 'black' } : { color: '#CCCCCC' }}
           />
+          &nbsp;
+          <a href="#">
+            <i
+              className="fas fa-trash fa-fw"
+              style={{ color: 'black' }}
+              onClick={() => {
+                const deleteOk =
+                  window.confirm('本当に削除してもよろしいですか？');
+                if (!deleteOk) return;
+                // actionAsyncChoiceDestroy(choiceId, themeId);
+              }}
+            />
+          </a>
         </div>
       </div>
-      <ChoiceUpdateArea choice={null} themeId={themeId} visibleFormMap={null} />
+      {/* <ChoiceUpdateArea choice={null} themeId={themeId} visibleFormMap={null} /> */}
 
       {/* <ChoiceTagArea choiceId={choice.id} /> */}
       <ImageAreaConainer choice={{}} />
@@ -258,7 +243,7 @@ export default (props: Props) => {
           編集
         </Button>
       </div>
-      <CommentAreaContainer />
+      {/* <CommentAreaContainer /> */}
     </Col>
   );
 };
