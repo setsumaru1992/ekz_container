@@ -37,7 +37,7 @@ module Application::Finder
             Rails.logger.error(e.backtrace.join("\n"))
           end
         end
-        
+
         choice_hash
       end
     end

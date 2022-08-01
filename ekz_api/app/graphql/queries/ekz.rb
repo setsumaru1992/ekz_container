@@ -11,6 +11,7 @@ module Queries
         name: choice["name"],
         url: choice["url"],
         description: choice["description"],
+        evaluation: choice["evaluation"],
       }
     end
   end

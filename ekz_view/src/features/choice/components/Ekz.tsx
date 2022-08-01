@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Choice from './Choice';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
 import useThemeQuery from '../../theme/models/queries/useThemeQuery';
+import NewChoiceForm from './NewChoiceForm';
 
 interface Props {
   themeId: number;
@@ -59,7 +60,7 @@ const useChoosenList = (pickedChoice, repick) => {
 };
 
 const Header = (props) => {
-  const { theme } = props;
+  const { theme, newChoiceCreating, setNewChoiceCreating } = props;
 
   const fontSize = '0.8rem';
   return (
@@ -106,11 +107,10 @@ const Header = (props) => {
           marginLeft: 'auto',
         }}
       >
-        {/* {this.newChoiceCreateAreaIntoThisTheme( */}
-        {/*  theme, */}
-        {/*  visibleFormMap, */}
-        {/*  actionChoiceVisibleForm, */}
-        {/* )} */}
+        <div onClick={() => setNewChoiceCreating(!newChoiceCreating)}>
+          <i className="fas fa-edit" />
+          新規追加
+        </div>
       </div>
     </div>
   );
@@ -177,12 +177,20 @@ export default (props: Props) => {
 
   const { selectedChoice, changePage } = useChoosenList(choice, repick);
 
+  const [newChoiceCreating, setNewChoiceCreating] = useState(false);
+
   if (loading) return <>ロード中</>;
   return (
     <>
-      <Header theme={theme} />
+      <Header
+        theme={theme}
+        newChoiceCreating={newChoiceCreating}
+        setNewChoiceCreating={setNewChoiceCreating}
+      />
       <div style={{ position: 'relative' }}>
-        <SwitchEkzAreaContainer changePage={changePage} />
+        {!newChoiceCreating && (
+          <SwitchEkzAreaContainer changePage={changePage} />
+        )}
         <div
           style={{
             margin: '0px 20px',
@@ -191,7 +199,11 @@ export default (props: Props) => {
             borderColor: '#F5F5F5',
           }}
         >
-          <ChoiceComponent loading={loading} choice={selectedChoice} />
+          {!newChoiceCreating ? (
+            <ChoiceComponent loading={loading} choice={selectedChoice} />
+          ) : (
+            <NewChoiceForm />
+          )}
         </div>
       </div>
     </>
