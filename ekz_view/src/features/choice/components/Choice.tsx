@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { Col, Button, Table } from 'react-bootstrap';
 import { Choice } from '../models/queries/pickEkz';
 

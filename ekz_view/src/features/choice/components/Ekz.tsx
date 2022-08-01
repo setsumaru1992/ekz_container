@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Choice from './Choice';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
@@ -7,6 +7,61 @@ import useThemeQuery from '../../theme/models/queries/useThemeQuery';
 interface Props {
   themeId: number;
 }
+
+enum ChangeType {
+  Prev,
+  Next,
+}
+
+const useChoosenList = (pickedChoice, repick) => {
+  const [fetchedChoices, setFetchedChoices] = useState([]);
+  const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(0);
+
+  useEffect(() => {
+    if (!pickedChoice) return;
+
+    const choicesForUpdate = [].concat(fetchedChoices);
+    choicesForUpdate.push(pickedChoice);
+    setFetchedChoices(choicesForUpdate);
+    console.log(
+      choicesForUpdate.map((c) => {
+        return c.id;
+      }),
+    );
+  }, [pickedChoice]);
+  const idxExceedsArrayLength = (arr, idx) => {
+    return arr.length - 1 < idx;
+  };
+
+  let selectedChoice;
+  if (!idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx)) {
+    selectedChoice = fetchedChoices[selectedChoiceIdx];
+  } else if (fetchedChoices.length > 0) {
+    selectedChoice = fetchedChoices[fetchedChoices.length - 1];
+  }
+
+  const changePage = (changeType: ChangeType) => {
+    if (changeType === ChangeType.Prev) {
+      if (selectedChoiceIdx === 0) {
+        return;
+      }
+      setSelectedChoiceIdx(selectedChoiceIdx - 1);
+    }
+
+    if (changeType === ChangeType.Next) {
+      setSelectedChoiceIdx(selectedChoiceIdx + 1);
+      if (!idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx + 1)) {
+        return;
+      }
+      repick();
+    }
+  };
+
+  return {
+    selectedChoice,
+    changePage,
+  };
+};
 
 const Header = (props) => {
   const { theme } = props;
@@ -66,7 +121,7 @@ const Header = (props) => {
   );
 };
 
-const SwitchEkzAreaContainer = (changePage) => {
+const SwitchEkzAreaContainer = ({ changePage }) => {
   const switchAreaBaseStyle = {
     width: '20px',
     height: '100%',
@@ -93,10 +148,18 @@ const SwitchEkzAreaContainer = (changePage) => {
 
   return (
     <>
-      <a href="#" style={leftSwitchAreaStyle} onClick={() => changePage()}>
+      <a
+        href="#"
+        style={leftSwitchAreaStyle}
+        onClick={() => changePage(ChangeType.Prev)}
+      >
         <i style={textStyle} className="fas fa-chevron-left" />
       </a>
-      <a href="#" style={rightSwitchAreaStyle} onClick={() => changePage()}>
+      <a
+        href="#"
+        style={rightSwitchAreaStyle}
+        onClick={() => changePage(ChangeType.Next)}
+      >
         <i style={textStyle} className="fas fa-chevron-right" />
       </a>
     </>
@@ -114,20 +177,17 @@ const ChoiceComponent = (props) => {
 export default (props: Props) => {
   const { themeId } = props;
   const { theme, fetchLoading: themeFetchLoading } = useThemeQuery(themeId);
-  const {
-    choice,
-    loading: pickEkzLoading,
-    error,
-    repick,
-  } = usePickEkzQuery(themeId);
+  const { choice, loading: pickEkzLoading, repick } = usePickEkzQuery(themeId);
   const loading = themeFetchLoading || pickEkzLoading;
+
+  const { selectedChoice, changePage } = useChoosenList(choice, repick);
 
   if (loading) return <>ロード中</>;
   return (
     <>
       <Header theme={theme} />
       <div style={{ position: 'relative' }}>
-        <SwitchEkzAreaContainer changePage={() => {}} />
+        <SwitchEkzAreaContainer changePage={changePage} />
         <div
           style={{
             margin: '0px 20px',
@@ -136,7 +196,7 @@ export default (props: Props) => {
             borderColor: '#F5F5F5',
           }}
         >
-          <ChoiceComponent loading={loading} choice={choice} />
+          <ChoiceComponent loading={loading} choice={selectedChoice} />
         </div>
       </div>
     </>
