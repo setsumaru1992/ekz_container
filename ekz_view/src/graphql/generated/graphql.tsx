@@ -131,6 +131,7 @@ export type Query = {
   ekz?: Maybe<Choice>;
   profile: Profile;
   tags: Array<Tag>;
+  theme?: Maybe<Theme>;
   themes: Array<Theme>;
 };
 
@@ -140,6 +141,10 @@ export type QueryEkzArgs = {
 
 export type QueryTagsArgs = {
   choiceId: Scalars['Int'];
+};
+
+export type QueryThemeArgs = {
+  themeId: Scalars['Int'];
 };
 
 export type Tag = {
@@ -216,6 +221,20 @@ export type UpdateThemeMutationVariables = Exact<{
 export type UpdateThemeMutation = {
   __typename?: 'Mutation';
   updateTheme?: { __typename?: 'UpdateThemePayload'; id: number } | null;
+};
+
+export type ThemeQueryVariables = Exact<{
+  themeId: Scalars['Int'];
+}>;
+
+export type ThemeQuery = {
+  __typename?: 'Query';
+  theme?: {
+    __typename?: 'Theme';
+    id: string;
+    name: string;
+    description?: string | null;
+  } | null;
 };
 
 export type ThemesQueryVariables = Exact<{ [key: string]: never }>;
@@ -434,6 +453,56 @@ export type UpdateThemeMutationResult =
 export type UpdateThemeMutationOptions = Apollo.BaseMutationOptions<
   UpdateThemeMutation,
   UpdateThemeMutationVariables
+>;
+export const ThemeDocument = gql`
+  query theme($themeId: Int!) {
+    theme(themeId: $themeId) {
+      id
+      name
+      description
+    }
+  }
+`;
+
+/**
+ * __useThemeQuery__
+ *
+ * To run a query within a React component, call `useThemeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useThemeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useThemeQuery({
+ *   variables: {
+ *      themeId: // value for 'themeId'
+ *   },
+ * });
+ */
+export function useThemeQuery(
+  baseOptions: Apollo.QueryHookOptions<ThemeQuery, ThemeQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ThemeQuery, ThemeQueryVariables>(
+    ThemeDocument,
+    options,
+  );
+}
+export function useThemeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ThemeQuery, ThemeQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ThemeQuery, ThemeQueryVariables>(
+    ThemeDocument,
+    options,
+  );
+}
+export type ThemeQueryHookResult = ReturnType<typeof useThemeQuery>;
+export type ThemeLazyQueryHookResult = ReturnType<typeof useThemeLazyQuery>;
+export type ThemeQueryResult = Apollo.QueryResult<
+  ThemeQuery,
+  ThemeQueryVariables
 >;
 export const ThemesDocument = gql`
   query themes {

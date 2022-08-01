@@ -5,6 +5,9 @@ module Types
     end
 
     field :themes, resolver: Queries::Themes
+    field :theme, resolver: Queries::Theme do
+      argument :theme_id, Int, required: true
+    end
 
     field :ekz, resolver: Queries::Ekz do
       argument :theme_id, Int, required: true

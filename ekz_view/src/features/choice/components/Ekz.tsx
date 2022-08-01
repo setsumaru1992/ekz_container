@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Choice from './Choice';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
+import useThemeQuery from '../../theme/models/queries/useThemeQuery';
 
 interface Props {
   themeId: number;
@@ -104,9 +105,6 @@ const SwitchEkzAreaContainer = (changePage) => {
 
 const ChoiceComponent = (props) => {
   const { loading, choice } = props;
-  if (loading) {
-    return <>ロード中</>;
-  }
   if (!choice) {
     return <>選択肢を作成してください</>;
   }
@@ -115,9 +113,16 @@ const ChoiceComponent = (props) => {
 
 export default (props: Props) => {
   const { themeId } = props;
-  const theme = { id: themeId, name: '※テーマ取得後に表示' };
-  const { choice, loading, error, repick } = usePickEkzQuery(theme.id);
+  const { theme, fetchLoading: themeFetchLoading } = useThemeQuery(themeId);
+  const {
+    choice,
+    loading: pickEkzLoading,
+    error,
+    repick,
+  } = usePickEkzQuery(themeId);
+  const loading = themeFetchLoading || pickEkzLoading;
 
+  if (loading) return <>ロード中</>;
   return (
     <>
       <Header theme={theme} />

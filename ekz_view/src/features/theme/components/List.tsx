@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import ErrorBoundary from '../../common/components/ErrorBoundary';
 import { Theme } from '../models/queries/fetchThemes';
-import useThemeQuery from '../models/queries/useThemeQuery';
+import useThemesQuery from '../models/queries/useThemesQuery';
 import useThemeCommand, { AddTheme } from '../models/commands/useThemeCommand';
 import ThemeComponent from './Theme';
 
@@ -18,7 +18,7 @@ export default (props: Props) => {
     themes: themesByFetching,
     fetchLoading,
     refetch,
-  } = useThemeQuery(!themesFromProps);
+  } = useThemesQuery(!themesFromProps);
   const themes = themesByFetching || themesFromProps || [];
 
   const { addTheme, commandLoading } = useThemeCommand();
