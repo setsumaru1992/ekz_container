@@ -8,10 +8,9 @@ module Choice::EkzPicker
   MAX_SIZE_BAD = 1
 
   class_methods do
-    def ekz_pick(theme_id)
+    def ekz_pick(theme_id, max_list_size = 1)
       ekz_pick_param = EkzPickParams.new(theme_id)
 
-      max_list_size = 1
       good_choice_size, normal_choice_size, bad_choice_size = sizes_every_evaluation(max_list_size, ekz_pick_param)
 
       ekz_list = []

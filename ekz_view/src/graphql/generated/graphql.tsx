@@ -24,7 +24,7 @@ export type Scalars = {
 export type Choice = {
   __typename?: 'Choice';
   description?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id: Scalars['Int'];
   name: Scalars['String'];
   url?: Maybe<Scalars['String']>;
 };
@@ -136,6 +136,7 @@ export type Query = {
 };
 
 export type QueryEkzArgs = {
+  prePickedChoiceId?: InputMaybe<Scalars['Int']>;
   themeId: Scalars['Int'];
 };
 
@@ -180,13 +181,14 @@ export type UpdateThemePayload = {
 
 export type PickEkzQueryVariables = Exact<{
   themeId: Scalars['Int'];
+  prePickedChoiceId?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type PickEkzQuery = {
   __typename?: 'Query';
   ekz?: {
     __typename?: 'Choice';
-    id: string;
+    id: number;
     name: string;
     url?: string | null;
     description?: string | null;
@@ -251,8 +253,8 @@ export type ThemesQuery = {
 };
 
 export const PickEkzDocument = gql`
-  query pickEkz($themeId: Int!) {
-    ekz(themeId: $themeId) {
+  query pickEkz($themeId: Int!, $prePickedChoiceId: Int) {
+    ekz(themeId: $themeId, prePickedChoiceId: $prePickedChoiceId) {
       id
       name
       url
@@ -274,6 +276,7 @@ export const PickEkzDocument = gql`
  * const { data, loading, error } = usePickEkzQuery({
  *   variables: {
  *      themeId: // value for 'themeId'
+ *      prePickedChoiceId: // value for 'prePickedChoiceId'
  *   },
  * });
  */

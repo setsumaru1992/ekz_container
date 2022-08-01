@@ -7,8 +7,8 @@ import {
 } from '../../../../graphql/generated/graphql';
 
 export const PICK_EKZ = gql`
-  query pickEkz($themeId: Int!) {
-    ekz(themeId: $themeId) {
+  query pickEkz($themeId: Int!, $prePickedChoiceId: Int) {
+    ekz(themeId: $themeId, prePickedChoiceId: $prePickedChoiceId) {
       id
       name
       url

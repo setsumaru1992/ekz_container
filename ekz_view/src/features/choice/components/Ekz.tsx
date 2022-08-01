@@ -23,12 +23,8 @@ const useChoosenList = (pickedChoice, repick) => {
     const choicesForUpdate = [].concat(fetchedChoices);
     choicesForUpdate.push(pickedChoice);
     setFetchedChoices(choicesForUpdate);
-    console.log(
-      choicesForUpdate.map((c) => {
-        return c.id;
-      }),
-    );
   }, [pickedChoice]);
+
   const idxExceedsArrayLength = (arr, idx) => {
     return arr.length - 1 < idx;
   };
@@ -40,7 +36,7 @@ const useChoosenList = (pickedChoice, repick) => {
     selectedChoice = fetchedChoices[fetchedChoices.length - 1];
   }
 
-  const changePage = (changeType: ChangeType) => {
+  const changePage = async (changeType: ChangeType) => {
     if (changeType === ChangeType.Prev) {
       if (selectedChoiceIdx === 0) {
         return;
@@ -49,11 +45,10 @@ const useChoosenList = (pickedChoice, repick) => {
     }
 
     if (changeType === ChangeType.Next) {
-      setSelectedChoiceIdx(selectedChoiceIdx + 1);
-      if (!idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx + 1)) {
-        return;
+      if (idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx + 1)) {
+        await repick(selectedChoice.id);
       }
-      repick();
+      setSelectedChoiceIdx(selectedChoiceIdx + 1);
     }
   };
 
@@ -167,9 +162,9 @@ const SwitchEkzAreaContainer = ({ changePage }) => {
 };
 
 const ChoiceComponent = (props) => {
-  const { loading, choice } = props;
+  const { choice } = props;
   if (!choice) {
-    return <>選択肢を作成してください</>;
+    return <>表示できる選択肢がありません。選択肢を作成してください</>;
   }
   return <Choice choice={choice} />;
 };

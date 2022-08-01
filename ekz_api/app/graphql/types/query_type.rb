@@ -11,6 +11,7 @@ module Types
 
     field :ekz, resolver: Queries::Ekz do
       argument :theme_id, Int, required: true
+      argument :pre_picked_choice_id, Int, required: false
     end
 
     field :profile, resolver: Queries::Profile
