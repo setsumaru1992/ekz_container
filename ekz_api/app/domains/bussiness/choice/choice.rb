@@ -5,5 +5,6 @@ module Bussiness::Choice
     attribute :url, :string
     attribute :description, :string
     attribute :evaluation, :integer
+    attribute :theme_id, :integer
   end
 end

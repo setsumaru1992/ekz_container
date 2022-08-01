@@ -9,11 +9,18 @@ import {
 export const PICK_EKZ = gql`
   query pickEkz($themeId: Int!, $prePickedChoiceId: Int) {
     ekz(themeId: $themeId, prePickedChoiceId: $prePickedChoiceId) {
-      id
-      name
-      url
-      description
+      ...Choice
     }
+  }
+`;
+
+// TODO: choice一覧のところで定義
+export const CHOICE_FRAGMENT = gql`
+  fragment Choice on Choice {
+    id
+    name
+    url
+    description
   }
 `;
 

@@ -29,7 +29,6 @@ export default (props: Props) => {
     formState: { errors },
     reset,
   } = useForm<AddTheme>();
-  // TODO: 追加処理が成功したらrefetchする（成功時の書き方がわからないため保留中）
   const onSubmit: SubmitHandler<AddTheme> = (input) => {
     addTheme(input, {
       onCompleted: () => {

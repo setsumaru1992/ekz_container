@@ -1,23 +1,27 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { AddTheme } from '../../theme/models/commands/useThemeCommand';
+import useChoiceCommand, {
+  AddChoice,
+} from '../models/commands/useChoiceCommand';
 
 export default (props) => {
-  const { onCreated } = props;
+  const { themeId, onCreated } = props;
+
+  const { addChoice, commandLoading } = useChoiceCommand();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<AddTheme>();
-  const onSubmit: SubmitHandler<AddTheme> = (input) => {
+  } = useForm<AddChoice>();
+  const onSubmit: SubmitHandler<AddChoice> = async (input) => {
     input.evaluation = input.evaluation ? 1 : 0;
-    // addTheme(input, {
-    //   onCompleted: (createdChoice) => {
-    //     onCreated(createdChoice);
-    //     reset();
-    //   },
-    // });
+    await addChoice(input, {
+      onCompleted: async (createdChoice) => {
+        await onCreated(createdChoice);
+        reset();
+      },
+    });
   };
 
   return (
@@ -37,8 +41,13 @@ export default (props) => {
           />{' '}
           お気に入り
         </label>
+        <input
+          type="hidden"
+          value={themeId}
+          {...register('themeId', { required: true, valueAsNumber: true })}
+        />
         <br />
-        <input type="submit" disabled={false} value="新規作成" />
+        <input type="submit" disabled={commandLoading} value="新規作成" />
       </form>
     </div>
   );

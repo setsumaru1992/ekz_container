@@ -1,63 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Choice from './Choice';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
 import useThemeQuery from '../../theme/models/queries/useThemeQuery';
 import NewChoiceForm from './NewChoiceForm';
+import useChoosenEkzs, { ChangeType } from './useChoosenEkzs';
 
 interface Props {
   themeId: number;
 }
-
-enum ChangeType {
-  Prev,
-  Next,
-}
-
-const useChoosenList = (pickedChoice, repick) => {
-  const [fetchedChoices, setFetchedChoices] = useState([]);
-  const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(0);
-
-  useEffect(() => {
-    if (!pickedChoice) return;
-
-    const choicesForUpdate = [].concat(fetchedChoices);
-    choicesForUpdate.push(pickedChoice);
-    setFetchedChoices(choicesForUpdate);
-  }, [pickedChoice]);
-
-  const idxExceedsArrayLength = (arr, idx) => {
-    return arr.length - 1 < idx;
-  };
-
-  let selectedChoice;
-  if (!idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx)) {
-    selectedChoice = fetchedChoices[selectedChoiceIdx];
-  } else if (fetchedChoices.length > 0) {
-    selectedChoice = fetchedChoices[fetchedChoices.length - 1];
-  }
-
-  const changePage = async (changeType: ChangeType) => {
-    if (changeType === ChangeType.Prev) {
-      if (selectedChoiceIdx === 0) {
-        return;
-      }
-      setSelectedChoiceIdx(selectedChoiceIdx - 1);
-    }
-
-    if (changeType === ChangeType.Next) {
-      if (idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx + 1)) {
-        await repick(selectedChoice.id);
-      }
-      setSelectedChoiceIdx(selectedChoiceIdx + 1);
-    }
-  };
-
-  return {
-    selectedChoice,
-    changePage,
-  };
-};
 
 const Header = (props) => {
   const { theme, newChoiceCreating, setNewChoiceCreating } = props;
@@ -175,9 +126,14 @@ export default (props: Props) => {
   const { choice, loading: pickEkzLoading, repick } = usePickEkzQuery(themeId);
   const loading = themeFetchLoading || pickEkzLoading;
 
-  const { selectedChoice, changePage } = useChoosenList(choice, repick);
+  const { selectedChoice, changePage, addNewChoiceAndTransitionToNewChoice } =
+    useChoosenEkzs(choice, repick);
 
   const [newChoiceCreating, setNewChoiceCreating] = useState(false);
+  const onCreated = async (createdChoice) => {
+    await addNewChoiceAndTransitionToNewChoice(createdChoice);
+    setNewChoiceCreating(false);
+  };
 
   if (loading) return <>ロード中</>;
   return (
@@ -202,7 +158,7 @@ export default (props: Props) => {
           {!newChoiceCreating ? (
             <ChoiceComponent loading={loading} choice={selectedChoice} />
           ) : (
-            <NewChoiceForm />
+            <NewChoiceForm onCreated={onCreated} themeId={theme.id} />
           )}
         </div>
       </div>
