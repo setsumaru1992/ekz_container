@@ -1,6 +1,7 @@
 version: '3'
 services:
   ekz_view:
+    # TODO: ekz_view本格稼働時、ekz_view/v1,v2を作り、旧版をv1新板をv2とする
     container_name: ekz_view
     build: ./ekz_view
     command: "/root/ekz_view/entrypoint.sh"
