@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { useAddChoiceMutation } from '../../../../graphql/generated/graphql';
+import { useUpdateChoiceMutation } from '../../../../graphql/generated/graphql';
 
 export const UPDATE_CHOICE = gql`
   mutation updateChoice(
@@ -25,4 +25,4 @@ export const UPDATE_CHOICE = gql`
   }
 `;
 
-export { useAddChoiceMutation };
+export { useUpdateChoiceMutation };

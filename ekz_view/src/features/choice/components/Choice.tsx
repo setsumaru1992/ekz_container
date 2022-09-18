@@ -65,18 +65,6 @@ const ChoiceName = (props: {
   );
 };
 
-const ChoiceUpdateArea = (choice, themeId, visibleFormMap) => {
-  return (
-    <>
-      {/* {visibleFormMap[`${themeId}_${choice.id}`] */}
-      {/*  ? <ChoiceEdit themeId={themeId} choice={choice}/> */}
-      {/*  : null */}
-      {/* } */}
-      編集
-    </>
-  );
-};
-
 // 命名はコピー元を踏襲。名前はこれでなければならないわけではない
 const ImageAreaConainer = (choice) => {
   let imageSrc =

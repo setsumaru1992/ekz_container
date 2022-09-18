@@ -1,4 +1,5 @@
 import { useAddChoiceMutation } from './addChoice';
+import { useUpdateChoiceMutation } from './updateChoice';
 
 export type AddChoice = {
   name: string;
@@ -6,6 +7,14 @@ export type AddChoice = {
   description: string;
   evaluation: number;
   themeId: number;
+};
+
+export type UpdateChoice = {
+  id: number;
+  name: string;
+  url: string;
+  description: string;
+  evaluation: number;
 };
 
 const useAddChoice = () => {
@@ -23,12 +32,34 @@ const useAddChoice = () => {
   return { addChoice, addLoading, addError };
 };
 
+const useUpdateChoice = () => {
+  const [updateChoiceMutation, { loading: updateLoading, error: updateError }] =
+    useUpdateChoiceMutation();
+  const updateChoice = async (
+    updateInput: UpdateChoice,
+    originalChoice: UpdateChoice,
+    { onCompleted },
+  ) => {
+    const updateChoiceInput = Object.assign(originalChoice, updateInput);
+    return updateChoiceMutation({
+      variables: updateChoiceInput,
+      onCompleted: async (data) => {
+        const updatedChoice = data.updateChoice.choice;
+        await onCompleted(updatedChoice);
+      },
+    });
+  };
+  return { updateChoice, updateLoading, updateError };
+};
+
 export default () => {
   const { addChoice, addLoading, addError } = useAddChoice();
+  const { updateChoice, updateLoading, updateError } = useUpdateChoice();
 
   return {
     addChoice,
-    commandLoading: addLoading,
-    commandError: addError,
+    updateChoice,
+    commandLoading: addLoading || updateLoading,
+    commandError: addError || updateError,
   };
 };
