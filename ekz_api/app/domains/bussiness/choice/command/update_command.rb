@@ -7,8 +7,6 @@ module Bussiness::Choice
     attribute :url, :string
     attribute :description, :string
     attribute :evaluation, :integer
-    attribute :theme_id, :integer
-    validates :theme_id, presence: true
 
     def call
       choice = Repository.find(id)

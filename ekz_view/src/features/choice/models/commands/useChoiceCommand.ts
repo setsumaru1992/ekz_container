@@ -1,4 +1,4 @@
-import { useAddChoiceMutation } from './addChoice';
+import { useAddChoiceMutation, Choice } from './addChoice';
 import { useUpdateChoiceMutation } from './updateChoice';
 
 export type AddChoice = {
@@ -37,10 +37,10 @@ const useUpdateChoice = () => {
     useUpdateChoiceMutation();
   const updateChoice = async (
     updateInput: UpdateChoice,
-    originalChoice: UpdateChoice,
+    originalChoice: Choice,
     { onCompleted },
   ) => {
-    const updateChoiceInput = Object.assign(originalChoice, updateInput);
+    const updateChoiceInput = { ...originalChoice, ...updateInput };
     return updateChoiceMutation({
       variables: updateChoiceInput,
       onCompleted: async (data) => {

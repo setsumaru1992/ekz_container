@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Button, Table } from 'react-bootstrap';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Choice } from '../models/queries/pickEkz';
+import useChoiceCommand, {
+  UpdateChoice,
+} from '../models/commands/useChoiceCommand';
 
 interface Props {
   choice: Choice;
@@ -9,40 +13,36 @@ interface Props {
 const openUrlInNewTab = (url) => {
   window.open(url, String(new Date().getTime()));
 };
-
-const ChoiceName = (props: {
-  choice: Choice;
-  showChoicePropertyEditIcon: any;
-}) => {
-  const { choice, showChoicePropertyEditIcon } = props;
-  const extractString = (str, maxLength) => {
-    if (str.length > maxLength) {
-      return `${str.substr(0, maxLength - 1)}...`;
-    }
-    return str;
-  };
-  const choiceName = extractString(choice.name, 20);
-
-  let nameTag;
-  if (choice.url) {
-    nameTag = (
-      <a
-        href={choice.url}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          openUrlInNewTab(choice.url);
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-      >
-        {choiceName}
-        <br />({extractString(choice.url, 20)})
-      </a>
-    );
-  } else {
-    nameTag = choiceName;
+const extractString = (str, maxLength) => {
+  if (str.length > maxLength) {
+    return `${str.substr(0, maxLength - 1)}...`;
   }
+  return str;
+};
+
+const ChoiceName = (props: { choice: Choice }) => {
+  const { choice } = props;
+  const titleContentTag = (() => {
+    const choiceName = extractString(choice.name, 20);
+    if (choice.url) {
+      return (
+        <a
+          href={choice.url}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            openUrlInNewTab(choice.url);
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          {choiceName}
+          <br />({extractString(choice.url, 20)})
+        </a>
+      );
+    }
+    return <>{choiceName}</>;
+  })();
 
   const fontSize = '16px';
   return (
@@ -57,10 +57,97 @@ const ChoiceName = (props: {
           fontSize,
         }}
       >
-        {nameTag}
+        {titleContentTag}
       </h1>
       &nbsp;
-      {/* {showChoicePropertyEditIcon()} */}
+    </div>
+  );
+};
+
+const ChoiceTitleAndProperties = (props: {
+  choice: Choice;
+  openEditor: any;
+}) => {
+  const { choice, openEditor } = props;
+  return (
+    <div style={{ display: 'flex' }}>
+      <div>
+        <div>
+          <ChoiceName choice={choice} />
+          <i
+            className="fas fa-pen fa-fw"
+            style={false ? { color: 'black' } : { color: '#CCCCCC' }}
+            onClick={() => openEditor()}
+          />
+        </div>
+        <div>
+          {choice.description && choice.description !== '' && (
+            <div style={{ display: 'inline-flex' }}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: choice.description.replace(/\n/g, '<br />'),
+                }}
+              />
+              &nbsp;
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChoiceTitleAndPropertiesUpdateArea = (props: {
+  choice: Choice;
+  closeEditor: any;
+  updateDisplayChoice: any;
+}) => {
+  const { choice, closeEditor, updateDisplayChoice } = props;
+  const { updateChoice, commandLoading } = useChoiceCommand();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UpdateChoice>();
+  const onSubmit: SubmitHandler<UpdateChoice> = async (input) => {
+    await updateChoice(input, choice, {
+      onCompleted: async (updatedChoice) => {
+        closeEditor();
+        updateDisplayChoice(updatedChoice);
+      },
+    });
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        選択肢名
+        <input
+          {...register('name', { required: true })}
+          defaultValue={choice.name}
+        />
+        {errors.name && <span>This field is required</span>}
+        <i
+          className="fas fa-pen fa-fw"
+          style={false ? { color: 'black' } : { color: '#CCCCCC' }}
+          onClick={() => closeEditor()}
+        />
+        <br />
+        URL
+        <input
+          {...register('url', { required: false })}
+          defaultValue={choice.url}
+        />{' '}
+        <br />
+        説明
+        <input
+          {...register('description', { required: false })}
+          defaultValue={choice.description}
+        />{' '}
+        <br />
+        <br />
+        <input type="submit" disabled={commandLoading} value="修正" />
+      </form>
     </div>
   );
 };
@@ -151,31 +238,34 @@ const CommentAreaContainer = (
 };
 
 export default (props: Props) => {
-  const { choice } = props;
-  const themeId = null; // 本来指定の必要がないので、変数無いエラーを防ぐためだけに定義
+  const { choice: choiceFromProp } = props;
+  const [titleAndPropertiesEditing, setTitleAndPropertiesEditing] =
+    useState(false);
+  const [updatedChoices, setUpdateChoice] = useState({});
+  const updateDisplayChoice = (updatedChoiceArg) => {
+    updatedChoices[updatedChoiceArg.id] = updatedChoiceArg;
+    setUpdateChoice(updatedChoices);
+  };
+  const choice = updatedChoices[choiceFromProp.id] || choiceFromProp;
   return (
     <Col xs={12} md={12}>
       <div style={{ display: 'flex' }}>
-        <div style={{ display: 'flex' }}>
-          <div>
-            <div>
-              <ChoiceName choice={choice} showChoicePropertyEditIcon={null} />
-            </div>
-            <div>
-              {choice.description && choice.description !== '' && (
-                <div style={{ display: 'inline-flex' }}>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: choice.description.replace(/\n/g, '<br />'),
-                    }}
-                  />
-                  &nbsp;
-                  {/* {showChoicePropertyEditIcon()} */}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        {titleAndPropertiesEditing ? (
+          <ChoiceTitleAndPropertiesUpdateArea
+            choice={choice}
+            closeEditor={() => {
+              setTitleAndPropertiesEditing(false);
+            }}
+            updateDisplayChoice={updateDisplayChoice}
+          />
+        ) : (
+          <ChoiceTitleAndProperties
+            choice={choice}
+            openEditor={() => {
+              setTitleAndPropertiesEditing(true);
+            }}
+          />
+        )}
         <div style={{ display: 'flex', marginLeft: 'auto' }}>
           {/* 詳細ページ未作成のためコメントアウト */}
           {/* <Link */}
