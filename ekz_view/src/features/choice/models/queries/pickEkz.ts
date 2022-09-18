@@ -21,6 +21,8 @@ export const CHOICE_FRAGMENT = gql`
     name
     url
     description
+    evaluation
+    themeId
   }
 `;
 

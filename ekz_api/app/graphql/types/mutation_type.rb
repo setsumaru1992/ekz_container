@@ -5,6 +5,7 @@ module Types
     field :remove_theme, mutation: Mutations::Theme::DeleteTheme
 
     field :add_choice, mutation: Mutations::Choice::CreateChoice
+    field :update_choice, mutation: Mutations::Choice::UpdateChoice
 
     field :delete_tag, resolver: Mutations::DeleteTag
     field :create_tag, resolver: Mutations::CreateTag
