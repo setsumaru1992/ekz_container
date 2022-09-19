@@ -35,8 +35,9 @@ const useAddChoice = () => {
 const useUpdateChoice = () => {
   const [updateChoiceMutation, { loading: updateLoading, error: updateError }] =
     useUpdateChoiceMutation();
+
   const updateChoice = async (
-    updateInput: UpdateChoice,
+    updateInput: Partial<UpdateChoice>,
     originalChoice: Choice,
     { onCompleted },
   ) => {
@@ -49,6 +50,7 @@ const useUpdateChoice = () => {
       },
     });
   };
+
   return { updateChoice, updateLoading, updateError };
 };
 

@@ -22,6 +22,7 @@ export default (props: Props) => {
     setUpdateChoice(updatedChoices);
   };
   const choice = updatedChoices[choiceFromProp.id] || choiceFromProp;
+
   return (
     <Col xs={12} md={12}>
       <div style={{ display: 'flex' }}>
@@ -29,11 +30,11 @@ export default (props: Props) => {
           choice={choice}
           updateDisplayingChoice={updateDisplayingChoice}
         />
-        <Menu />
+        <Menu choice={choice} updateDisplayingChoice={updateDisplayingChoice} />
       </div>
 
       {/* <ChoiceTagArea choiceId={choice.id} /> */}
-      <ImageAreaConainer choice={{}} />
+      <ImageAreaConainer choice={choice} />
       {/* <CommentAreaContainer /> */}
     </Col>
   );
