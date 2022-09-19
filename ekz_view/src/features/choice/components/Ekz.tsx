@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { Col } from 'react-bootstrap';
 import Choice from './Choice';
 import { Choice as ChoiceType } from '../models/queries/pickEkz';
@@ -7,67 +6,11 @@ import usePickEkzQuery from '../models/queries/usePickEkzQuery';
 import useThemeQuery from '../../theme/models/queries/useThemeQuery';
 import NewChoiceForm from './NewChoiceForm';
 import useChoosenEkzs, { ChangeType } from './useChoosenEkzs';
+import Header from './Header';
 
 interface Props {
   themeId: number;
 }
-
-const Header = (props) => {
-  const { theme, newChoiceCreating, setNewChoiceCreating } = props;
-
-  const fontSize = '0.8rem';
-  return (
-    <div style={{ display: 'flex', height: '2rem' }}>
-      <div style={{ display: 'flex' }}>
-        <div
-          style={{
-            display: '-webkit-inline-box',
-            fontSize,
-          }}
-        >
-          <h2
-            style={{
-              fontSize,
-              lineHeight: 'initial',
-            }}
-          >
-            <Link
-              href={{
-                pathname: '/mypage/themes',
-              }}
-              as="/mypage/themes"
-            >
-              テーマ一覧
-            </Link>
-            &nbsp;&gt;&nbsp;
-            {theme.name}
-          </h2>
-          (
-          <Link
-            href={{
-              pathname: '/mypage/themes/[theme.id]/choices',
-            }}
-            as={`/mypage/themes/${theme.id}/choices`}
-          >
-            このテーマの選択肢を見る
-          </Link>
-          )
-        </div>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          marginLeft: 'auto',
-        }}
-      >
-        <div onClick={() => setNewChoiceCreating(!newChoiceCreating)}>
-          <i className="fas fa-edit" />
-          新規追加
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const SwitchEkzAreaContainer = ({ changePage }) => {
   const switchAreaBaseStyle = {
