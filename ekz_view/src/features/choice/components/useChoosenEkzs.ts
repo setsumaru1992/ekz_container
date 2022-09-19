@@ -44,8 +44,6 @@ const useChoiceRemoving = (
   const removeSelectedChoiceAndTransition = () => {
     removeSelectedChoice();
 
-    console.log(selectedChoiceIdx);
-
     if (selectedChoiceIdx !== 0) {
       setSelectedChoiceIdx(selectedChoiceIdx - 1);
     } else if (fetchedChoices.length !== 0) {
