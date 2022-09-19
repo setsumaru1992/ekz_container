@@ -6,6 +6,7 @@ import Menu from './Menu';
 
 interface Props {
   choice: Choice;
+  onRemoved?: any;
 }
 
 // TODO: util化。タイトルのところでも使用中
@@ -14,7 +15,7 @@ const openUrlInNewTab = (url) => {
 };
 
 export default (props: Props) => {
-  const { choice: choiceFromProp } = props;
+  const { choice: choiceFromProp, onRemoved } = props;
 
   const [updatedChoices, setUpdateChoice] = useState({});
   const updateDisplayingChoice = (updatedChoiceArg) => {
@@ -23,6 +24,13 @@ export default (props: Props) => {
   };
   const choice = updatedChoices[choiceFromProp.id] || choiceFromProp;
 
+  const onThisChoiceRemoved = (id) => {
+    updatedChoices[id] = null;
+    setUpdateChoice(updatedChoices);
+
+    if (onRemoved) onRemoved(id);
+  };
+
   return (
     <Col xs={12} md={12}>
       <div style={{ display: 'flex' }}>
@@ -30,7 +38,11 @@ export default (props: Props) => {
           choice={choice}
           updateDisplayingChoice={updateDisplayingChoice}
         />
-        <Menu choice={choice} updateDisplayingChoice={updateDisplayingChoice} />
+        <Menu
+          choice={choice}
+          updateDisplayingChoice={updateDisplayingChoice}
+          onRemoved={(id) => onThisChoiceRemoved(id)}
+        />
       </div>
 
       {/* <ChoiceTagArea choiceId={choice.id} /> */}

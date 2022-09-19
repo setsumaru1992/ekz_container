@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Choice from './Choice';
+import { Choice as ChoiceType } from '../models/queries/pickEkz';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
 import useThemeQuery from '../../theme/models/queries/useThemeQuery';
 import NewChoiceForm from './NewChoiceForm';
@@ -112,12 +113,12 @@ const SwitchEkzAreaContainer = ({ changePage }) => {
   );
 };
 
-const ChoiceComponent = (props) => {
-  const { choice } = props;
+const ChoiceComponent = (props: { choice: ChoiceType; onRemoved: any }) => {
+  const { choice, onRemoved } = props;
   if (!choice) {
     return <>表示できる選択肢がありません。選択肢を作成してください</>;
   }
-  return <Choice choice={choice} />;
+  return <Choice choice={choice} onRemoved={onRemoved} />;
 };
 
 export default (props: Props) => {
@@ -126,13 +127,20 @@ export default (props: Props) => {
   const { choice, loading: pickEkzLoading, repick } = usePickEkzQuery(themeId);
   const loading = themeFetchLoading || pickEkzLoading;
 
-  const { selectedChoice, changePage, addNewChoiceAndTransitionToNewChoice } =
-    useChoosenEkzs(choice, repick);
+  const {
+    selectedChoice,
+    changePage,
+    addNewChoiceAndTransitionToNewChoice,
+    removeSelectedChoiceAndTransition,
+  } = useChoosenEkzs(choice, repick);
 
   const [newChoiceCreating, setNewChoiceCreating] = useState(false);
   const onCreated = async (createdChoice) => {
     await addNewChoiceAndTransitionToNewChoice(createdChoice);
     setNewChoiceCreating(false);
+  };
+  const onRemoved = () => {
+    removeSelectedChoiceAndTransition();
   };
 
   if (loading) return <>ロード中</>;
@@ -156,7 +164,7 @@ export default (props: Props) => {
           }}
         >
           {!newChoiceCreating ? (
-            <ChoiceComponent loading={loading} choice={selectedChoice} />
+            <ChoiceComponent choice={selectedChoice} onRemoved={onRemoved} />
           ) : (
             <NewChoiceForm onCreated={onCreated} themeId={theme.id} />
           )}

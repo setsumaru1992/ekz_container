@@ -5,30 +5,74 @@ export enum ChangeType {
   Next,
 }
 
-export default (pickedChoice, repick) => {
-  const [fetchedChoices, setFetchedChoices] = useState([]);
-  const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(0);
+const idxExceedsArrayLength = (arr, idx) => {
+  return arr.length - 1 < idx;
+};
 
-  const addEkz = async (choice) => {
+const useChoiceAdding = (
+  fetchedChoices,
+  setFetchedChoices,
+  setSelectedChoiceIdx,
+) => {
+  const addChoice = async (choice) => {
     if (!choice) return;
 
     await setFetchedChoices((currentChoices) => [...currentChoices, choice]);
   };
 
-  useEffect(() => {
-    addEkz(pickedChoice);
-  }, [pickedChoice]);
-
-  const idxExceedsArrayLength = (arr, idx) => {
-    return arr.length - 1 < idx;
+  const addNewChoiceAndTransitionToNewChoice = async (choice) => {
+    await addChoice(choice);
+    const expectedLastIndexOfChoices = fetchedChoices.length - 1 + 1; // 本来上述処理で更新されたstateのリストの長さを取得したいが、それができないため、計算上の値を使用
+    setSelectedChoiceIdx(expectedLastIndexOfChoices);
   };
 
-  let selectedChoice;
-  if (!idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx)) {
-    selectedChoice = fetchedChoices[selectedChoiceIdx];
-  } else if (fetchedChoices.length > 0) {
-    selectedChoice = fetchedChoices[fetchedChoices.length - 1];
-  }
+  return { addChoice, addNewChoiceAndTransitionToNewChoice };
+};
+
+const useChoiceRemoving = (
+  fetchedChoices,
+  setFetchedChoices,
+  selectedChoiceIdx,
+  setSelectedChoiceIdx,
+  repick,
+) => {
+  const removeSelectedChoice = () => {
+    fetchedChoices.splice(selectedChoiceIdx, 1);
+    setFetchedChoices(fetchedChoices);
+  };
+
+  const removeSelectedChoiceAndTransition = () => {
+    removeSelectedChoice();
+
+    console.log(selectedChoiceIdx);
+
+    if (selectedChoiceIdx !== 0) {
+      setSelectedChoiceIdx(selectedChoiceIdx - 1);
+    } else if (fetchedChoices.length !== 0) {
+      setSelectedChoiceIdx(selectedChoiceIdx + 1);
+    } else {
+      repick(null);
+    }
+  };
+
+  return { removeSelectedChoiceAndTransition };
+};
+
+const useChoiceChoosing = (
+  fetchedChoices,
+  selectedChoiceIdx,
+  setSelectedChoiceIdx,
+  repick,
+) => {
+  const selectedChoice = (() => {
+    if (!idxExceedsArrayLength(fetchedChoices, selectedChoiceIdx)) {
+      return fetchedChoices[selectedChoiceIdx];
+    }
+    if (fetchedChoices.length > 0) {
+      return fetchedChoices[fetchedChoices.length - 1];
+    }
+    return null;
+  })();
 
   const changePage = async (changeType: ChangeType) => {
     if (changeType === ChangeType.Prev) {
@@ -46,15 +90,42 @@ export default (pickedChoice, repick) => {
     }
   };
 
-  const addNewChoiceAndTransitionToNewChoice = async (choice) => {
-    await addEkz(choice);
-    const expectedLastIndexOfChoices = fetchedChoices.length - 1 + 1; // 本来上述処理で更新されたstateのリストの長さを取得したいが、それができないため、計算上の値を使用
-    setSelectedChoiceIdx(expectedLastIndexOfChoices);
-  };
+  return { selectedChoice, changePage };
+};
+
+export default (pickedChoice, repick) => {
+  const [fetchedChoices, setFetchedChoices] = useState([]);
+  const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(0);
+
+  const { addChoice, addNewChoiceAndTransitionToNewChoice } = useChoiceAdding(
+    fetchedChoices,
+    setFetchedChoices,
+    setSelectedChoiceIdx,
+  );
+
+  useEffect(() => {
+    addChoice(pickedChoice);
+  }, [pickedChoice]);
+
+  const { removeSelectedChoiceAndTransition } = useChoiceRemoving(
+    fetchedChoices,
+    setFetchedChoices,
+    selectedChoiceIdx,
+    setSelectedChoiceIdx,
+    repick,
+  );
+
+  const { selectedChoice, changePage } = useChoiceChoosing(
+    fetchedChoices,
+    selectedChoiceIdx,
+    setSelectedChoiceIdx,
+    repick,
+  );
 
   return {
     selectedChoice,
     changePage,
     addNewChoiceAndTransitionToNewChoice,
+    removeSelectedChoiceAndTransition,
   };
 };

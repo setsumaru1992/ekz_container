@@ -6,9 +6,13 @@ import { Choice } from '../../models/queries/pickEkz';
 
 const EVALUATION_GOOD = 1;
 const EVALUATION_NOT_EVALUATED = 0;
-export default (props: { choice: Choice; updateDisplayingChoice: any }) => {
-  const { choice, updateDisplayingChoice } = props;
-  const { updateChoice } = useChoiceCommand();
+export default (props: {
+  choice: Choice;
+  updateDisplayingChoice: any;
+  onRemoved: any;
+}) => {
+  const { choice, updateDisplayingChoice, onRemoved } = props;
+  const { updateChoice, removeChoice } = useChoiceCommand();
 
   const evaluated = choice.evaluation === EVALUATION_GOOD;
   const reversedEvaluation = !evaluated
@@ -44,14 +48,18 @@ export default (props: { choice: Choice; updateDisplayingChoice: any }) => {
         }}
       />
       &nbsp;
-      <a href="src/features/choice/components/Choice/Choice#">
+      <a href="#">
         <i
           className="fas fa-trash fa-fw"
           style={{ color: 'black' }}
           onClick={() => {
             const deleteOk = window.confirm('本当に削除してもよろしいですか？');
             if (!deleteOk) return;
-            // actionAsyncChoiceDestroy(choiceId, themeId);
+            removeChoice(choice.id, {
+              onCompleted: () => {
+                onRemoved(choice.id);
+              },
+            });
           }}
         />
       </a>

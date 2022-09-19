@@ -22,6 +22,11 @@ module Bussiness::Choice
         choice_record = set_same_name_fields(updated_choice, choice_record, [:name, :url, :description, :evaluation, :theme_id])
         choice_record.save!
       end
+
+      def remove(id)
+        choice_record = ::Choice.find(id)
+        choice_record.destroy!
+      end
     end
   end
 end

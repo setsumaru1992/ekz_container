@@ -1,5 +1,6 @@
 import { useAddChoiceMutation, Choice } from './addChoice';
 import { useUpdateChoiceMutation } from './updateChoice';
+import { useRemoveChoiceMutation } from './removeChoice';
 
 export type AddChoice = {
   name: string;
@@ -54,14 +55,28 @@ const useUpdateChoice = () => {
   return { updateChoice, updateLoading, updateError };
 };
 
+const useRemoveChoice = () => {
+  const [removeChoiceMutation, { loading: removeLoading, error: removeError }] =
+    useRemoveChoiceMutation();
+  const removeChoice = async (id, { onCompleted }) => {
+    return removeChoiceMutation({
+      variables: { id },
+      onCompleted,
+    });
+  };
+  return { removeChoice, removeLoading, removeError };
+};
+
 export default () => {
   const { addChoice, addLoading, addError } = useAddChoice();
   const { updateChoice, updateLoading, updateError } = useUpdateChoice();
+  const { removeChoice, removeLoading, removeError } = useRemoveChoice();
 
   return {
     addChoice,
     updateChoice,
-    commandLoading: addLoading || updateLoading,
-    commandError: addError || updateError,
+    removeChoice,
+    commandLoading: addLoading || updateLoading || removeLoading,
+    commandError: addError || updateError || removeError,
   };
 };
