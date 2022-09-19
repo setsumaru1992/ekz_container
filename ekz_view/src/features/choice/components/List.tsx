@@ -46,7 +46,7 @@ export default (props: { themeId: number; choices: ChoiceType[] }) => {
         )}
         {choices.map((choice) => {
           return (
-            <Col xs={6} md={3}>
+            <Col xs={6} md={3} key={choice.id}>
               <Choice choice={choice} onRemoved={onRemoved} />
             </Col>
           );
