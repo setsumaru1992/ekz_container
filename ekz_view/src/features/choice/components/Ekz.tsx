@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { Col } from 'react-bootstrap';
 import Choice from './Choice';
 import { Choice as ChoiceType } from '../models/queries/pickEkz';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
@@ -118,7 +119,11 @@ const ChoiceComponent = (props: { choice: ChoiceType; onRemoved: any }) => {
   if (!choice) {
     return <>表示できる選択肢がありません。選択肢を作成してください</>;
   }
-  return <Choice choice={choice} onRemoved={onRemoved} />;
+  return (
+    <Col xs={12} md={12}>
+      <Choice choice={choice} onRemoved={onRemoved} />
+    </Col>
+  );
 };
 
 export default (props: Props) => {

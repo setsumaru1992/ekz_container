@@ -179,11 +179,16 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query';
+  choices: Array<Choice>;
   ekz?: Maybe<Choice>;
   profile: Profile;
   tags: Array<Tag>;
   theme?: Maybe<Theme>;
   themes: Array<Theme>;
+};
+
+export type QueryChoicesArgs = {
+  themeId: Scalars['Int'];
 };
 
 export type QueryEkzArgs = {
@@ -249,6 +254,16 @@ export type UpdateThemePayload = {
   id: Scalars['Int'];
 };
 
+export type ChoiceFragment = {
+  __typename?: 'Choice';
+  id: number;
+  name: string;
+  url?: string | null;
+  description?: string | null;
+  evaluation: number;
+  themeId: number;
+};
+
 export type AddChoiceMutationVariables = Exact<{
   name: Scalars['String'];
   url?: InputMaybe<Scalars['String']>;
@@ -306,6 +321,23 @@ export type UpdateChoiceMutation = {
   } | null;
 };
 
+export type FetchChoicesQueryVariables = Exact<{
+  themeId: Scalars['Int'];
+}>;
+
+export type FetchChoicesQuery = {
+  __typename?: 'Query';
+  choices: Array<{
+    __typename?: 'Choice';
+    id: number;
+    name: string;
+    url?: string | null;
+    description?: string | null;
+    evaluation: number;
+    themeId: number;
+  }>;
+};
+
 export type PickEkzQueryVariables = Exact<{
   themeId: Scalars['Int'];
   prePickedChoiceId?: InputMaybe<Scalars['Int']>;
@@ -322,16 +354,6 @@ export type PickEkzQuery = {
     evaluation: number;
     themeId: number;
   } | null;
-};
-
-export type ChoiceFragment = {
-  __typename?: 'Choice';
-  id: number;
-  name: string;
-  url?: string | null;
-  description?: string | null;
-  evaluation: number;
-  themeId: number;
 };
 
 export type AddThemeMutationVariables = Exact<{
@@ -591,6 +613,65 @@ export type UpdateChoiceMutationResult =
 export type UpdateChoiceMutationOptions = Apollo.BaseMutationOptions<
   UpdateChoiceMutation,
   UpdateChoiceMutationVariables
+>;
+export const FetchChoicesDocument = gql`
+  query fetchChoices($themeId: Int!) {
+    choices(themeId: $themeId) {
+      ...Choice
+    }
+  }
+  ${ChoiceFragmentDoc}
+`;
+
+/**
+ * __useFetchChoicesQuery__
+ *
+ * To run a query within a React component, call `useFetchChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchChoicesQuery({
+ *   variables: {
+ *      themeId: // value for 'themeId'
+ *   },
+ * });
+ */
+export function useFetchChoicesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    FetchChoicesQuery,
+    FetchChoicesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FetchChoicesQuery, FetchChoicesQueryVariables>(
+    FetchChoicesDocument,
+    options,
+  );
+}
+export function useFetchChoicesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchChoicesQuery,
+    FetchChoicesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FetchChoicesQuery, FetchChoicesQueryVariables>(
+    FetchChoicesDocument,
+    options,
+  );
+}
+export type FetchChoicesQueryHookResult = ReturnType<
+  typeof useFetchChoicesQuery
+>;
+export type FetchChoicesLazyQueryHookResult = ReturnType<
+  typeof useFetchChoicesLazyQuery
+>;
+export type FetchChoicesQueryResult = Apollo.QueryResult<
+  FetchChoicesQuery,
+  FetchChoicesQueryVariables
 >;
 export const PickEkzDocument = gql`
   query pickEkz($themeId: Int!, $prePickedChoiceId: Int) {

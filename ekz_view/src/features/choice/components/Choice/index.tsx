@@ -32,7 +32,7 @@ export default (props: Props) => {
   };
 
   return (
-    <Col xs={12} md={12}>
+    <>
       <div style={{ display: 'flex' }}>
         <ChoiceTitleAndProperties
           choice={choice}
@@ -48,7 +48,7 @@ export default (props: Props) => {
       {/* <ChoiceTagArea choiceId={choice.id} /> */}
       <ImageAreaConainer choice={choice} />
       {/* <CommentAreaContainer /> */}
-    </Col>
+    </>
   );
 };
 

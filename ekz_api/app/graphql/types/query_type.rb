@@ -14,6 +14,10 @@ module Types
       argument :pre_picked_choice_id, Int, required: false
     end
 
+    field :choices, resolver: Queries::Choices do
+      argument :theme_id, Int, required: true
+    end
+
     field :profile, resolver: Queries::Profile
   end
 end

@@ -3,8 +3,8 @@ import {
   usePickEkzQuery,
   usePickEkzLazyQuery,
   PickEkzDocument,
-  Choice,
 } from '../../../../graphql/generated/graphql';
+import { Choice } from '../choice';
 
 export const PICK_EKZ = gql`
   query pickEkz($themeId: Int!, $prePickedChoiceId: Int) {
@@ -14,17 +14,6 @@ export const PICK_EKZ = gql`
   }
 `;
 
-// TODO: choice一覧のところで定義
-export const CHOICE_FRAGMENT = gql`
-  fragment Choice on Choice {
-    id
-    name
-    url
-    description
-    evaluation
-    themeId
-  }
-`;
-
 export { usePickEkzQuery, usePickEkzLazyQuery, PickEkzDocument };
+// TODO: ここじゃない定義元からimportさせる
 export type { Choice };
