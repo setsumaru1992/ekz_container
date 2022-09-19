@@ -2,10 +2,42 @@ import React, { useState } from 'react';
 import { Col, Button, Table } from 'react-bootstrap';
 import { Choice } from '../../models/queries/pickEkz';
 import ChoiceTitleAndProperties from './ChoiceTitleAndProperties';
+import Menu from './Menu';
 
 interface Props {
   choice: Choice;
 }
+
+// TODO: util化。タイトルのところでも使用中
+const openUrlInNewTab = (url) => {
+  window.open(url, String(new Date().getTime()));
+};
+
+export default (props: Props) => {
+  const { choice: choiceFromProp } = props;
+
+  const [updatedChoices, setUpdateChoice] = useState({});
+  const updateDisplayingChoice = (updatedChoiceArg) => {
+    updatedChoices[updatedChoiceArg.id] = updatedChoiceArg;
+    setUpdateChoice(updatedChoices);
+  };
+  const choice = updatedChoices[choiceFromProp.id] || choiceFromProp;
+  return (
+    <Col xs={12} md={12}>
+      <div style={{ display: 'flex' }}>
+        <ChoiceTitleAndProperties
+          choice={choice}
+          updateDisplayingChoice={updateDisplayingChoice}
+        />
+        <Menu />
+      </div>
+
+      {/* <ChoiceTagArea choiceId={choice.id} /> */}
+      <ImageAreaConainer choice={{}} />
+      {/* <CommentAreaContainer /> */}
+    </Col>
+  );
+};
 
 // 命名はコピー元を踏襲。名前はこれでなければならないわけではない
 const ImageAreaConainer = (choice) => {
@@ -89,75 +121,5 @@ const CommentAreaContainer = (
         </tbody>
       </Table>
     </div>
-  );
-};
-
-export default (props: Props) => {
-  const { choice: choiceFromProp } = props;
-
-  const [updatedChoices, setUpdateChoice] = useState({});
-  const updateDisplayingChoice = (updatedChoiceArg) => {
-    updatedChoices[updatedChoiceArg.id] = updatedChoiceArg;
-    setUpdateChoice(updatedChoices);
-  };
-  const choice = updatedChoices[choiceFromProp.id] || choiceFromProp;
-  return (
-    <Col xs={12} md={12}>
-      <div style={{ display: 'flex' }}>
-        <ChoiceTitleAndProperties
-          choice={choice}
-          updateDisplayingChoice={updateDisplayingChoice}
-        />
-        <div style={{ display: 'flex', marginLeft: 'auto' }}>
-          {/* 詳細ページ未作成のためコメントアウト */}
-          {/* <Link */}
-          {/*  href={{ */}
-          {/*    pathname: '/mypage/themes/[themeId]/choices', */}
-          {/*  }} */}
-          {/*  as={`/mypage/themes/${themeId}/choices`} */}
-          {/*  style={{ */}
-          {/*    marginRight: 'auto', */}
-          {/*  }} */}
-          {/* > */}
-          {/*  <i className="far fa-list-alt fa-fw" style={iconStyle} /> */}
-          {/* </Link> */}
-          {/* TODO:
-            - イイネボタンと削除ボタン合わせてMenuコンポーネントに修正
-          */}
-          <i
-            className="fas fa-thumbs-up fa-fw"
-            style={false ? { color: 'black' } : { color: '#CCCCCC' }}
-          />
-          &nbsp;
-          <a href="src/features/choice/components/Choice/Choice#">
-            <i
-              className="fas fa-trash fa-fw"
-              style={{ color: 'black' }}
-              onClick={() => {
-                const deleteOk =
-                  window.confirm('本当に削除してもよろしいですか？');
-                if (!deleteOk) return;
-                // actionAsyncChoiceDestroy(choiceId, themeId);
-              }}
-            />
-          </a>
-        </div>
-      </div>
-      {/* <ChoiceUpdateArea choice={null} themeId={themeId} visibleFormMap={null} /> */}
-
-      {/* <ChoiceTagArea choiceId={choice.id} /> */}
-      <ImageAreaConainer choice={{}} />
-      <div>
-        {/* {choiceEvaluationButtonGroup( */}
-        {/*  choice.id, */}
-        {/*  themeId, */}
-        {/*  choice.evaluation, */}
-        {/*  (value, event) => { */}
-        {/*    // actionAsyncChoiceUpdateEvaluation(choice.id, value, themeId); */}
-        {/*  }, */}
-        {/* )} */}
-      </div>
-      {/* <CommentAreaContainer /> */}
-    </Col>
   );
 };
