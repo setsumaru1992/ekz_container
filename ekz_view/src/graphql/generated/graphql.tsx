@@ -26,9 +26,9 @@ export type Choice = {
   description?: Maybe<Scalars['String']>;
   evaluation?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
-  imageFilename?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   themeId: Scalars['Int'];
+  uploadedImageUrl?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   webpageCaptureUrl?: Maybe<Scalars['String']>;
 };
@@ -264,7 +264,7 @@ export type ChoiceFragment = {
   description?: string | null;
   evaluation?: number | null;
   themeId: number;
-  imageFilename?: string | null;
+  uploadedImageUrl?: string | null;
   webpageCaptureUrl?: string | null;
 };
 
@@ -288,7 +288,7 @@ export type AddChoiceMutation = {
       description?: string | null;
       evaluation?: number | null;
       themeId: number;
-      imageFilename?: string | null;
+      uploadedImageUrl?: string | null;
       webpageCaptureUrl?: string | null;
     };
   } | null;
@@ -323,7 +323,7 @@ export type UpdateChoiceMutation = {
       description?: string | null;
       evaluation?: number | null;
       themeId: number;
-      imageFilename?: string | null;
+      uploadedImageUrl?: string | null;
       webpageCaptureUrl?: string | null;
     };
   } | null;
@@ -343,7 +343,7 @@ export type FetchChoicesQuery = {
     description?: string | null;
     evaluation?: number | null;
     themeId: number;
-    imageFilename?: string | null;
+    uploadedImageUrl?: string | null;
     webpageCaptureUrl?: string | null;
   }>;
 };
@@ -363,7 +363,7 @@ export type PickEkzQuery = {
     description?: string | null;
     evaluation?: number | null;
     themeId: number;
-    imageFilename?: string | null;
+    uploadedImageUrl?: string | null;
     webpageCaptureUrl?: string | null;
   } | null;
 };
@@ -433,7 +433,7 @@ export const ChoiceFragmentDoc = gql`
     description
     evaluation
     themeId
-    imageFilename
+    uploadedImageUrl
     webpageCaptureUrl
   }
 `;

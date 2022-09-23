@@ -10,8 +10,8 @@ export default (props: { choice: Choice }) => {
   const { choice } = props;
   const choiceUrl = choice.url ? choice.url : '#';
   const imageUrl = (() => {
-    if (false) {
-      return '';
+    if (choice.uploadedImageUrl) {
+      return choice.uploadedImageUrl;
     }
     if (choice.webpageCaptureUrl) {
       return choice.webpageCaptureUrl;
