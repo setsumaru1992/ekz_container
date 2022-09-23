@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import { Col, Button, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { Choice } from '../../models/queries/pickEkz';
 import ChoiceTitleAndProperties from './ChoiceTitleAndProperties';
 import Menu from './Menu';
+import Image from './Image';
 
 interface Props {
   choice: Choice;
   onRemoved?: any;
 }
-
-// TODO: util化。タイトルのところでも使用中
-const openUrlInNewTab = (url) => {
-  window.open(url, String(new Date().getTime()));
-};
 
 export default (props: Props) => {
   const { choice: choiceFromProp, onRemoved } = props;
@@ -47,7 +43,7 @@ export default (props: Props) => {
       </div>
 
       {/* <ChoiceTagArea choiceId={choice.id} /> */}
-      <ImageAreaConainer choice={choice} />
+      <Image choice={choice} />
       {/* <CommentAreaContainer /> */}
     </>
   );
@@ -71,7 +67,7 @@ const ImageAreaConainer = (props: { choice: Choice }) => {
       href={imageUrl}
       onMouseDown={(e) => {
         e.preventDefault();
-        openUrlInNewTab(imageUrl);
+        // openUrlInNewTab(imageUrl);
       }}
       onClick={(e) => {
         e.preventDefault();
