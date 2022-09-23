@@ -49,35 +49,6 @@ export default (props: Props) => {
   );
 };
 
-// 命名はコピー元を踏襲。名前はこれでなければならないわけではない
-const ImageAreaConainer = (props: { choice: Choice }) => {
-  const { choice } = props;
-  let imageSrc =
-    'https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png';
-  if (choice.image_filename) {
-    imageSrc = choice.image_filename.url;
-  } else if (choice.webpageCaptureUrl) {
-    imageSrc = choice.webpageCaptureUrl;
-  }
-
-  const imageUrl = choice.url ? choice.url : '#';
-
-  return (
-    <a
-      href={imageUrl}
-      onMouseDown={(e) => {
-        e.preventDefault();
-        // openUrlInNewTab(imageUrl);
-      }}
-      onClick={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <img src={imageSrc} style={{ width: '100%', padding: '0px 20px' }} />
-    </a>
-  );
-};
-
 const CommentAreaContainer = (
   commentMap,
   visibleCommentFormMap,

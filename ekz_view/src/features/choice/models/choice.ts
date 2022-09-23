@@ -10,8 +10,7 @@ export const CHOICE_FRAGMENT = gql`
     description
     evaluation
     themeId
-    uploadedImageUrl
-    webpageCaptureUrl
+    imageUrl
   }
 `;
 

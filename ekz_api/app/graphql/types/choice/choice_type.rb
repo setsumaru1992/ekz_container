@@ -7,8 +7,7 @@ module Types
       field :description, String, null: true
       field :evaluation, Int, null: true
       field :theme_id, Int, null: false
-      field :uploaded_image_url, String, null: true
-      field :webpage_capture_url, String, null: true
+      field :image_url, String, null: true
     end
   end
 end

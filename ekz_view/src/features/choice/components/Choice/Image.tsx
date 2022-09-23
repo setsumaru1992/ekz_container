@@ -9,15 +9,6 @@ const openUrlInNewTab = (url) => {
 export default (props: { choice: Choice }) => {
   const { choice } = props;
   const choiceUrl = choice.url ? choice.url : '#';
-  const imageUrl = (() => {
-    if (choice.uploadedImageUrl) {
-      return choice.uploadedImageUrl;
-    }
-    if (choice.webpageCaptureUrl) {
-      return choice.webpageCaptureUrl;
-    }
-    return 'https://ekz-images.s3-ap-northeast-1.amazonaws.com/static/no_image.png';
-  })();
 
   return (
     <a
@@ -30,7 +21,10 @@ export default (props: { choice: Choice }) => {
         e.preventDefault();
       }}
     >
-      <img src={imageUrl} style={{ width: '100%', padding: '0px 20px' }} />
+      <img
+        src={choice.imageUrl}
+        style={{ width: '100%', padding: '0px 20px' }}
+      />
     </a>
   );
 };
