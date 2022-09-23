@@ -13,6 +13,7 @@ module Queries
         description: choice["description"],
         evaluation: choice["evaluation"],
         theme_id: choice["theme_id"],
+        image_url: choice["image_url"],
       }
     end
   end

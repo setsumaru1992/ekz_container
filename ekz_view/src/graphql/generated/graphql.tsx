@@ -26,7 +26,7 @@ export type Choice = {
   description?: Maybe<Scalars['String']>;
   evaluation?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
-  imageUrl?: Maybe<Scalars['String']>;
+  imageUrl: Scalars['String'];
   name: Scalars['String'];
   themeId: Scalars['Int'];
   url?: Maybe<Scalars['String']>;
@@ -263,7 +263,7 @@ export type ChoiceFragment = {
   description?: string | null;
   evaluation?: number | null;
   themeId: number;
-  imageUrl?: string | null;
+  imageUrl: string;
 };
 
 export type AddChoiceMutationVariables = Exact<{
@@ -286,7 +286,7 @@ export type AddChoiceMutation = {
       description?: string | null;
       evaluation?: number | null;
       themeId: number;
-      imageUrl?: string | null;
+      imageUrl: string;
     };
   } | null;
 };
@@ -320,7 +320,7 @@ export type UpdateChoiceMutation = {
       description?: string | null;
       evaluation?: number | null;
       themeId: number;
-      imageUrl?: string | null;
+      imageUrl: string;
     };
   } | null;
 };
@@ -339,7 +339,7 @@ export type FetchChoicesQuery = {
     description?: string | null;
     evaluation?: number | null;
     themeId: number;
-    imageUrl?: string | null;
+    imageUrl: string;
   }>;
 };
 
@@ -358,7 +358,7 @@ export type PickEkzQuery = {
     description?: string | null;
     evaluation?: number | null;
     themeId: number;
-    imageUrl?: string | null;
+    imageUrl: string;
   } | null;
 };
 
