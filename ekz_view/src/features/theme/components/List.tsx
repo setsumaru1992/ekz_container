@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import ErrorBoundary from '../../common/components/ErrorBoundary';
 import { Theme } from '../models/queries/fetchThemes';
 import useThemesQuery from '../models/queries/useThemesQuery';
 import useThemeCommand, { AddTheme } from '../models/commands/useThemeCommand';
@@ -43,31 +42,30 @@ export default (props: Props) => {
   return (
     <div>
       <h1>テーマ一覧</h1>
-      <ErrorBoundary>
-        <Table bordered hover>
-          <tbody>
-            <tr>
-              <td>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  新テーマ名
-                  <input {...register('name', { required: true })} />
-                  {errors.name && <span>This field is required</span>}
-                  <input type="submit" disabled={commandLoading} />
-                </form>
-              </td>
-            </tr>
-            {themes.map((theme) => {
-              return (
-                <tr key={theme.id}>
-                  <td>
-                    <ThemeComponent theme={theme} refetch={refetch} />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </ErrorBoundary>
+
+      <Table bordered hover>
+        <tbody>
+          <tr>
+            <td>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                新テーマ名
+                <input {...register('name', { required: true })} />
+                {errors.name && <span>This field is required</span>}
+                <input type="submit" disabled={commandLoading} />
+              </form>
+            </td>
+          </tr>
+          {themes.map((theme) => {
+            return (
+              <tr key={theme.id}>
+                <td>
+                  <ThemeComponent theme={theme} refetch={refetch} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
     </div>
   );
 };

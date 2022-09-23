@@ -1,9 +1,12 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, from, HttpLink } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
 import fetch from 'isomorphic-unfetch';
 import judgeExecInClientOrServer, {
   ExecSituation,
 } from '../lib/judgeExecInClientOrServer';
 import authCookieManager from '../features/auth/authCookieManager';
+import UnauthenticatedError from '../features/auth/errors/UnauthenticatedError';
+import { apiErrors } from './globalVars';
 
 const generateUrl = () => {
   let protcol;
@@ -35,17 +38,37 @@ const getAccessKey = (nextJsContext) => {
   }
 };
 
+const generateLink = (ctx) => {
+  const httpLink = new HttpLink({
+    uri: generateUrl(),
+    // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
+    fetch,
+    headers: { Authorization: getAccessKey(ctx) || '' },
+  });
+
+  const errorLink = onError(({ graphQLErrors }) => {
+    const errors = [];
+    if (graphQLErrors) {
+      // for (const err of graphQLErrors) {
+      //   if (err.extensions?.code === 'UNAUTHENTICATED') {
+      //     throw new UnauthenticatedError('login required');
+      //   }
+      // }
+      graphQLErrors.forEach((err) => {
+        errors.push(err);
+      });
+    }
+    apiErrors(errors);
+  });
+
+  return from([errorLink, httpLink]);
+};
+
+// The `ctx` (NextPageContext) will only be present on the server.
+// use it to extract auth headers (ctx.req) or similar.
 export default (ctx) => {
-  // The `ctx` (NextPageContext) will only be present on the server.
-  // use it to extract auth headers (ctx.req) or similar.
   return new ApolloClient({
-    ssrMode: Boolean(ctx),
-    link: new HttpLink({
-      uri: generateUrl(),
-      // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-      fetch,
-      headers: { Authorization: getAccessKey(ctx) || '' },
-    }),
+    link: generateLink(ctx),
     cache: new InMemoryCache(),
   });
 };
