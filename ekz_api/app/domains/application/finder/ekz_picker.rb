@@ -7,7 +7,7 @@ module Application::Finder
     def fetch
       can_repick = Choice.where(theme_id: theme_id).where.not(id: pre_picked_choice_id).size > 0
       return unless can_repick
-      
+
       while true
         # TODO: 取得するサイズが1つにfixしたから、v2移行したら1つしか取得しない前提のコードを書く
         ekz_list = Choice.ekz_pick(theme_id)
