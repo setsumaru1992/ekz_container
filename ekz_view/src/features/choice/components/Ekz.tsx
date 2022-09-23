@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Col } from 'react-bootstrap';
+import * as CSS from 'csstype'; // https://akamist.com/blog/archives/5301
 import Choice from './Choice';
 import { Choice as ChoiceType } from '../models/queries/pickEkz';
 import usePickEkzQuery from '../models/queries/usePickEkzQuery';
@@ -13,24 +14,24 @@ interface Props {
 }
 
 const SwitchEkzAreaContainer = ({ changePage }) => {
-  const switchAreaBaseStyle = {
+  const switchAreaBaseStyle: CSS.Properties = {
     width: '20px',
     height: '100%',
     position: 'absolute',
     backgroundColor: '#F5F5F5',
   };
-  const leftSwitchAreaStyle = {
+  const leftSwitchAreaStyle: CSS.Properties = {
     left: '0px',
     textAlign: 'left',
     ...switchAreaBaseStyle,
   };
-  const rightSwitchAreaStyle = {
+  const rightSwitchAreaStyle: CSS.Properties = {
     right: '0px',
     textAlign: 'center',
     ...switchAreaBaseStyle,
   };
 
-  const textStyle = {
+  const textStyle: CSS.Properties = {
     height: '100%',
     position: 'absolute',
     transform: 'translateY(50%)', // https://saruwakakun.com/html-css/basic/centering
