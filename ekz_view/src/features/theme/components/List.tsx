@@ -38,7 +38,6 @@ export default (props: Props) => {
     });
   };
 
-  if (fetchError) return <div>エラー発生</div>;
   if (fetchLoading) return <div>Loading...</div>; // 必ずhooksがすべて終わった後に分岐を使う
 
   return (

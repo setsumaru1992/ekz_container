@@ -10,5 +10,7 @@ module Types
 
     field :delete_tag, resolver: Mutations::DeleteTag
     field :create_tag, resolver: Mutations::CreateTag
+
+    field :login, resolver: Mutations::Session::Login
   end
 end

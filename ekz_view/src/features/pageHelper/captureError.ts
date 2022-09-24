@@ -1,5 +1,3 @@
-import { GetServerSidePropsResult } from 'next';
-import { GraphQLError } from 'graphql/index';
 import { includeUnauthenticatedError } from '../auth/errors/authErrorJudgeMethods';
 import { LOGIN_PAGE_URL } from './consts';
 
