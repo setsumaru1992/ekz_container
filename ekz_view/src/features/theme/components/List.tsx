@@ -16,6 +16,7 @@ export default (props: Props) => {
   const {
     themes: themesByFetching,
     fetchLoading,
+    fetchError,
     refetch,
   } = useThemesQuery(!themesFromProps);
   const themes = themesByFetching || themesFromProps || [];
@@ -37,6 +38,7 @@ export default (props: Props) => {
     });
   };
 
+  if (fetchError) return <div>エラー発生</div>;
   if (fetchLoading) return <div>Loading...</div>; // 必ずhooksがすべて終わった後に分岐を使う
 
   return (

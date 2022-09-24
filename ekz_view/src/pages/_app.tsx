@@ -7,20 +7,17 @@ import { GraphQLError } from 'graphql';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import buildApolloClient from '../graphql/buildApolloClient';
 import { apiErrors } from '../graphql/globalVars';
-import ErrorBoundary from '../features/common/components/ErrorBoundary';
+import ErrorBoundary from '../features/pageHelper/components/ErrorBoundary';
+import { includeUnauthenticatedError } from '../features/auth/errors/authErrorJudgeMethods';
 
 const useErrorHandling = () => {
   const router = useRouter();
-  const apiErr = useReactiveVar(apiErrors);
+  const apiErrs = useReactiveVar(apiErrors);
   useEffect(() => {
-    const isUnauthorized = apiErr.some((error) => {
-      const e = error as GraphQLError;
-      return e?.extensions?.code === 'UNAUTHENTICATED';
-    });
-    if (isUnauthorized) {
+    if (includeUnauthenticatedError(apiErrs)) {
       router.push('/mypage/login');
     }
-  }, [apiErr]);
+  }, [apiErrs]);
 };
 
 const MyApp = ({ Component, pageProps }: AppProps) => {

@@ -5,7 +5,6 @@ import judgeExecInClientOrServer, {
   ExecSituation,
 } from '../lib/judgeExecInClientOrServer';
 import authCookieManager from '../features/auth/authCookieManager';
-import UnauthenticatedError from '../features/auth/errors/UnauthenticatedError';
 import { apiErrors } from './globalVars';
 
 const generateUrl = () => {
@@ -49,11 +48,6 @@ const generateLink = (ctx) => {
   const errorLink = onError(({ graphQLErrors }) => {
     const errors = [];
     if (graphQLErrors) {
-      // for (const err of graphQLErrors) {
-      //   if (err.extensions?.code === 'UNAUTHENTICATED') {
-      //     throw new UnauthenticatedError('login required');
-      //   }
-      // }
       graphQLErrors.forEach((err) => {
         errors.push(err);
       });

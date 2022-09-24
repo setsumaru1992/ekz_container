@@ -5,6 +5,7 @@ import {
   ThemeList,
   ThemeType,
 } from '../../../features/theme';
+import captureError from '../../../features/pageHelper/captureError';
 
 type Props = {
   themes: ThemeType[];
@@ -19,8 +20,10 @@ const dummyThemes = [
 ];
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { data } = await prefetchThemesByServerside(context);
-  return { props: { themes: data.themes } };
+  return captureError(async () => {
+    const { data } = await prefetchThemesByServerside(context);
+    return { props: { themes: data.themes } };
+  });
 };
 
 const Themes: React.FC<Props> = (props) => {
