@@ -2,12 +2,12 @@ module Mutations::Session
   class Login < ::Mutations::BaseMutation
     argument :email, String, required: true
     argument :password, String, required: true
-    argument :auto_login, Boolean, required: true
+    argument :auto_login, Boolean, required: false
 
     field :access_key, String, null: true
     field :remind_token, String, null: true
 
-    def resolve(email:, password:, autoLogin:)
+    def resolve(email:, password:, auto_login: false)
       user = ::User.find_by(email: email)
       login_succeed = user && user.authenticate(password)
       unless login_succeed

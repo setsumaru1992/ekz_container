@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-// import { useRemoveThemeMutation } from '../../../../graphql/generated/graphql';
+import { useLoginMutation } from '../../../../graphql/generated/graphql';
 
 export const LOGIN = gql`
   mutation login($email: String!, $password: String!, $autoLogin: Boolean!) {
@@ -11,3 +11,5 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export { useLoginMutation };

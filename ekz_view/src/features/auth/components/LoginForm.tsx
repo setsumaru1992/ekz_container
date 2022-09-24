@@ -1,29 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Row, Col, Form, Button } from 'react-bootstrap';
-
-interface Login {
-  email: string;
-  password: string;
-  autoLogin: boolean;
-}
+import useSession, { LoginInput } from '../models/commands/useSession';
+import authCookieManager from '../authCookieManager';
+import { TOP_PAGE_AFTER_LOGIN_URL } from '../../pageHelper/consts';
 
 export default (props) => {
+  const { login, commandLoading } = useSession();
+  const [isLoginError, setIsLoginError] = useState(false);
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm<Login>();
-  const onSubmit: SubmitHandler<Login> = (input) => {
+  } = useForm<LoginInput>();
+
+  const onSubmit: SubmitHandler<LoginInput> = (input) => {
     if (Object.keys(errors).length !== 0) return false;
-    console.log(input);
-    // addTheme(input, {
-    //   onCompleted: () => {
-    //     refetch();
-    //     reset();
-    //   },
-    // });
+
+    login(input, {
+      onCompleted: (data) => {
+        const { accessKey } = data.login;
+        if (!accessKey) {
+          setIsLoginError(true);
+        }
+        authCookieManager.setAccessKey(accessKey);
+        router.push(TOP_PAGE_AFTER_LOGIN_URL);
+      },
+    });
   };
 
   return (
@@ -51,6 +57,7 @@ export default (props) => {
             <Form.Control
               {...register('password', { required: true })}
               placeholder="必須"
+              type="password"
             />
             {errors.password && <span>This field is required</span>}
           </Col>
@@ -67,7 +74,18 @@ export default (props) => {
           </Col>
         </Row>
       </Form.Group>
-      <input type="submit" value="ログイン" />
+      <Form.Group>
+        <Col smoffset={2} sm={5}>
+          <Button
+            variant="outline-primary"
+            type="submit"
+            disabled={commandLoading}
+          >
+            ログイン
+          </Button>
+        </Col>
+      </Form.Group>
+      {isLoginError && <div>ログインに失敗しました。</div>}
     </Form>
   );
 };

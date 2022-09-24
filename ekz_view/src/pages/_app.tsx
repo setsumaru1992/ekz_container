@@ -15,6 +15,7 @@ const useErrorHandling = () => {
   const apiErrs = useReactiveVar(apiErrors);
   useEffect(() => {
     if (includeUnauthenticatedError(apiErrs)) {
+      apiErrors([]);
       router.push(LOGIN_PAGE_URL);
     }
   }, [apiErrs]);
