@@ -27,7 +27,9 @@ export default (props) => {
           setIsLoginError(true);
         }
         authCookieManager.setAccessKey(accessKey);
-        router.push(TOP_PAGE_AFTER_LOGIN_URL);
+        // router.push(TOP_PAGE_AFTER_LOGIN_URL);
+        // router.pushで、なぜかサーバサイドの認証エラーになるので、強制ページ遷移で暫定対応
+        window.location.href = 'themes';
       },
     });
   };

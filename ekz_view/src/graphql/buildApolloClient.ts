@@ -38,11 +38,12 @@ const getAccessKey = (nextJsContext) => {
 };
 
 const generateLink = (ctx) => {
+  const accessKey = getAccessKey(ctx);
   const httpLink = new HttpLink({
     uri: generateUrl(),
     // credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     fetch,
-    headers: { Authorization: getAccessKey(ctx) || '' },
+    headers: { Authorization: accessKey || '' },
   });
 
   const errorLink = onError(({ graphQLErrors }) => {
