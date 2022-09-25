@@ -1,5 +1,15 @@
 import React from 'react';
+import { GetServerSideProps } from 'next';
+import { logout } from '../features/auth/models/commands/useSession';
+import { LOGIN_PAGE_URL } from '../features/pageHelper/consts';
 
-const IndexPage = () => <div>aa</div>;
+export default () => <div>aa</div>;
 
-export default IndexPage;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    redirect: {
+      destination: '/mypage/themes',
+      permanent: false,
+    },
+  };
+};
