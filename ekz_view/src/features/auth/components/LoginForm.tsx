@@ -28,7 +28,9 @@ export default (props) => {
         }
         authCookieManager.setAccessKey(accessKey);
         // router.push(TOP_PAGE_AFTER_LOGIN_URL);
-        // router.pushで、なぜかサーバサイドの認証エラーになるので、強制ページ遷移で暫定対応
+
+        // router.pushでアクセスキーが必要なページに遷移すると、
+        // なぜかサーバサイドの認証エラーになるので、強制ページ遷移で暫定対応
         window.location.href = 'themes';
       },
     });

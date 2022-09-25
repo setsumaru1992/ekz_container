@@ -12,5 +12,6 @@ module Types
     field :create_tag, resolver: Mutations::CreateTag
 
     field :login, resolver: Mutations::Session::Login
+    field :logout, resolver: Mutations::Session::Logout
   end
 end
