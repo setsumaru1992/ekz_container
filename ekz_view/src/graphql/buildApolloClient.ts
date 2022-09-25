@@ -16,8 +16,13 @@ const generateUrl = () => {
       host = process.env.API_HOST_AND_PORT_BY_SERVER_SIDE;
       break;
     case ExecSituation.ExecInClientSide:
-      protcol = 'http';
-      host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_DEV;
+      if (process.env.NODE_ENV === 'development') {
+        protcol = 'http';
+        host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_DEV;
+      } else {
+        protcol = 'http';
+        host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_PROD;
+      }
       break;
     default:
       protcol = 'http';
