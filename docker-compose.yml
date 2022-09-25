@@ -10,8 +10,8 @@ services:
       - "18070:18072"
     volumes:
       - ./ekz_view:/root/ekz_view
-    # depends_on:
-    #   - ekz_api
+    environment:
+      NODE_ENV: ${ENV:-development} # 本番実行時は`ENV=production docker-compose up`
 
   ekz_api:
     container_name: ekz_api
