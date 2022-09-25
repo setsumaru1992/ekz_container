@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { useLoginMutation } from '../../../../graphql/generated/graphql';
+import { useLogoutMutation } from '../../../../graphql/generated/graphql';
 
 export const LOGOUT = gql`
   mutation logout($accessKey: String!) {
@@ -9,4 +9,4 @@ export const LOGOUT = gql`
   }
 `;
 
-// export { useLoginMutation };
+export { useLogoutMutation };

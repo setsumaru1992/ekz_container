@@ -22,17 +22,18 @@ class AuthCookieManager {
     return cookies[COOKIE_ACCESS_KEY_NAME];
   }
 
-  setAccessKey(accessKey) {
+  setAccessKey(accessKey, nextJsContext = null) {
     if (accessKey === null || accessKey === undefined) return;
-    cookieManager.set(
+    nookies.set(
+      nextJsContext,
       COOKIE_ACCESS_KEY_NAME,
       accessKey,
       COOKIE_ACCESS_KEY_ATTR,
     );
   }
 
-  deleteAccessKey() {
-    cookieManager.delete(COOKIE_ACCESS_KEY_NAME);
+  deleteAccessKey(nextJsContext = null) {
+    nookies.set(nextJsContext, COOKIE_ACCESS_KEY_NAME, '', { maxAge: 0 });
   }
 
   getRemindToken() {
