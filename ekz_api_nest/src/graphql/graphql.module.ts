@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ThemeQuery } from './queries/theme.query';
+import { ThemesFinder } from '../finders/ThemesFinder';
 
 @Module({
   imports: [
@@ -13,6 +14,9 @@ import { ThemeQuery } from './queries/theme.query';
       sortSchema: true,
     })
   ],
-  providers: [ThemeQuery],
+  providers: [
+    ThemeQuery,
+    ThemesFinder
+  ],
 })
 export class GraphqlModule {}

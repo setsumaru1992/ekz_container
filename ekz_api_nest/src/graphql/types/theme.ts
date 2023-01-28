@@ -3,10 +3,10 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class Theme {
   @Field(type => Int)
-  id: number
+  id: number | bigint
 
   @Field({nullable: false})
-  name?: string
+  name: string
 
   @Field({nullable: true})
   description?: string
