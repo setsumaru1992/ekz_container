@@ -2,8 +2,9 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Theme {
-  @Field(type => Int)
-  id: number | bigint
+  // Prisma経由のBigintをGraphQLのIntに変換できないため、暫定的にコメントアウト
+  // @Field(type => Int)
+  // id: number | bigint
 
   @Field({nullable: false})
   name: string

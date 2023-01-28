@@ -9,25 +9,7 @@ class ThemeRepository {
   }
 
   async allThemes(): Promise<Theme[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 1,
-            name: 'hogename',
-            description: 'hogedescription'
-          }
-        ])
-      }, 100)
-    })
-    // return [
-    //   {
-    //     id: 1,
-    //     name: 'hogename',
-    //     description: 'hogedescription'
-    //   }
-    // ]
-    // return await this.client.themes.findMany()
+    return await this.client.themes.findMany()
   }
 }
 

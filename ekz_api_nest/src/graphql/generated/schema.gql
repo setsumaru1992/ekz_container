@@ -8,6 +8,5 @@ type Query {
 
 type Theme {
   description: String
-  id: Int!
   name: String!
 }
