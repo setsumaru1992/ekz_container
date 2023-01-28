@@ -1,4 +1,4 @@
-import type { Theme } from '../type/Theme';
+import type { Theme } from '../entity/Theme';
 import { themeRepository } from '../ThemeRepository';
 
 export class ThemesQuery {

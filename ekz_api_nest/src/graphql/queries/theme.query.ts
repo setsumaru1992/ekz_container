@@ -10,6 +10,9 @@ export class ThemeQuery {
 
   @Query(returns => [Theme], { name: 'themes' })
   async themes(): Promise<Theme[]> {
-    return await this.themesFinder.call()
+    const themes = await this.themesFinder.call()
+    return themes.map((theme) => {
+      return theme.value as Theme
+    })
   }
 }

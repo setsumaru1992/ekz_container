@@ -1,5 +1,5 @@
-import { Theme } from './type/Theme';
 import { PrismaClient } from '@prisma/client';
+import { Theme } from './entity/Theme';
 
 class ThemeRepository {
   client: PrismaClient
@@ -9,7 +9,10 @@ class ThemeRepository {
   }
 
   async allThemes(): Promise<Theme[]> {
-    return await this.client.themes.findMany()
+    const themes = await this.client.themes.findMany()
+    return themes.map((theme) => {
+      return new Theme(theme)
+    })
   }
 }
 

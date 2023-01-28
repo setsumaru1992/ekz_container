@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ThemesQuery } from '../models/theme/query/ThemesQuery';
-import { Theme } from '../models/theme/type/Theme';
+import { Theme } from '../models/theme/entity/Theme';
 
 @Injectable()
 export class ThemesFinder {
