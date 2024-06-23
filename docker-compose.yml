@@ -42,7 +42,7 @@ services:
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
-  ekz_selenium_hub:
+  ekz_selenium_hub: # arm製で動かないのでintel製使う。古いバージョンだとarmのイメージが無く、新しいとセッションタイムアウトを設定しろと言われるが設定できない
     image: selenium/hub:4.3.0-20220726
     container_name: ekz_selenium_hub
     ports:
