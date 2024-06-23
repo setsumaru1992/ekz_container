@@ -22,30 +22,30 @@ services:
     volumes:
       - ./ekz_api:/root/ekz_api
 
-  ekz_api_nest:
-    container_name: ekz_api_nest
-    build: ./ekz_api_nest
-    command: "/root/ekz_api_nest/entrypoint.sh"
-    ports:
-      - "18031:3000"
-    env_file: /etc/opt/app_setting_files/ekz_container/.env
-    volumes:
-      - ./ekz_api_nest:/root/ekz_api_nest
+  # ekz_api_nest:
+    # container_name: ekz_api_nest
+    # build: ./ekz_api_nest
+    # command: "/root/ekz_api_nest/entrypoint.sh"
+    # ports:
+      # - "18031:3000"
+    # env_file: /etc/opt/app_setting_files/ekz_container/.env
+    # volumes:
+      # - ./ekz_api_nest:/root/ekz_api_nest
 
-  ekz_chrome:
-    image: seleniarm/node-chromium:4.3.0-20220709
-    shm_size: 2gb
-    depends_on:
-      - ekz_selenium_hub
-    environment:
-      - SE_EVENT_BUS_HOST=ekz_selenium_hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  # ekz_chrome:
+    # image: seleniarm/node-chromium:4.3.0-20220709
+    # shm_size: 2gb
+    # depends_on:
+      # - ekz_selenium_hub
+    # environment:
+      # - SE_EVENT_BUS_HOST=ekz_selenium_hub
+      # - SE_EVENT_BUS_PUBLISH_PORT=4442
+      # - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
-  ekz_selenium_hub: # arm製で動かないのでintel製使う。古いバージョンだとarmのイメージが無く、新しいとセッションタイムアウトを設定しろと言われるが設定できない
-    image: selenium/hub:4.3.0-20220726
-    container_name: ekz_selenium_hub
-    ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
+  # ekz_selenium_hub: # arm製で動かないのでintel製使う。古いバージョンだとarmのイメージが無く、新しいとセッションタイムアウトを設定しろと言われるが設定できない
+    # image: selenium/hub:4.3.0-20220726
+    # container_name: ekz_selenium_hub
+    # ports:
+      # - "4442:4442"
+      # - "4443:4443"
+      # - "4444:4444"
