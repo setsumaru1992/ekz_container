@@ -22,6 +22,16 @@ services:
     volumes:
       - ./ekz_api:/root/ekz_api
 
+  ekz_api_nest:
+    container_name: ekz_api_nest
+    build: ./ekz_api_nest
+    command: "/root/ekz_api_nest/entrypoint.sh"
+    ports:
+      - "18031:3000"
+    env_file: /etc/opt/app_setting_files/ekz_container/.env
+    volumes:
+      - ./ekz_api_nest:/root/ekz_api_nest
+
   ekz_chrome:
     image: seleniarm/node-chromium:4.3.0-20220709
     shm_size: 2gb

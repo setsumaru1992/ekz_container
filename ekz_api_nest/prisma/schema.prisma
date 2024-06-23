@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("EKZ_DB_PRISMA_URL")
+}
+
+model access_keys {
+  id         BigInt    @id @default(autoincrement())
+  user_id    Int?
+  access_key String?   @db.VarChar(255)
+  expire     DateTime? @db.Timestamp(0)
+  created_at DateTime  @db.DateTime(0)
+  updated_at DateTime  @db.DateTime(0)
+}
+
+model ar_internal_metadata {
+  key        String   @id @db.VarChar(255)
+  value      String?  @db.VarChar(255)
+  created_at DateTime @db.DateTime(0)
+  updated_at DateTime @db.DateTime(0)
+}
+
+model choice_images {
+  id             BigInt   @id @default(autoincrement())
+  image_filename String?  @db.VarChar(255)
+  choice_id      BigInt?
+  created_at     DateTime @db.DateTime(0)
+  updated_at     DateTime @db.DateTime(0)
+  choices        choices? @relation(fields: [choice_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_957d5ca346")
+
+  @@index([choice_id], map: "index_choice_images_on_choice_id")
+}
+
+model choice_tags {
+  id         BigInt   @id @default(autoincrement())
+  name       String?  @db.VarChar(255)
+  choice_id  BigInt?
+  created_at DateTime @db.DateTime(0)
+  updated_at DateTime @db.DateTime(0)
+  choices    choices? @relation(fields: [choice_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_8d5301f245")
+
+  @@index([choice_id], map: "index_choice_tags_on_choice_id")
+}
+
+model choice_webpage_captures {
+  id         BigInt   @id @default(autoincrement())
+  choice_id  BigInt?
+  image      String?  @db.VarChar(255)
+  created_at DateTime @db.DateTime(0)
+  updated_at DateTime @db.DateTime(0)
+  choices    choices? @relation(fields: [choice_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_6435cb2d3e")
+
+  @@index([choice_id], map: "index_choice_webpage_captures_on_choice_id")
+}
+
+model choices {
+  id                      BigInt                    @id @default(autoincrement())
+  name                    String?                   @db.VarChar(255)
+  url                     String?                   @db.VarChar(255)
+  description             String?                   @db.Text
+  evaluation              Int?
+  click_cnt               Int?
+  click_at                DateTime?                 @db.DateTime(0)
+  theme_id                BigInt?
+  created_at              DateTime                  @db.DateTime(0)
+  updated_at              DateTime                  @db.DateTime(0)
+  choice_images           choice_images[]
+  choice_tags             choice_tags[]
+  choice_webpage_captures choice_webpage_captures[]
+  themes                  themes?                   @relation(fields: [theme_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_86d4fc8934")
+  comments                comments[]
+
+  @@index([theme_id], map: "index_choices_on_theme_id")
+}
+
+model comments {
+  id         BigInt   @id @default(autoincrement())
+  content    String?  @db.Text
+  choice_id  BigInt?
+  created_by Int?
+  created_at DateTime @db.DateTime(0)
+  updated_at DateTime @db.DateTime(0)
+  choices    choices? @relation(fields: [choice_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_4fa20c3a85")
+
+  @@index([choice_id], map: "index_comments_on_choice_id")
+}
+
+model remind_tokens {
+  id           BigInt   @id @default(autoincrement())
+  user_id      Int?
+  remind_token String?  @db.VarChar(255)
+  created_at   DateTime @db.DateTime(0)
+  updated_at   DateTime @db.DateTime(0)
+}
+
+model schema_migrations {
+  version String @id @db.VarChar(255)
+}
+
+model themes {
+  id              BigInt    @id @default(autoincrement())
+  name            String?   @db.VarChar(255)
+  description     String?   @db.Text
+  accesible_group Int?
+  created_by      Int?
+  updated_by      Int?
+  created_at      DateTime  @db.DateTime(0)
+  updated_at      DateTime  @db.DateTime(0)
+  choices         choices[]
+}
+
+model user_group_relations {
+  id            BigInt       @id @default(autoincrement())
+  user_id       BigInt?
+  user_group_id BigInt?
+  created_at    DateTime     @db.DateTime(0)
+  updated_at    DateTime     @db.DateTime(0)
+  user_groups   user_groups? @relation(fields: [user_group_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_5e68f147bd")
+  users         users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_rails_c9c9637e4e")
+
+  @@index([user_group_id], map: "index_user_group_relations_on_user_group_id")
+  @@index([user_id], map: "index_user_group_relations_on_user_id")
+}
+
+model user_groups {
+  id                   BigInt                 @id @default(autoincrement())
+  name                 String?                @db.VarChar(255)
+  created_at           DateTime               @db.DateTime(0)
+  updated_at           DateTime               @db.DateTime(0)
+  is_public            Boolean?
+  user_group_relations user_group_relations[]
+}
+
+model users {
+  id                   BigInt                 @id @default(autoincrement())
+  id_param             String?                @db.VarChar(255)
+  disp_name            String?                @db.VarChar(255)
+  created_at           DateTime               @db.DateTime(0)
+  updated_at           DateTime               @db.DateTime(0)
+  password_digest      String?                @db.VarChar(255)
+  email                String?                @db.VarChar(255)
+  user_group_relations user_group_relations[]
+}
