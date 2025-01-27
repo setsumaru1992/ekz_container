@@ -20,7 +20,7 @@ const generateUrl = () => {
         protcol = 'http';
         host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_DEV;
       } else {
-        protcol = 'http';
+        protcol = 'https';
         host = process.env.NEXT_PUBLIC_API_HOST_AND_PORT_BY_CLIENT_SIDE_PROD;
       }
       break;
