@@ -8,12 +8,6 @@ const hour = 60 * minute;
 const day = 24 * hour;
 // const month = 31 * day
 const year = 365 * day;
-const COOKIE_ACCESS_KEY_ATTR = {
-  maxAge: 1 * hour,
-};
-const COOKIE_REMIND_TOKEN_ATTR = {
-  maxAge: 20 * year,
-};
 
 class AuthCookieManager {
   getAccessKey(nextJsContext = null) {
@@ -24,11 +18,18 @@ class AuthCookieManager {
 
   setAccessKey(accessKey, nextJsContext = null) {
     if (accessKey === null || accessKey === undefined) return;
+
+    const secure = process.env.NODE_ENV !== 'development';
+    // console.log('secure', secure);
+    const cookieOption = {
+      maxAge: 60 * day,
+      secure: secure, // まだsecure属性付与は成功していない。自己証明書だからかもしれない。
+    };
     nookies.set(
       nextJsContext,
       COOKIE_ACCESS_KEY_NAME,
       accessKey,
-      COOKIE_ACCESS_KEY_ATTR,
+      cookieOption,
     );
   }
 
@@ -46,10 +47,14 @@ class AuthCookieManager {
       this.deleteRemindToken();
       return;
     }
+    
+    const cookieOption = {
+      maxAge: 20 * year,
+    };
     cookieManager.set(
       COOKIE_REMIND_TOKEN_NAME,
       remindToken,
-      COOKIE_REMIND_TOKEN_ATTR,
+      cookieOption,
     );
   }
 
